@@ -5,9 +5,54 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Magisterka"
+        xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        Title="Regulator" Height="350" Width="525">
+        ResizeMode="NoResize"
+        Title="Automatyka Inteligentnych Budynków" Height="700" Width="1200">
+    <Window.DataContext>
+        <local:SeriesModel/>
+    </Window.DataContext>
     <Grid>
-        
+
+        <TabControl HorizontalAlignment="Stretch" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="Auto">
+            <TabItem Header="Okno główne">
+                <Grid Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image HorizontalAlignment="Center" Height="Auto" Margin="258,25,4,0" VerticalAlignment="Top" Width="Auto"/>
+                    <Label Content="Dane Wejściowe" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Grid.Column="0"/>
+                    <Label Content="Dane Wyjściowe" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                    <Button Name="ControllerParametersButton" Content="Parametry&#x0a;Sterownika" HorizontalAlignment="Right" Margin="0,0,25,25" VerticalAlignment="Bottom" Width="100" Grid.Column="1" Click="ControllerParametersButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Wykresy">
+                <Grid Background="Transparent" >
+                    <oxy:Plot Title="{Binding PlotTitle}" Margin="20,20">
+                        <oxy:LineSeries Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding Points}">
+
+                        </oxy:LineSeries>
+                    </oxy:Plot>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Model wymiennika">
+                <Grid Background="Transparent" >
+                    <Image Name="imgexchanger" HorizontalAlignment="Center" Margin="404,10,10,234" VerticalAlignment="Center" Height="Auto" Width="Auto" Source="images\wymiennikblank.png"/>
+                    <Image Name="imgfilterin1" HorizontalAlignment="Center" Height="124" Margin="432,31,704,468" VerticalAlignment="Center" Width="48" Source="images\filter.png"/>
+                    <Button Name="startButton" Content="Start" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="75" Height="40"/>
+                    <Button Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="134,14,0,0" VerticalAlignment="Top" Width="74" Height="40"/>
+                    <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40"/>
+                    <Slider Name="simspeedSlider" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="26" Width="274" Maximum="5" Minimum="1" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}"/>
+                    <Label Name="simspeedLabel" Content="1 s/s" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top"/>
+                    <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="180" Margin="404,404,0,0" VerticalAlignment="Top" Width="336"/>
+                    <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="180" Margin="838,404,0,0" VerticalAlignment="Top" Width="336"/>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+
     </Grid>
 </Controls:MetroWindow>
