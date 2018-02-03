@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Magisterka
 {
-    public sealed class HVACFilter : HVACObject
+    public sealed class HVACHeater : HVACObject, IDynamicObject
     {
-        public HVACFilter()
+        public void UpdateParams()
         {
-            IsGenerativeFlow = false;
+            throw new NotImplementedException();
         }
     }
 }

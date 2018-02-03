@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Magisterka
 {
-    public class HVACFan : HVACObject, IDynamicObject
+    public sealed class HVACFan : HVACObject, IDynamicObject
     {
         public HVACFan()
         {

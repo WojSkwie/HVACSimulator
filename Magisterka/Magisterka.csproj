@@ -90,8 +90,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HVACFan.cs" />
     <Compile Include="HVACFilter.cs" />
+    <Compile Include="HVACHeater.cs" />
     <Compile Include="HVACObject.cs" />
+    <Compile Include="HVACSupplyChannel.cs" />
+    <Compile Include="IDynamicObject.cs" />
     <Compile Include="SeriesModel.cs" />
     <Compile Include="USB.cs">
       <SubType>Component</SubType>
