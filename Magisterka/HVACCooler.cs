@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Magisterka
 {
-    public sealed class HVACHeater : HVACObject, IDynamicObject
+    public class HVACCooler : HVACObject, IDynamicObject
     {
-        public HVACHeater()
+        public HVACCooler()
         {
             IsGenerativeFlow = false;
-            Name = "Nagrzewnica";
+            Name = "Chłodnica";
         }
 
         public void UpdateParams()

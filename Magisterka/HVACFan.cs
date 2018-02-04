@@ -11,6 +11,7 @@ namespace Magisterka
         public HVACFan()
         {
             IsGenerativeFlow = true;
+            Name = "Wentylator";
         }
 
         public void UpdateParams()

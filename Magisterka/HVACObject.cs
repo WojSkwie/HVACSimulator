@@ -13,6 +13,7 @@ namespace Magisterka
         public double BCoeff { get; set; }
         public double CCoeff { get; set; }
         public bool IsPresent { get; set; }
+        public string Name { get; set; }
 
     }
 }

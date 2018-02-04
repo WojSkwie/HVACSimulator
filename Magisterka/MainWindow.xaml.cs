@@ -25,32 +25,78 @@ namespace Magisterka
     public partial class MainWindow : MetroWindow
     {
         private cRegulator regulator;
-        private DispatcherTimer MainTimer;
+        private DispatcherTimer mainTimer;
+        private HVACSupplyChannel supplyChannel = new HVACSupplyChannel();
 
         public MainWindow()
         {
+            
             regulator = new cRegulator();
-            MainTimer = new DispatcherTimer();
-            MainTimer.Tick += MainTimer_Tick;
+            mainTimer = new DispatcherTimer();
             InitializeComponent();
+            mainTimer.Tick += MainTimer_Tick;
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
         {
-            return;
+            throw new NotImplementedException();
+            //return;
         }
 
-        private void SetTimerInterval(int seconds)
+        private void ChangeTimerSpan(int milliseconds)
         {
-            this.MainTimer.Interval = new TimeSpan(0, 0, seconds);
+            if(mainTimer != null)
+            {
+                bool wasEnabled = mainTimer.IsEnabled;
+                mainTimer.Stop();
+                mainTimer.Interval = new TimeSpan(0, 0, 0, 0, milliseconds);
+                if(wasEnabled) mainTimer.Start();
+            }
         }
-
-
-
 
         private void ControllerParametersButton_Click(object sender, RoutedEventArgs e)
         {
             regulator.ZmienParametry();
+        }
+
+        private void stepspersecSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int steps = (int)(Math.Pow(2, (int)e.NewValue-1));
+            int milliseconds = 1000/steps;
+            stepspersecLabel.Content = $"{steps} kroków na sek";
+            ChangeTimerSpan(milliseconds);
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
+        }
+
+        private void stopButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainTimer.Stop();
+            ResetSimulation();
+        }
+
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainTimer.Start();
+        }
+
+        private void pauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainTimer.Stop();
+        }
+
+        private void ResetSimulation()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void steplengthSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int index = (int)e.NewValue - 1;
+            steplengthLabel.Content = $"krok długości \n{Constants.stepValues[index]} sek";
         }
     }
 }

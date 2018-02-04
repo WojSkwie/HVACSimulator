@@ -11,6 +11,7 @@ namespace Magisterka
         public HVACFilter()
         {
             IsGenerativeFlow = false;
+            Name = "Filtr";
         }
     }
 }

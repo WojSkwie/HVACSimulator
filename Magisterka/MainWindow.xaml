@@ -7,14 +7,15 @@
         xmlns:local="clr-namespace:Magisterka"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
+        ResizeMode="NoResize" 
+        Loaded="MetroWindow_Loaded"
         Title="Automatyka Inteligentnych Budynków" Height="700" Width="1200">
     <Window.DataContext>
         <local:SeriesModel/>
     </Window.DataContext>
     <Grid>
 
-        <TabControl HorizontalAlignment="Stretch" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="Auto">
+        <TabControl HorizontalAlignment="Stretch" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="Auto" Background="#121212">
             <TabItem Header="Okno główne">
                 <Grid Background="Transparent">
                     <Grid.ColumnDefinitions>
@@ -41,13 +42,20 @@
                 <Grid Background="Transparent" >
                     <Image Name="imgexchanger" HorizontalAlignment="Center" Margin="404,10,10,234" VerticalAlignment="Center" Height="Auto" Width="Auto" Source="images\wymiennikblank.png"/>
                     <Image Name="imgfilterin1" HorizontalAlignment="Center" Height="124" Margin="432,31,704,468" VerticalAlignment="Center" Width="48" Source="images\filter.png"/>
-                    <Button Name="startButton" Content="Start" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="75" Height="40"/>
-                    <Button Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="134,14,0,0" VerticalAlignment="Top" Width="74" Height="40"/>
-                    <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40"/>
-                    <Slider Name="simspeedSlider" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="26" Width="274" Maximum="5" Minimum="1" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}"/>
-                    <Label Name="simspeedLabel" Content="1 s/s" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top"/>
-                    <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="180" Margin="404,404,0,0" VerticalAlignment="Top" Width="336"/>
-                    <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="180" Margin="838,404,0,0" VerticalAlignment="Top" Width="336"/>
+                    <Button Name="startButton" Content="Start" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="startButton_Click"/>
+                    <Button Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="134,14,0,0" VerticalAlignment="Top" Width="74" Height="40" Click="stopButton_Click"/>
+                    <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="pauseButton_Click"/>
+                    <Label Name="stepspersecLabel" Content="1 na sek" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top"/>
+                    <Slider Name="stepspersecSlider" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="26" Width="274" Maximum="5" Minimum="1" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" ValueChanged="stepspersecSlider_ValueChanged" Value="1"/>
+                    <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="180" Margin="404,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
+                            <DataGridTemplateColumn Header="Obecny" Width="70" ></DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="180" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" />
+                    <Label Name="steplengthLabel" Content="1 sek." HorizontalAlignment="Left" Margin="306,129,0,0" VerticalAlignment="Top"/>
+                    <Slider Name="steplengthSlider" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" Minimum="1" Maximum="6" ValueChanged="steplengthSlider_ValueChanged"/>
 
                 </Grid>
             </TabItem>
