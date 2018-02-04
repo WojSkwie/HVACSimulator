@@ -90,6 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AirChannel.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="HVACCooler.cs" />
     <Compile Include="HVACFan.cs" />

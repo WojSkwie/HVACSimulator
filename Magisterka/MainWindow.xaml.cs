@@ -38,7 +38,7 @@ namespace Magisterka
             InitializeComponent();
 
             mainTimer.Tick += MainTimer_Tick;
-            supplyChannel.SupplyPresenceChanged += PresenceChangedInSupplyChannel;
+            supplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -111,6 +111,11 @@ namespace Magisterka
         private void DrawSupplyItems()
         {
 
+        }
+
+        private void supplyDataGrid_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            int itemIndex = supplyDataGrid.InputHitTest(e.GetPosition(this)).
         }
     }
 }

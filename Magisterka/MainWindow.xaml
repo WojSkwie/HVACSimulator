@@ -47,10 +47,10 @@
                     <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="pauseButton_Click"/>
                     <Label Name="stepspersecLabel" Content="1 na sek" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top"/>
                     <Slider Name="stepspersecSlider" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="26" Width="274" Maximum="5" Minimum="1" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" ValueChanged="stepspersecSlider_ValueChanged" Value="1"/>
-                    <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="180" Margin="404,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" >
+                    <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="180" Margin="404,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" MouseRightButtonUp="supplyDataGrid_MouseRightButtonUp">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
-                            <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent}" ></DataGridCheckBoxColumn>
+                            <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent, UpdateSourceTrigger=PropertyChanged}" ></DataGridCheckBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="180" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" />
