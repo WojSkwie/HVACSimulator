@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using ahuKlasy;
 using ahuRegulator;
 using System.Windows.Threading;
+using System.ComponentModel;
 
 namespace Magisterka
 {
@@ -33,8 +34,11 @@ namespace Magisterka
             
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
+
             InitializeComponent();
+
             mainTimer.Tick += MainTimer_Tick;
+            supplyChannel.SupplyPresenceChanged += PresenceChangedInSupplyChannel;
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -97,6 +101,16 @@ namespace Magisterka
         {
             int index = (int)e.NewValue - 1;
             steplengthLabel.Content = $"krok długości \n{Constants.stepValues[index]} sek";
+        }
+
+        private void PresenceChangedInSupplyChannel(object sender, EventArgs e)
+        {
+            DrawSupplyItems();
+        }
+
+        private void DrawSupplyItems()
+        {
+
         }
     }
 }

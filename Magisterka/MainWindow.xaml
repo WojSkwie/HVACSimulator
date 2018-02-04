@@ -50,7 +50,7 @@
                     <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="180" Margin="404,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
-                            <DataGridTemplateColumn Header="Obecny" Width="70" ></DataGridTemplateColumn>
+                            <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent}" ></DataGridCheckBoxColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="180" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" />
