@@ -12,6 +12,7 @@ namespace Magisterka
         {
             IsGenerativeFlow = false;
             Name = "Chłodnica";
+            IsMovable = true;
         }
 
         public void UpdateParams()

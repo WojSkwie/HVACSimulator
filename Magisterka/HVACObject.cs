@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Magisterka
 {
@@ -13,6 +15,7 @@ namespace Magisterka
         public double ACoeff { get; set; }
         public double BCoeff { get; set; }
         public double CCoeff { get; set; }
+        public Visibility ImageVisibility { get; set; }
         private bool _IsPresent;
         public bool IsPresent
         {
@@ -20,10 +23,14 @@ namespace Magisterka
             set
             {
                 OnPropoertyChanged("IsPresent");
+                if (value == false) ImageVisibility = Visibility.Collapsed;
+                else ImageVisibility = Visibility.Visible;
                 this._IsPresent = value;
             }
         }
         public string Name { get; set; }
+        public bool IsMovable { get; set; }
+        public Image ImageToDraw { get; set; }
 
         
         public event PropertyChangedEventHandler PropertyChanged;

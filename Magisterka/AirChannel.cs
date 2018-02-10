@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Magisterka
 {
     public abstract class AirChannel
     {
-        public List<HVACObject> HVACObjectsList = new List<HVACObject>();
+        public ObservableCollection<HVACObject> HVACObjectsList { get; set; } = new ObservableCollection<HVACObject>();
 
         protected AirChannel()
         {

@@ -17,6 +17,7 @@ using ahuKlasy;
 using ahuRegulator;
 using System.Windows.Threading;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace Magisterka
 {
@@ -28,10 +29,14 @@ namespace Magisterka
         private cRegulator regulator;
         private DispatcherTimer mainTimer;
         private HVACSupplyChannel supplyChannel = new HVACSupplyChannel();
+        public ObservableCollection<HVACObject> HVACObjectsList111 { get; set; } = new ObservableCollection<HVACObject>();
 
         public MainWindow()
         {
-            
+            HVACObjectsList111.Add(new HVACFilter());
+            HVACObjectsList111.Add(new HVACFilter());
+            HVACObjectsList111.Add(new HVACFilter());
+            HVACObjectsList111.Add(new HVACFilter());
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
 
@@ -39,6 +44,8 @@ namespace Magisterka
 
             mainTimer.Tick += MainTimer_Tick;
             supplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
+
+            
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -73,7 +80,7 @@ namespace Magisterka
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
+            //supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
@@ -89,6 +96,7 @@ namespace Magisterka
 
         private void pauseButton_Click(object sender, RoutedEventArgs e)
         {
+            
             mainTimer.Stop();
         }
 
@@ -115,7 +123,66 @@ namespace Magisterka
 
         private void supplyDataGrid_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            int itemIndex = supplyDataGrid.InputHitTest(e.GetPosition(this)).
+            //int itemIndex = supplyDataGrid.InputHitTest(e.GetPosition(this)).
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void UpButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = FindRowIndex(sender);
+            if(index > 0)
+            {
+                if(supplyChannel.HVACObjectsList[index].IsMovable && supplyChannel.HVACObjectsList[index - 1].IsMovable)
+                {
+                    HVACObject temp = supplyChannel.HVACObjectsList[index - 1];
+                    supplyChannel.HVACObjectsList.RemoveAt(index - 1);
+                    supplyChannel.HVACObjectsList.Insert(index,temp);
+                    supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
+                }
+            }
+            
+            
+        }
+
+        private void DownButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = FindRowIndex(sender);
+            if (index < 0) return;
+            if (index < supplyChannel.HVACObjectsList.Count-1 && index !=0)
+            {
+                if (supplyChannel.HVACObjectsList[index].IsMovable && supplyChannel.HVACObjectsList[index + 1].IsMovable)
+                {
+                    HVACObject temp = supplyChannel.HVACObjectsList[index + 1];
+                    supplyChannel.HVACObjectsList.RemoveAt(index + 1);
+                    supplyChannel.HVACObjectsList.Insert(index, temp);
+                    supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
+                }
+            }
+        }
+
+        private int FindRowIndex(object sender)
+        {
+            int index = -1;
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+            {
+                if (vis is DataGridRow)
+                {
+                    var row = (DataGridRow)vis;
+                    index = row.GetIndex();
+                    
+                }
+            }
+            return index;
+        }
+
+        private void EditCharItem_Click(object sender, RoutedEventArgs e)
+        { 
+
+            int index = FindRowIndex(sender);
         }
     }
 }

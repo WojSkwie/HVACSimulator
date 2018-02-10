@@ -12,6 +12,7 @@ namespace Magisterka
         {
             IsGenerativeFlow = true;
             Name = "Wentylator";
+            IsMovable = true;
         }
 
         public void UpdateParams()

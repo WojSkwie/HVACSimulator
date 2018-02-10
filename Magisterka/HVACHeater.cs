@@ -12,6 +12,7 @@ namespace Magisterka
         {
             IsGenerativeFlow = false;
             Name = "Nagrzewnica";
+            IsMovable = true;
         }
 
         public void UpdateParams()
