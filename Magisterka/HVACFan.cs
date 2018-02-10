@@ -15,6 +15,8 @@ namespace Magisterka
             IsMovable = true;
         }
 
+        public double TimeConstant { get; set; }
+
         public void UpdateParams()
         {
             throw new NotImplementedException();

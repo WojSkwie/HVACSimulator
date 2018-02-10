@@ -16,5 +16,7 @@ namespace Magisterka
             IsMovable = false;
             //ImageToDraw = imgfilterin1
         }
+
+        
     }
 }

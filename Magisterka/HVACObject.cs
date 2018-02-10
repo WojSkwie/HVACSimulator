@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace Magisterka
 {
-    public abstract class HVACObject : INotifyPropertyChanged
+    public abstract class HVACObject : INotifyPropertyChanged, IModifiableCharact
     {
         public bool IsGenerativeFlow { get; set; }
         public double ACoeff { get; set; }
@@ -38,6 +38,12 @@ namespace Magisterka
         private void OnPropoertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void ModifyCharacteristics()
+        {
+            var CharactDialog = new CharactWindow(this);
+            CharactDialog.ShowDialog();
         }
     }
 }

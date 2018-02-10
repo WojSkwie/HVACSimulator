@@ -51,8 +51,7 @@
                               Margin="404,404,0,0" VerticalAlignment="Top" Width="336" 
                               Background="White" AutoGenerateColumns="False" CanUserAddRows="False" 
                               CanUserReorderColumns="False" CanUserSortColumns="False" 
-                              MouseRightButtonUp="supplyDataGrid_MouseRightButtonUp" 
-                              
+                              SelectionMode="Single" SelectionUnit="FullRow"
                               ItemsSource="{Binding Path=HVACObjectsList, NotifyOnSourceUpdated=True}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>

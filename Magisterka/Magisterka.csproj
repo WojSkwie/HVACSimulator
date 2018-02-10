@@ -91,6 +91,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AirChannel.cs" />
+    <Compile Include="CharactWindow.xaml.cs">
+      <DependentUpon>CharactWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="HVACCooler.cs" />
     <Compile Include="HVACFan.cs" />
@@ -99,10 +102,15 @@
     <Compile Include="HVACObject.cs" />
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="IDynamicObject.cs" />
+    <Compile Include="IModifiableCharact.cs" />
     <Compile Include="SeriesModel.cs" />
     <Compile Include="USB.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Page Include="CharactWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

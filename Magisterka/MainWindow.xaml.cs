@@ -80,7 +80,7 @@ namespace Magisterka
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
+            
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
@@ -120,21 +120,12 @@ namespace Magisterka
         {
 
         }
-
-        private void supplyDataGrid_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //int itemIndex = supplyDataGrid.InputHitTest(e.GetPosition(this)).
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         private void UpButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = FindRowIndex(sender);
-            if(index > 0)
+            int index = supplyDataGrid.SelectedIndex;
+            if (index > 0)
             {
                 if(supplyChannel.HVACObjectsList[index].IsMovable && supplyChannel.HVACObjectsList[index - 1].IsMovable)
                 {
@@ -150,7 +141,7 @@ namespace Magisterka
 
         private void DownButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = FindRowIndex(sender);
+            int index = supplyDataGrid.SelectedIndex;
             if (index < 0) return;
             if (index < supplyChannel.HVACObjectsList.Count-1 && index !=0)
             {
@@ -164,7 +155,7 @@ namespace Magisterka
             }
         }
 
-        private int FindRowIndex(object sender)
+        /*private int FindRowIndex(object sender)
         {
             int index = -1;
             for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
@@ -177,12 +168,17 @@ namespace Magisterka
                 }
             }
             return index;
-        }
+        }*/
 
         private void EditCharItem_Click(object sender, RoutedEventArgs e)
-        { 
-
-            int index = FindRowIndex(sender);
+        {
+            int index = supplyDataGrid.SelectedIndex;
+            if (index < 0) { return; }
+            var currentItem = supplyChannel.HVACObjectsList[index];
+            if (currentItem is IModifiableCharact)
+            {
+                (currentItem as IModifiableCharact).ModifyCharacteristics();
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Magisterka
             IsMovable = true;
         }
 
+
         public void UpdateParams()
         {
             throw new NotImplementedException();
