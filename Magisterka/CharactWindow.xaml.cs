@@ -28,6 +28,8 @@ namespace Magisterka
             this.currentObject = currentObject;
         }
 
+        public CharacModel CharacModel { get; set; } = new CharacModel();
+
         private double CofA { get; set; }
         private double CofB { get; set; }
         private double CofC { get; set; }
@@ -95,13 +97,29 @@ namespace Magisterka
             try
             {
                 CofA = Convert.ToDouble(CofATextBox.Text);
-                CofA = Convert.ToDouble(CofATextBox.Text);
-                CofA = Convert.ToDouble(CofATextBox.Text);
+                CofB = Convert.ToDouble(CofBTextBox.Text);
+                CofC = Convert.ToDouble(CofCTextBox.Text);
             }
             catch(FormatException ex)
             {
                 MessageBox.Show("Wpisz poprawne liczby");
+                return;
             }
+            GetParabola(CofA, CofB, CofC, 10);
+        }
+
+        private void GetParabola(double A, double B, double C, double Xmax)
+        {
+            CharacModel.ClearPlot();
+            for(int i = 0; i < Xmax; i++)
+            {
+                double X = i;
+                double Y = MyMath.Quad(A, B, C, X);
+                CharacModel.AddPoint(X, Y);
+            }
+            Plot.Model = CharacModel.PlotModel;
+            
+            //CharPlot.ActualModel.InvalidatePlot(true);
             
         }
     }

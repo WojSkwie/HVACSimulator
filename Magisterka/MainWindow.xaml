@@ -46,7 +46,7 @@
                     <Button Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="134,14,0,0" VerticalAlignment="Top" Width="74" Height="40" Click="stopButton_Click"/>
                     <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="pauseButton_Click"/>
                     <Label Name="stepspersecLabel" Content="1 na sek" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top"/>
-                    <Slider Name="stepspersecSlider" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="26" Width="274" Maximum="5" Minimum="1" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" ValueChanged="stepspersecSlider_ValueChanged" Value="1"/>
+                    <Slider Name="stepspersecSlider" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="26" Width="274" Maximum="5" Minimum="1" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" ValueChanged="StepspersecSlider_ValueChanged" Value="1"/>
                     <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="Auto" 
                               Margin="404,404,0,0" VerticalAlignment="Top" Width="336" 
                               Background="White" AutoGenerateColumns="False" CanUserAddRows="False" 

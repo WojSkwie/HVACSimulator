@@ -33,10 +33,6 @@ namespace Magisterka
 
         public MainWindow()
         {
-            HVACObjectsList111.Add(new HVACFilter());
-            HVACObjectsList111.Add(new HVACFilter());
-            HVACObjectsList111.Add(new HVACFilter());
-            HVACObjectsList111.Add(new HVACFilter());
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
 
@@ -50,8 +46,12 @@ namespace Magisterka
 
         private void MainTimer_Tick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
-            //return;
+            UpdateAllDynamicObjects();
+        }
+
+        private void UpdateAllDynamicObjects()
+        {
+            supplyChannel.UpdateParams();
         }
 
         private void ChangeTimerSpan(int milliseconds)
@@ -70,7 +70,7 @@ namespace Magisterka
             regulator.ZmienParametry();
         }
 
-        private void stepspersecSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void StepspersecSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int steps = (int)(Math.Pow(2, (int)e.NewValue-1));
             int milliseconds = 1000/steps;
