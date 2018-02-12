@@ -104,6 +104,7 @@
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="IDynamicObject.cs" />
     <Compile Include="IModifiableCharact.cs" />
+    <Compile Include="INotifyErrorSimulation.cs" />
     <Compile Include="MyMath.cs" />
     <Compile Include="SeriesModel.cs" />
     <Compile Include="USB.cs">

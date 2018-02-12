@@ -13,12 +13,16 @@ namespace Magisterka
             IsGenerativeFlow = false;
             Name = "Nagrzewnica";
             IsMovable = true;
+
+            ACoeff = 1;
+            BCoeff = 1;
+            CCoeff = 0;
         }
 
 
         public void UpdateParams()
         {
-            throw new NotImplementedException();
+            Console.Write("TODO UPDATE PARAMS HEATER\n"); //TODO
         }
     }
 }

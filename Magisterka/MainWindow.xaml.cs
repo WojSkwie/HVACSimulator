@@ -180,5 +180,13 @@ namespace Magisterka
                 (currentItem as IModifiableCharact).ModifyCharacteristics();
             }
         }
+
+        private void SetSpeedSupplyNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            if(SetSpeedSupplyNumeric.Value != null)
+            {
+                supplyChannel.SetSpeedFan((double)SetSpeedSupplyNumeric.Value);
+            }
+        }
     }
 }

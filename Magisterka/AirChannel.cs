@@ -16,6 +16,9 @@ namespace Magisterka
         {
         }
 
+        public double FlowRate { get; set; } 
+        public double FanPressureDrop { get; set; }
+
         protected void SubscribeToAllItems()
         {
             foreach (HVACObject obj in HVACObjectsList)

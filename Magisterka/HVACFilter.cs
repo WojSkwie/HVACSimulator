@@ -14,7 +14,10 @@ namespace Magisterka
             IsGenerativeFlow = false;
             Name = "Filtr";
             IsMovable = false;
-            //ImageToDraw = imgfilterin1
+
+            ACoeff = 1;
+            BCoeff = 1;
+            CCoeff = 0;
         }
 
         

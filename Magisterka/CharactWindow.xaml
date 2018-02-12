@@ -11,13 +11,13 @@
         Background="#121212"
         WindowStyle="ToolWindow"
         
-        Title="Charakterystyka" Height="300" Width="550">
+        Title="Charakterystyka" Height="300" Width="500">
     <Window.DataContext>
         <local:CharacModel/>
     </Window.DataContext>
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="49*"/>
+            <ColumnDefinition Width="60*"/>
             <ColumnDefinition Width="87*"/>
         </Grid.ColumnDefinitions>
 

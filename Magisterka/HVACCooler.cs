@@ -13,11 +13,15 @@ namespace Magisterka
             IsGenerativeFlow = false;
             Name = "Chłodnica";
             IsMovable = true;
+
+            ACoeff = 1;
+            BCoeff = 1;
+            CCoeff = 0;
         }
 
         public void UpdateParams()
         {
-            throw new NotImplementedException();
+            Console.Write("TODO UPDATE PARAMS COOLER\n"); //TODO
         }
     }
 }

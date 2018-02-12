@@ -22,7 +22,25 @@ namespace Magisterka
 
         public void UpdateParams()
         {
-            throw new NotImplementedException();
+            
+            foreach(HVACObject obj in HVACObjectsList)
+            {
+                if(obj is IDynamicObject)
+                {
+                    ((IDynamicObject)obj).UpdateParams();
+                }
+            }
+        }
+
+        public void SetSpeedFan(double speed)
+        {
+            foreach(HVACObject obj in HVACObjectsList)
+            {
+                if(obj is HVACFan)
+                {
+                    ((HVACFan)obj).SetSpeedPercent = speed;
+                }
+            }
         }
 
         

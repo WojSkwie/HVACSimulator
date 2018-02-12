@@ -26,6 +26,8 @@ namespace Magisterka
         {
             InitializeComponent();
             this.currentObject = currentObject;
+            SetVisuals();
+            CopyCoeffs();
         }
 
         public CharacModel CharacModel { get; set; } = new CharacModel();
@@ -105,7 +107,7 @@ namespace Magisterka
                 MessageBox.Show("Wpisz poprawne liczby");
                 return;
             }
-            GetParabola(CofA, CofB, CofC, 10);
+            GetParabola(CofA, CofB, CofC, Constants.pointsOnCharac);
         }
 
         private void GetParabola(double A, double B, double C, double Xmax)
@@ -115,11 +117,14 @@ namespace Magisterka
             {
                 double X = i;
                 double Y = MyMath.Quad(A, B, C, X);
-                CharacModel.AddPoint(X, Y);
+                if(Y > 0)
+                {
+                    CharacModel.AddPoint(X, Y);
+                }
             }
             Plot.Model = CharacModel.PlotModel;
             
-            //CharPlot.ActualModel.InvalidatePlot(true);
+            
             
         }
     }
