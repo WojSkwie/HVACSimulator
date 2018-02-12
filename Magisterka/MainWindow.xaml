@@ -79,9 +79,9 @@
                     </DataGrid>
                     <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="180" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" />
                     <Label Name="steplengthLabel" Content="1 sek." HorizontalAlignment="Left" Margin="306,129,0,0" VerticalAlignment="Top"/>
-                    <Slider Name="steplengthSlider" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" Minimum="1" Maximum="6" ValueChanged="steplengthSlider_ValueChanged"/>
+                    <Slider Name="steplengthSlider" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" Minimum="1" Maximum="6" ValueChanged="steplengthSlider_ValueChanged" />
                     <Controls:NumericUpDown Name="SetSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="255,187,0,0"  VerticalAlignment="Top" Height="23" Width="86" Interval="1" Value="0" ValueChanged="SetSpeedSupplyNumeric_ValueChanged" Maximum="100" Minimum="0" UpDownButtonsWidth="17" />
-                    <Controls:NumericUpDown Name="ActualSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="255,220,0,0"  VerticalAlignment="Top" Height="23" Width="86" Interval="1" Value="0" HideUpDownButtons="True" IsReadOnly="True"/>
+                    <Controls:NumericUpDown Name="ActualSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="255,220,0,0"  VerticalAlignment="Top" Height="23" Width="86" Interval="1" Value="0" HideUpDownButtons="True" IsReadOnly="True" ValueChanged="ActualSpeedSupplyNumeric_ValueChanged"/>
                     <Label Content="Zadane Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top"/>
                     <Label Content="Aktualne Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top"/>
 

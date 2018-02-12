@@ -52,6 +52,13 @@ namespace Magisterka
         private void UpdateAllDynamicObjects()
         {
             supplyChannel.UpdateParams();
+            foreach(HVACObject obj in supplyChannel.HVACObjectsList)
+            {
+                if(obj is HVACFan)
+                {
+                    ActualSpeedSupplyNumeric.Value = ((HVACFan)obj).ActualSpeedPercent;
+                }
+            }
         }
 
         private void ChangeTimerSpan(int milliseconds)
@@ -109,6 +116,7 @@ namespace Magisterka
         {
             int index = (int)e.NewValue - 1;
             steplengthLabel.Content = $"krok długości \n{Constants.stepValues[index]} sek";
+            Constants.step = Constants.stepValues[index];
         }
 
         private void PresenceChangedInSupplyChannel(object sender, EventArgs e)
@@ -186,6 +194,16 @@ namespace Magisterka
             if(SetSpeedSupplyNumeric.Value != null)
             {
                 supplyChannel.SetSpeedFan((double)SetSpeedSupplyNumeric.Value);
+            }
+        }
+
+        private void ActualSpeedSupplyNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            double value = (double)ActualSpeedSupplyNumeric.Value;
+            if (value.ToString().Length > 5)
+            {
+                string truncated = value.ToString("0.000");
+                ActualSpeedSupplyNumeric.Value = double.Parse(truncated);
             }
         }
     }

@@ -36,6 +36,8 @@ namespace Magisterka
                 return;
             }
             double derivative = (SetSpeedPercent - ActualSpeedPercent) / TimeConstant;
+            ActualSpeedPercent += derivative * Constants.step;
+
         }
     }
 }
