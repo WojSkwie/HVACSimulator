@@ -116,7 +116,7 @@ namespace Magisterka
             for(int i = 0; i < Xmax; i++)
             {
                 double X = i;
-                double Y = MyMath.Quad(A, B, C, X);
+                double Y = MyMath.QuadEquaVal(A, B, C, X);
                 if(Y > 0)
                 {
                     CharacModel.AddPoint(X, Y);

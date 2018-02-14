@@ -41,7 +41,11 @@
             <TabItem Header="Model wymiennika">
                 <Grid Background="Transparent" >
                     <Image Name="imgexchanger" HorizontalAlignment="Center" Margin="404,10,10,234" VerticalAlignment="Center" Height="Auto" Width="Auto" DataContext="HVACSupplyChannel" Source="images\wymiennikblank.png" />
-                    <Image Name="imgfilterin1" HorizontalAlignment="Center" Height="124" Margin="432,31,704,468" VerticalAlignment="Center" Width="48" Source="images\filter.png" Visibility="{Binding HVACObjectsList[0].ImageVisibility}"/>
+                    <Image Name="imgfilterin1" HorizontalAlignment="Center" Height="72" Margin="432,57,721,494" VerticalAlignment="Center" Width="31" Source="images\filter.png" />
+                    <Image Name="imgheaterin" HorizontalAlignment="Center" Height="68" Margin="908,224,226,331" VerticalAlignment="Center" Width="50" Source="images\heater.png" />
+                    <Image Name="imgcoolerin" HorizontalAlignment="Center" Height="68" Margin="838,224,296,331" VerticalAlignment="Center" Width="50" Source="images\cooler.png" />
+                    <Image Name="imgfanin" HorizontalAlignment="Center" Height="72" Margin="1002,220,118,331" VerticalAlignment="Center" Width="64" Source="images\fan.png" />
+                    <Image Name="imgfilterin2" HorizontalAlignment="Center" Height="72" Margin="1110,220,43,331" VerticalAlignment="Center" Width="31" Source="images\filter.png" />
                     <Button Name="startButton" Content="Start" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="startButton_Click"/>
                     <Button Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="134,14,0,0" VerticalAlignment="Top" Width="74" Height="40" Click="stopButton_Click"/>
                     <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="pauseButton_Click"/>
@@ -80,12 +84,16 @@
                     <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="180" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" />
                     <Label Name="steplengthLabel" Content="1 sek." HorizontalAlignment="Left" Margin="306,129,0,0" VerticalAlignment="Top"/>
                     <Slider Name="steplengthSlider" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" Minimum="1" Maximum="6" ValueChanged="steplengthSlider_ValueChanged" />
-                    <Controls:NumericUpDown Name="SetSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="255,187,0,0"  VerticalAlignment="Top" Height="23" Width="86" Interval="1" Value="0" ValueChanged="SetSpeedSupplyNumeric_ValueChanged" Maximum="100" Minimum="0" UpDownButtonsWidth="17" />
-                    <Controls:NumericUpDown Name="ActualSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="255,220,0,0"  VerticalAlignment="Top" Height="23" Width="86" Interval="1" Value="0" HideUpDownButtons="True" IsReadOnly="True" ValueChanged="ActualSpeedSupplyNumeric_ValueChanged"/>
-                    <Label Content="Zadane Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,187,0,0" VerticalAlignment="Top"/>
+                    <Controls:NumericUpDown Name="SetSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="274,189,0,0"  VerticalAlignment="Top" Height="23" Width="125" Interval="1" Value="0" ValueChanged="SetSpeedSupplyNumeric_ValueChanged" Maximum="100" Minimum="0" UpDownButtonsWidth="17" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="ActualSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="274,220,0,0"  VerticalAlignment="Top" Height="23" Width="125" Interval="1" Value="0" HideUpDownButtons="True" IsReadOnly="True" ValueChanged="ActualSpeedSupplyNumeric_ValueChanged" TextAlignment="Left"/>
+                    <Label Content="Zadane Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top"/>
                     <Label Content="Aktualne Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top"/>
 
-
+                    <Controls:NumericUpDown Name="PressureDropSupplyNumeric" HorizontalAlignment="Left" Margin="274,251,0,0"  VerticalAlignment="Top" Height="23" Width="125" Interval="1" Value="{Binding FanPressureDrop, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HideUpDownButtons="True" TextAlignment="Left" HasDecimals="True"/>
+                    <Controls:NumericUpDown Name="FlowRateSupplyNumeric" HorizontalAlignment="Left" Margin="274,282,0,0"  VerticalAlignment="Top" Height="23" Width="125" Interval="1" Value="{Binding FlowRate, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" IsReadOnly="True" TextAlignment="Left" HasDecimals="True"/>
+                    <!--<TextBox Name="test" HorizontalAlignment="Left" Margin="265,320,0,0"  VerticalAlignment="Top" Height="23" Width="76" Text="{Binding FlowRate, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, StringFormat=N2}"  IsReadOnly="True" TextAlignment="Left" />-->
+                    <Label Content="Spadek ciśnienia w kanale wlotowym [Pa]" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Natężnie przepływu w kanale wlotowym [m3/s]" HorizontalAlignment="Left" Margin="10,282,0,0" VerticalAlignment="Top"/>
 
                 </Grid>
             </TabItem>

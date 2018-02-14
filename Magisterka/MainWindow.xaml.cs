@@ -29,7 +29,7 @@ namespace Magisterka
         private cRegulator regulator;
         private DispatcherTimer mainTimer;
         private HVACSupplyChannel supplyChannel = new HVACSupplyChannel();
-        public ObservableCollection<HVACObject> HVACObjectsList111 { get; set; } = new ObservableCollection<HVACObject>();
+        //public ObservableCollection<HVACObject> HVACObjectsList111 { get; set; } = new ObservableCollection<HVACObject>();
 
         public MainWindow()
         {
@@ -47,6 +47,8 @@ namespace Magisterka
         private void MainTimer_Tick(object sender, EventArgs e)
         {
             UpdateAllDynamicObjects();
+            PressureDropSupplyNumeric.Value = supplyChannel.FanPressureDrop;
+            FlowRateSupplyNumeric.Value = supplyChannel.FlowRate;
         }
 
         private void UpdateAllDynamicObjects()
@@ -126,7 +128,14 @@ namespace Magisterka
 
         private void DrawSupplyItems()
         {
-
+            if(supplyChannel.HVACObjectsList[0].IsPresent)
+            {
+                imgfilterin1.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                imgfilterin1.Visibility = Visibility.Collapsed;
+            }
         }
         
 
@@ -206,5 +215,6 @@ namespace Magisterka
                 ActualSpeedSupplyNumeric.Value = double.Parse(truncated);
             }
         }
+
     }
 }

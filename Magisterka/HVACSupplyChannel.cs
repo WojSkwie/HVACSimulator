@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Magisterka
 {
-    public sealed class HVACSupplyChannel : AirChannel, IDynamicObject
+    public sealed class HVACSupplyChannel : AirChannel, IDynamicObject, INotifyPropertyChanged
     {
         public HVACSupplyChannel() : base()
         {
@@ -30,6 +30,7 @@ namespace Magisterka
                     ((IDynamicObject)obj).UpdateParams();
                 }
             }
+            CalculateDropAndFlow();
         }
 
         public void SetSpeedFan(double speed)
@@ -42,9 +43,5 @@ namespace Magisterka
                 }
             }
         }
-
-        
-
-        
     }
 }
