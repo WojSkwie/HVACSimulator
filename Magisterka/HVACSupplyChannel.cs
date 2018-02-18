@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 
 namespace Magisterka
 {
@@ -23,7 +25,7 @@ namespace Magisterka
         public void UpdateParams()
         {
             
-            foreach(HVACObject obj in HVACObjectsList)
+            foreach (HVACObject obj in HVACObjectsList)
             {
                 if(obj is IDynamicObject)
                 {

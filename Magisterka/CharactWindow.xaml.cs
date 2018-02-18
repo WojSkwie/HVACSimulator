@@ -60,6 +60,18 @@ namespace Magisterka
             }
         }
 
+        private void CopyCoeffsToObject()
+        {
+            currentObject.ACoeff = Convert.ToDouble(CofATextBox.Text);
+            currentObject.BCoeff = Convert.ToDouble(CofBTextBox.Text);
+            currentObject.CCoeff = Convert.ToDouble(CofCTextBox.Text);
+            if (currentObject is HVACFan)
+            {
+                (currentObject as HVACFan).TimeConstant = Convert.ToDouble(TimeConstTextBox.Text); 
+            }
+            
+        }
+
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
@@ -67,7 +79,7 @@ namespace Magisterka
 
         private void OKbutton_Click(object sender, RoutedEventArgs e)
         {
-            CopyCoeffs();
+            CopyCoeffsToObject();
             DialogResult = true;
         }
 

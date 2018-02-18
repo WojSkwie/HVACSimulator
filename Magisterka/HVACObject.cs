@@ -16,15 +16,12 @@ namespace Magisterka
         public double BCoeff { get; set; }
         public double CCoeff { get; set; }
         public Visibility ImageVisibility { get; set; }
-        private bool _IsPresent = true;
+        private bool _IsPresent;
         public bool IsPresent
         {
             get { return _IsPresent; }
             set
             {
-                
-                if (value == false) ImageVisibility = Visibility.Collapsed;
-                else ImageVisibility = Visibility.Visible;
                 this._IsPresent = value;
                 OnPropertyChanged("IsPresent");
             }
@@ -41,8 +38,6 @@ namespace Magisterka
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        
 
         public void ModifyCharacteristics()
         {

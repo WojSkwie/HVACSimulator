@@ -78,6 +78,7 @@ namespace Magisterka
             double Ap = 0, Bp = 0, Cp = 0;
             foreach (HVACObject obj in HVACObjectsList)
             {
+                if(!obj.IsPresent) { continue; }
                 if(obj.IsGenerativeFlow)
                 {
                     if(obj is HVACFan)
@@ -96,7 +97,7 @@ namespace Magisterka
 
                     Ap += obj.ACoeff;
                     Bp += obj.BCoeff;
-                    Cp = obj.CCoeff;
+                    Cp += obj.CCoeff;
                 }
             }
 

@@ -29,7 +29,6 @@ namespace Magisterka
         private cRegulator regulator;
         private DispatcherTimer mainTimer;
         private HVACSupplyChannel supplyChannel = new HVACSupplyChannel();
-        //public ObservableCollection<HVACObject> HVACObjectsList111 { get; set; } = new ObservableCollection<HVACObject>();
 
         public MainWindow()
         {
@@ -128,14 +127,14 @@ namespace Magisterka
 
         private void DrawSupplyItems()
         {
-            if(supplyChannel.HVACObjectsList[0].IsPresent)
+            /*if(supplyChannel.HVACObjectsList[0].IsPresent)
             {
                 imgfilterin1.Visibility = Visibility.Visible;
             }
             else
             {
                 imgfilterin1.Visibility = Visibility.Collapsed;
-            }
+            }*/
         }
         
 
@@ -171,21 +170,6 @@ namespace Magisterka
                 }
             }
         }
-
-        /*private int FindRowIndex(object sender)
-        {
-            int index = -1;
-            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
-            {
-                if (vis is DataGridRow)
-                {
-                    var row = (DataGridRow)vis;
-                    index = row.GetIndex();
-                    
-                }
-            }
-            return index;
-        }*/
 
         private void EditCharItem_Click(object sender, RoutedEventArgs e)
         {
