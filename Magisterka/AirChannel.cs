@@ -72,16 +72,16 @@ namespace Magisterka
             OnChannelPresenceChanged();
         }
 
-        protected void CalculateDropAndFlow()
+        protected void GatherParametersFromObjects(out double A, out double B, out double C, 
+            out double Ap, out double Bp, out double Cp)
         {
-            double A = 0, B = 0, C = 0;
-            double Ap = 0, Bp = 0, Cp = 0;
+            A = 0; B = 0; C = 0; Ap = 0; Bp = 0; Cp = 0;
             foreach (HVACObject obj in HVACObjectsList)
             {
-                if(!obj.IsPresent) { continue; }
-                if(obj.IsGenerativeFlow)
+                if (!obj.IsPresent) { continue; }
+                if (obj.IsGenerativeFlow)
                 {
-                    if(obj is HVACFan)
+                    if (obj is HVACFan)
                     {
                         double percent = ((HVACFan)obj).ActualSpeedPercent;
                         A -= obj.ACoeff * (percent / 100);
@@ -100,6 +100,13 @@ namespace Magisterka
                     Cp += obj.CCoeff;
                 }
             }
+        }
+
+        protected void CalculateDropAndFlow()
+        {
+            double A, B, C;
+            double Ap, Bp, Cp;
+            GatherParametersFromObjects(out A, out B, out C, out Ap, out Bp, out Cp);
 
             double delta = MyMath.CalculateDelta(A, B, C);
             if(delta < 0 ) { OnSimulationErrorOccured("Charakterystyki nie mają punktu wspólnego"); }
@@ -120,6 +127,11 @@ namespace Magisterka
                 return;
             }
             double pressure = MyMath.QuadEquaVal(Ap, Bp, Cp, flow);
+            if(pressure < 0)
+            {
+                OnSimulationErrorOccured("Ujemna wartość spadku ciśnienia");
+                return;
+            }
 
             FlowRate = flow;
             FanPressureDrop = pressure;
