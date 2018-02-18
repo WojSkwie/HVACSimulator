@@ -28,18 +28,21 @@ namespace Magisterka
     {
         private cRegulator regulator;
         private DispatcherTimer mainTimer;
-        private HVACSupplyChannel supplyChannel = new HVACSupplyChannel();
+        private HVACSupplyChannel supplyChannel;
 
         public MainWindow()
         {
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
+            supplyChannel = new HVACSupplyChannel();
 
             InitializeComponent();
 
             mainTimer.Tick += MainTimer_Tick;
             supplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
+            
 
+            DataContext = supplyChannel;
             
         }
 
@@ -88,7 +91,7 @@ namespace Magisterka
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            //supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
@@ -127,14 +130,14 @@ namespace Magisterka
 
         private void DrawSupplyItems()
         {
-            /*if(supplyChannel.HVACObjectsList[0].IsPresent)
+            if(supplyChannel.HVACObjectsList[0].IsPresent)
             {
                 imgfilterin1.Visibility = Visibility.Visible;
             }
             else
             {
                 imgfilterin1.Visibility = Visibility.Collapsed;
-            }*/
+            }
         }
         
 

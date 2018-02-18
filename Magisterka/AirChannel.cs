@@ -104,22 +104,22 @@ namespace Magisterka
             double delta = MyMath.CalculateDelta(A, B, C);
             if(delta < 0 ) { OnSimulationErrorOccured("Charakterystyki nie mają punktu wspólnego"); }
             double[] roots = MyMath.FindRoots(A, B, C, delta);
-            double pressure;
+            double flow;
             if(roots[0] > 0 )
             {
-                pressure = roots[0];
+                flow = roots[0];
                 
             }
             else if(roots[1] > 0)
             {
-                pressure = roots[1];
+                flow = roots[1];
             }
             else
             {
                 OnSimulationErrorOccured("Charakterystyki nie mają dodatniego punktu wspólnego");
                 return;
             }
-            double flow = MyMath.QuadEquaVal(Ap, Bp, Cp, pressure);
+            double pressure = MyMath.QuadEquaVal(Ap, Bp, Cp, flow);
 
             FlowRate = flow;
             FanPressureDrop = pressure;
