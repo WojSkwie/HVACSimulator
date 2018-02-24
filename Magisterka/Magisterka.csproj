@@ -91,6 +91,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AirChannel.cs" />
+    <Compile Include="ChannelCharactWindow.xaml.cs">
+      <DependentUpon>ChannelCharactWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CharacModel.cs" />
     <Compile Include="CharactWindow.xaml.cs">
       <DependentUpon>CharactWindow.xaml</DependentUpon>
@@ -110,6 +113,10 @@
     <Compile Include="USB.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Page Include="ChannelCharactWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CharactWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

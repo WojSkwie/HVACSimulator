@@ -78,6 +78,7 @@
                         <DataGrid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Name="EditCharItem" Header="Edytuj charakterystykę" Click="EditCharItem_Click"></MenuItem>
+                                <MenuItem Name="EditCharChan" Header="Zmień spadek ciśnienia na pustym kanale" Click="EditCharChan_Click"></MenuItem>
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>

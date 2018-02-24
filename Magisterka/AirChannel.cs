@@ -18,6 +18,7 @@ namespace Magisterka
 
         protected double _FlowRate;
         protected double _FanPressureDrop;
+        public double EmptyChannelPressureDrop;
 
         public double FlowRate
         {
@@ -76,6 +77,10 @@ namespace Magisterka
             out double Ap, out double Bp, out double Cp)
         {
             A = 0; B = 0; C = 0; Ap = 0; Bp = 0; Cp = 0;
+
+            C += EmptyChannelPressureDrop;
+            Cp += EmptyChannelPressureDrop;
+
             foreach (HVACObject obj in HVACObjectsList)
             {
                 if (!obj.IsPresent) { continue; }
@@ -115,7 +120,6 @@ namespace Magisterka
             if(roots[0] > 0 )
             {
                 flow = roots[0];
-                
             }
             else if(roots[1] > 0)
             {

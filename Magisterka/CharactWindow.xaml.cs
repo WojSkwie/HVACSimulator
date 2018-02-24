@@ -60,15 +60,26 @@ namespace Magisterka
             }
         }
 
-        private void CopyCoeffsToObject()
+        private bool CommitCoeffs()
         {
-            currentObject.ACoeff = Convert.ToDouble(CofATextBox.Text);
-            currentObject.BCoeff = Convert.ToDouble(CofBTextBox.Text);
-            currentObject.CCoeff = Convert.ToDouble(CofCTextBox.Text);
-            if (currentObject is HVACFan)
+            try
             {
-                (currentObject as HVACFan).TimeConstant = Convert.ToDouble(TimeConstTextBox.Text); 
+                currentObject.ACoeff = Convert.ToDouble(CofATextBox.Text);
+                currentObject.BCoeff = Convert.ToDouble(CofBTextBox.Text);
+                currentObject.CCoeff = Convert.ToDouble(CofCTextBox.Text);
+                if (currentObject is HVACFan)
+                {
+                    (currentObject as HVACFan).TimeConstant = Convert.ToDouble(TimeConstTextBox.Text);
+                }
+                return true;
             }
+            catch(InvalidCastException)
+            {
+                MessageBox.Show("Wpisz poprawne współczynniki");
+                return false;
+            }
+            
+
             
         }
 
@@ -79,13 +90,10 @@ namespace Magisterka
 
         private void OKbutton_Click(object sender, RoutedEventArgs e)
         {
-            CopyCoeffsToObject();
-            DialogResult = true;
-        }
-
-        private void CommitCoeffs()
-        {
-            throw new NotImplementedException();
+            if(CommitCoeffs())
+            {
+                DialogResult = true;
+            }
         }
 
         private void NumericTextBox_Input(object sender, TextCompositionEventArgs e)
@@ -114,7 +122,7 @@ namespace Magisterka
                 CofB = Convert.ToDouble(CofBTextBox.Text);
                 CofC = Convert.ToDouble(CofCTextBox.Text);
             }
-            catch(FormatException ex)
+            catch (FormatException)
             {
                 MessageBox.Show("Wpisz poprawne liczby");
                 return;
