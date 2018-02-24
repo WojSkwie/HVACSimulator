@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Magisterka
 {
-    public abstract class AirChannel : INotifyErrorSimulation, INotifyPropertyChanged
+    public abstract class AirChannel : INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact
     {
         public ObservableCollection<HVACObject> HVACObjectsList { get; set; } = new ObservableCollection<HVACObject>();
 
@@ -150,6 +150,12 @@ namespace Magisterka
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void ModifyCharacteristics()
+        {
+            var dialog = new ChannelCharactWindow(this);
+            dialog.ShowDialog();
         }
     }
 }

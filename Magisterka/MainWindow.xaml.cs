@@ -205,7 +205,7 @@ namespace Magisterka
 
         private void EditCharChan_Click(object sender, RoutedEventArgs e)
         {
-
+            supplyChannel.ModifyCharacteristics();
         }
     }
 }

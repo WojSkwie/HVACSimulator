@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,13 +18,14 @@ namespace Magisterka
     /// <summary>
     /// Interaction logic for ChannelCharactWindow.xaml
     /// </summary>
-    public partial class ChannelCharactWindow : Window
+    public partial class ChannelCharactWindow : MetroWindow
     {
         private AirChannel AirChannel { get; set; }
         public ChannelCharactWindow(AirChannel airChannel)
         {
             InitializeComponent();
-            this.AirChannel = airChannel;
+            AirChannel = airChannel;
+            CopyCoeffs();
         }
 
         private bool CommitCoeffs()
