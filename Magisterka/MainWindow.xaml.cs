@@ -148,26 +148,15 @@ namespace Magisterka
                 HVACObject obj = supplyChannel.HVACObjectsList[i];
                 imagesSupplyChannnel[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative)); 
             }
-            /*imgfilterin1.Visibility = supplyChannel.HVACObjectsList[0].IsPresent ? Visibility.Visible : Visibility.Collapsed;
-            imgfilterin2.Visibility = supplyChannel.HVACObjectsList.Last().IsPresent ? Visibility.Visible : Visibility.Collapsed;
-            imgin1.Source = new BitmapImage(new Uri(@"images\fan.png", UriKind.Relative));*/
-
         }
         
 
         private void UpButton_Click(object sender, RoutedEventArgs e)
         {
             int index = supplyDataGrid.SelectedIndex;
-            if (index > 0)
-            {
-                if(supplyChannel.HVACObjectsList[index].IsMovable && supplyChannel.HVACObjectsList[index - 1].IsMovable)
-                {
-                    HVACObject temp = supplyChannel.HVACObjectsList[index - 1];
-                    supplyChannel.HVACObjectsList.RemoveAt(index - 1);
-                    supplyChannel.HVACObjectsList.Insert(index,temp);
-                    supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
-                }
-            }
+            if (index < 0) return;
+            supplyChannel.MoveObject(index, -1);
+            supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
             DrawSupplyItems();
             
         }
@@ -176,16 +165,8 @@ namespace Magisterka
         {
             int index = supplyDataGrid.SelectedIndex;
             if (index < 0) return;
-            if (index < supplyChannel.HVACObjectsList.Count-1 && index !=0)
-            {
-                if (supplyChannel.HVACObjectsList[index].IsMovable && supplyChannel.HVACObjectsList[index + 1].IsMovable)
-                {
-                    HVACObject temp = supplyChannel.HVACObjectsList[index + 1];
-                    supplyChannel.HVACObjectsList.RemoveAt(index + 1);
-                    supplyChannel.HVACObjectsList.Insert(index, temp);
-                    supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
-                }
-            }
+            supplyChannel.MoveObject(index, 1);
+            supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
             DrawSupplyItems();
 
         }

@@ -157,5 +157,19 @@ namespace Magisterka
             var dialog = new ChannelCharactWindow(this);
             dialog.ShowDialog();
         }
+
+        /// <param name="direction">1 for moving down the list, 1 for up the list</param>
+        public void MoveObject(int index, int direction)
+        {
+            if (index + direction > -1 && index + direction < HVACObjectsList.Count )
+            {
+                if (HVACObjectsList[index].IsMovable && HVACObjectsList[index + direction].IsMovable)
+                {
+                    HVACObject temp = HVACObjectsList[index + direction];
+                    HVACObjectsList.RemoveAt(index + direction);
+                    HVACObjectsList.Insert(index, temp);
+                }
+            }
+        }
     }
 }
