@@ -41,11 +41,11 @@
             <TabItem Header="Model wymiennika">
                 <Grid Background="Transparent" >
                     <Image Name="imgexchanger" HorizontalAlignment="Center" Margin="404,10,10,234" VerticalAlignment="Center" Height="Auto" Width="Auto" DataContext="HVACSupplyChannel" Source="images\wymiennikblank.png" />
-                    <Image Name="imgfilterin1" HorizontalAlignment="Center" Height="72" Margin="432,57,721,494" VerticalAlignment="Center" Width="31" Source="images\filter.png" />
-                    <Image Name="imgheaterin" HorizontalAlignment="Center" Height="68" Margin="908,224,226,331" VerticalAlignment="Center" Width="50" Source="images\heater.png" />
-                    <Image Name="imgcoolerin" HorizontalAlignment="Center" Height="68" Margin="838,224,296,331" VerticalAlignment="Center" Width="50" Source="images\cooler.png" />
-                    <Image Name="imgfanin" HorizontalAlignment="Center" Height="72" Margin="1002,220,118,331" VerticalAlignment="Center" Width="64" Source="images\fan.png" />
-                    <Image Name="imgfilterin2" HorizontalAlignment="Center" Height="72" Margin="1110,220,43,331" VerticalAlignment="Center" Width="31" Source="images\filter.png" />
+                    <Image Name="imgin1" HorizontalAlignment="Left" Height="72" Margin="432,57,721,494" VerticalAlignment="Top" Width="31" Source="images\filter.png" />
+                    <Image Name="imgin2" HorizontalAlignment="Left" Height="68" Margin="830,225,0,0" VerticalAlignment="Top" Width="50" Source="images\heater.png" />
+                    <Image Name="imgin3" HorizontalAlignment="Left" Height="68" Margin="900,225,0,0" VerticalAlignment="Top" Width="50" Source="images\cooler.png" />
+                    <Image Name="imgin4" HorizontalAlignment="Left" Height="72" Margin="970,225,0,0" VerticalAlignment="Top" Width="72" Source="images\fan.png" />
+                    <Image Name="imgin5" HorizontalAlignment="Left" Height="72" Margin="1110,220,43,331" VerticalAlignment="Center" Width="31" Source="images\filter.png" />
                     <Button Name="startButton" Content="Start" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="startButton_Click"/>
                     <Button Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="134,14,0,0" VerticalAlignment="Top" Width="74" Height="40" Click="stopButton_Click"/>
                     <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="pauseButton_Click"/>

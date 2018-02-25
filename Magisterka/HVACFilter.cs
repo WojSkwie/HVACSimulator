@@ -18,6 +18,7 @@ namespace Magisterka
             ACoeff = 1;
             BCoeff = 1;
             CCoeff = 0;
+            ImageSource = @"images\filter.png";
         }
 
         

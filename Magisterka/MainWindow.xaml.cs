@@ -29,12 +29,14 @@ namespace Magisterka
         private cRegulator regulator;
         private DispatcherTimer mainTimer;
         private HVACSupplyChannel supplyChannel;
+        private List<Image> imagesSupplyChannnel;
 
         public MainWindow()
         {
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
             supplyChannel = new HVACSupplyChannel();
+            imagesSupplyChannnel = new List<Image>();
 
             InitializeComponent();
 
@@ -43,6 +45,7 @@ namespace Magisterka
             
 
             DataContext = supplyChannel;
+            AddImagesToLists();
             DrawSupplyItems();
             
         }
@@ -129,10 +132,25 @@ namespace Magisterka
             DrawSupplyItems();
         }
 
+        private void AddImagesToLists()
+        {
+            imagesSupplyChannnel.Add(imgin1);
+            imagesSupplyChannnel.Add(imgin2);
+            imagesSupplyChannnel.Add(imgin3);
+            imagesSupplyChannnel.Add(imgin4);
+            imagesSupplyChannnel.Add(imgin5);
+        }
+
         private void DrawSupplyItems()
         {
-            imgfilterin1.Visibility = supplyChannel.HVACObjectsList[0].IsPresent ? Visibility.Visible : Visibility.Collapsed;
+            for(int i = 0; i < supplyChannel.HVACObjectsList.Count; i++)
+            {
+                HVACObject obj = supplyChannel.HVACObjectsList[i];
+                imagesSupplyChannnel[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative)); 
+            }
+            /*imgfilterin1.Visibility = supplyChannel.HVACObjectsList[0].IsPresent ? Visibility.Visible : Visibility.Collapsed;
             imgfilterin2.Visibility = supplyChannel.HVACObjectsList.Last().IsPresent ? Visibility.Visible : Visibility.Collapsed;
+            imgin1.Source = new BitmapImage(new Uri(@"images\fan.png", UriKind.Relative));*/
 
         }
         
@@ -150,7 +168,7 @@ namespace Magisterka
                     supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
                 }
             }
-            
+            DrawSupplyItems();
             
         }
 
@@ -168,6 +186,8 @@ namespace Magisterka
                     supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
                 }
             }
+            DrawSupplyItems();
+
         }
 
         private void EditCharItem_Click(object sender, RoutedEventArgs e)
