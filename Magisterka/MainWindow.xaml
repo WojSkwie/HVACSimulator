@@ -63,14 +63,14 @@
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Name="UpButton" Click="UpButton_Click" Content="W górę" IsEnabled="{Binding IsMovable}"></Button>
+                                        <Button Name="UpButton" Click="MoveButton_Click" Tag="-1" Content="W górę" IsEnabled="{Binding IsMovable}"></Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Name="DownButton" Click="DownButton_Click" Content="W dół" IsEnabled="{Binding IsMovable}"></Button>
+                                        <Button Name="DownButton" Click="MoveButton_Click" Tag="1" Content="W dół" IsEnabled="{Binding IsMovable}"></Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

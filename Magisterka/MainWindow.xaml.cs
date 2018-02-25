@@ -162,16 +162,6 @@ namespace Magisterka
             
         }
 
-        private void DownButton_Click(object sender, RoutedEventArgs e)
-        {
-            int index = supplyDataGrid.SelectedIndex;
-            if (index < 0) return;
-            supplyChannel.MoveObject(index, 1);
-            supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
-            DrawSupplyItems();
-
-        }
-
         private void EditCharItem_Click(object sender, RoutedEventArgs e)
         {
             int index = supplyDataGrid.SelectedIndex;
