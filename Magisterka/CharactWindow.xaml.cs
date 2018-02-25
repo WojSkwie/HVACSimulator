@@ -128,7 +128,11 @@ namespace Magisterka
                 return;
             }
             GetParabola(CofA, CofB, CofC, Constants.pointsOnCharac);
+            
+            
         }
+
+        
 
         private void GetParabola(double A, double B, double C, double Xmax)
         {

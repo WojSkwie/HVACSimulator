@@ -22,8 +22,9 @@ namespace Magisterka
             ACoeff = -1;
             BCoeff = 1;
             CCoeff = 120;
-        }
 
+            ImageSource = "images\fan.png";
+        } 
         public double TimeConstant { get; set; }
         public double SetSpeedPercent { get; set; } 
         public double ActualSpeedPercent { get; set; } 

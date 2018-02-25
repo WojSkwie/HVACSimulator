@@ -43,6 +43,7 @@ namespace Magisterka
             
 
             DataContext = supplyChannel;
+            DrawSupplyItems();
             
         }
 
@@ -130,14 +131,9 @@ namespace Magisterka
 
         private void DrawSupplyItems()
         {
-            if(supplyChannel.HVACObjectsList[0].IsPresent)
-            {
-                imgfilterin1.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                imgfilterin1.Visibility = Visibility.Collapsed;
-            }
+            imgfilterin1.Visibility = supplyChannel.HVACObjectsList[0].IsPresent ? Visibility.Visible : Visibility.Collapsed;
+            imgfilterin2.Visibility = supplyChannel.HVACObjectsList.Last().IsPresent ? Visibility.Visible : Visibility.Collapsed;
+
         }
         
 

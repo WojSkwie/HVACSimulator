@@ -28,9 +28,9 @@ namespace Magisterka
         }
         public string Name { get; set; }
         public bool IsMovable { get; set; }
-        public Image ImageToDraw { get; set; }
+        public string ImageSource { get; set; }
 
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<string> SimulationErrorOccured;
 

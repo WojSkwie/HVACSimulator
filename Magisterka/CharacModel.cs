@@ -55,7 +55,10 @@ namespace Magisterka
                 Position = AxisPosition.Bottom
             };
             PlotModel.Axes.Add(xAxis);
-            var yAxis = new LinearAxis();
+            var yAxis = new LinearAxis()
+            {
+                Maximum = 300
+            };
             PlotModel.Axes.Add(yAxis);
         }
 
