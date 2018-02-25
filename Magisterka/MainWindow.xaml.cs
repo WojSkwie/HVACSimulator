@@ -146,7 +146,8 @@ namespace Magisterka
             for(int i = 0; i < supplyChannel.HVACObjectsList.Count; i++)
             {
                 HVACObject obj = supplyChannel.HVACObjectsList[i];
-                imagesSupplyChannnel[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative)); 
+                imagesSupplyChannnel[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative));
+                imagesSupplyChannnel[i].Visibility = supplyChannel.HVACObjectsList[i].IsPresent ? Visibility.Visible : Visibility.Hidden;
             }
         }
         

@@ -15,7 +15,6 @@ namespace Magisterka
         public double ACoeff { get; set; }
         public double BCoeff { get; set; }
         public double CCoeff { get; set; }
-        public Visibility ImageVisibility { get; set; }
         private bool _IsPresent;
         public bool IsPresent
         {
