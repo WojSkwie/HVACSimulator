@@ -63,7 +63,7 @@
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Name="UpButton" Click="MoveButton_Click" Tag="-1" Content="W górę" IsEnabled="{Binding IsMovable}"></Button>
+                                        <Button Name="UpButton" Click="MoveButton_Click" Tag="-1" Content="W górę" IsEnabled="{Binding IsMovable}" Visibility="{Binding IsMovable}"></Button>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

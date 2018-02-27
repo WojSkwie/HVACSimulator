@@ -195,5 +195,15 @@ namespace Magisterka
         {
             supplyChannel.ModifyCharacteristics();
         }
+
+        private void MoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = supplyDataGrid.SelectedIndex;
+            int direction = Convert.ToInt32(((Button)sender).Tag);
+            if (index < 0) return;
+            supplyChannel.MoveObject(index, direction);
+            supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
+            DrawSupplyItems();
+        }
     }
 }
