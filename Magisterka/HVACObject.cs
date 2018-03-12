@@ -28,6 +28,7 @@ namespace Magisterka
         public string Name { get; set; }
         public bool IsMovable { get; set; }
         public string ImageSource { get; set; }
+        public double OutputTemperature { get; set; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,6 +49,11 @@ namespace Magisterka
         {
             SimulationErrorOccured?.Invoke(this, error);
             MessageBox.Show(error);
+        }
+
+        public virtual double CalculateOutputTemperature(double inputTemperature)
+        {
+            return (OutputTemperature = inputTemperature);
         }
     }
 }

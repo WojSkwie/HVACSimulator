@@ -8,7 +8,6 @@ namespace Magisterka
 {
     interface INotifyErrorSimulation
     {
-
         event EventHandler<string> SimulationErrorOccured;
 
         void OnSimulationErrorOccured(string error);

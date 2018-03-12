@@ -103,6 +103,7 @@
     <Compile Include="HVACFan.cs" />
     <Compile Include="HVACFilter.cs" />
     <Compile Include="HVACHeater.cs" />
+    <Compile Include="HVACInletExchange.cs" />
     <Compile Include="HVACObject.cs" />
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="IDynamicObject.cs" />

@@ -15,6 +15,7 @@ namespace Magisterka
         {
             
             HVACObjectsList.Add(new HVACFilter());
+            HVACObjectsList.Add(new HVACInletExchange());
             HVACObjectsList.Add(new HVACHeater());
             HVACObjectsList.Add(new HVACCooler());
             HVACObjectsList.Add(new HVACFan());

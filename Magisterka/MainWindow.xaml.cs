@@ -135,6 +135,7 @@ namespace Magisterka
         private void AddImagesToLists()
         {
             imagesSupplyChannnel.Add(imgin1);
+            imagesSupplyChannnel.Add(new Image());
             imagesSupplyChannnel.Add(imgin2);
             imagesSupplyChannnel.Add(imgin3);
             imagesSupplyChannnel.Add(imgin4);

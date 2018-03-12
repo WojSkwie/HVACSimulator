@@ -8,7 +8,7 @@ namespace Magisterka
 {
     public static class Constants
     {
-        public static double[] stepValues = { 1, 2, 5, 10, 30, 60 };
+        public static double[] stepValues = { 0.1, 0.2, 0.5, 1, 2, 5 };
 
         public static int pointsOnCharac = 20;
 
