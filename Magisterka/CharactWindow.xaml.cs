@@ -40,12 +40,13 @@ namespace Magisterka
 
         private void SetVisuals()
         {
+            if(!currentObject.HasSingleTimeConstant)
+            {
+                TimeConstStackpanel.Visibility = Visibility.Collapsed;
+            }
             if (!(currentObject is HVACFan))
             {
-                CofCTextBox.Visibility = Visibility.Collapsed;
-                CofCLabel.Visibility = Visibility.Collapsed;
-                TimeConstTextBox.Visibility = Visibility.Collapsed;
-                TimeConstLabel.Visibility = Visibility.Collapsed;
+                CofCStackpanel.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -54,9 +55,9 @@ namespace Magisterka
             CofATextBox.Text = currentObject.ACoeff.ToString();
             CofBTextBox.Text = currentObject.BCoeff.ToString();
             CofCTextBox.Text = currentObject.CCoeff.ToString();
-            if(currentObject is HVACFan)
+            if(currentObject.HasSingleTimeConstant)
             {
-                TimeConstTextBox.Text = (currentObject as HVACFan).TimeConstant.ToString();
+                TimeConstTextBox.Text = currentObject.TimeConstant.ToString();
             }
         }
 
@@ -67,9 +68,9 @@ namespace Magisterka
                 currentObject.ACoeff = Convert.ToDouble(CofATextBox.Text);
                 currentObject.BCoeff = Convert.ToDouble(CofBTextBox.Text);
                 currentObject.CCoeff = Convert.ToDouble(CofCTextBox.Text);
-                if (currentObject is HVACFan)
+                if (currentObject.HasSingleTimeConstant)
                 {
-                    (currentObject as HVACFan).TimeConstant = Convert.ToDouble(TimeConstTextBox.Text);
+                    currentObject.TimeConstant = Convert.ToDouble(TimeConstTextBox.Text);
                 }
                 return true;
             }
@@ -78,9 +79,6 @@ namespace Magisterka
                 MessageBox.Show("Wpisz poprawne współczynniki");
                 return false;
             }
-            
-
-            
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
@@ -127,12 +125,8 @@ namespace Magisterka
                 MessageBox.Show("Wpisz poprawne liczby");
                 return;
             }
-            GetParabola(CofA, CofB, CofC, Constants.pointsOnCharac);
-            
-            
+            GetParabola(CofA, CofB, CofC, Constants.pointsOnCharac);            
         }
-
-        
 
         private void GetParabola(double A, double B, double C, double Xmax)
         {
@@ -147,8 +141,6 @@ namespace Magisterka
                 }
             }
             Plot.Model = CharacModel.PlotModel;
-            
-            
             
         }
     }

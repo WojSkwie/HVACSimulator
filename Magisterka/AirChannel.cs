@@ -15,10 +15,9 @@ namespace Magisterka
         protected AirChannel()
         {
         }
-
+        
         protected double _FlowRate;
         protected double _FanPressureDrop;
-        public double EmptyChannelPressureDrop;
 
         public double FlowRate
         {
@@ -50,6 +49,8 @@ namespace Magisterka
                 }
             }
         }
+        public double EmptyChannelPressureDrop { get; set; }
+        public double InputTemperature { get; set; }
 
         protected void SubscribeToAllItems()
         {
@@ -169,6 +170,15 @@ namespace Magisterka
                     HVACObjectsList.RemoveAt(index + direction);
                     HVACObjectsList.Insert(index, temp);
                 }
+            }
+        }
+
+        public void CalculateTemperatures()
+        {
+            double temperature = InputTemperature;
+            foreach(HVACObject obj in HVACObjectsList)
+            {
+                temperature = obj.CalculateOutputTemperature(temperature);
             }
         }
     }

@@ -14,6 +14,8 @@ namespace Magisterka
             Name = "Nagrzewnica";
             IsMovable = true;
 
+            HasSingleTimeConstant = true;
+
             ACoeff = 1;
             BCoeff = 1;
             CCoeff = 0;
@@ -21,10 +23,18 @@ namespace Magisterka
             ImageSource = @"images\heater.png";
         }
 
+        public double ActualHotWaterFlow { get; set; }
+        public double SetHotWaterFlow { get; set; }
 
         public void UpdateParams()
         {
-            Console.Write("TODO UPDATE PARAMS HEATER\n"); //TODO
+            if (TimeConstant <= 0)
+            {
+                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
+                return;
+            }
+            double derivative = (SetHotWaterFlow - ActualHotWaterFlow) / TimeConstant;
+            ActualHotWaterFlow += derivative * Constants.step;
         }
     }
 }

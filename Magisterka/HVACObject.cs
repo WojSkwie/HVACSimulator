@@ -29,6 +29,8 @@ namespace Magisterka
         public bool IsMovable { get; set; }
         public string ImageSource { get; set; }
         public double OutputTemperature { get; set; }
+        public bool HasSingleTimeConstant { get; set; }
+        public double TimeConstant { get; set; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -18,6 +18,7 @@ namespace Magisterka
             ActualSpeedPercent = 0;
             SetSpeedPercent = 0;
             TimeConstant = 5;
+            HasSingleTimeConstant = true;
 
             ACoeff = -1;
             BCoeff = 1;
@@ -25,7 +26,6 @@ namespace Magisterka
 
             ImageSource = @"images\fan.png";
         } 
-        public double TimeConstant { get; set; }
         public double SetSpeedPercent { get; set; } 
         public double ActualSpeedPercent { get; set; } 
 

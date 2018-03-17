@@ -30,20 +30,20 @@
         </oxy:PlotView>
         
         <StackPanel HorizontalAlignment="Left" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Top" Width="Auto">
-            <StackPanel HorizontalAlignment="Left" Height="Auto" Margin="10,10,0,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+            <StackPanel x:Name="CofAStackpanel" HorizontalAlignment="Left" Height="Auto" Margin="10,10,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
                 <TextBox x:Name="CofATextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
                 <Label x:Name="CofALabel" Content="Współczynnik A" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
-        
-            <StackPanel HorizontalAlignment="Left" Height="Auto" Margin="10,20,0,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+
+            <StackPanel x:Name="CofBStackpanel" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
                 <TextBox x:Name="CofBTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
                 <Label x:Name="CofBLabel" Content="Współczynnik B" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Height="Auto" Margin="10,20,0,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+            <StackPanel x:Name="CofCStackpanel" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal" >
                 <TextBox x:Name="CofCTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
                 <Label x:Name="CofCLabel" Content="Współczynnik C" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Left" Height="Auto" Margin="10,20,0,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+            <StackPanel x:Name="TimeConstStackpanel" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
                 <TextBox x:Name="TimeConstTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
                 <Label x:Name="TimeConstLabel" Content="Stała czasowa" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
