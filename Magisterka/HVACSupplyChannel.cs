@@ -46,5 +46,27 @@ namespace Magisterka
                 }
             }
         }
+
+        public void SetHeaterWaterTemperature(double temperature)
+        {
+            foreach(HVACObject obj in HVACObjectsList)
+            {
+                if(obj is HVACHeater)
+                {
+                    ((HVACHeater)obj).SetHotWaterTemperature = temperature;
+                }
+            }
+        }
+
+        public void SetHotWaterFlow(double flow)
+        {
+            foreach (HVACObject obj in HVACObjectsList)
+            {
+                if (obj is HVACHeater)
+                {
+                    ((HVACHeater)obj).HotWaterFlowPercent = flow;
+                }
+            }
+        }
     }
 }

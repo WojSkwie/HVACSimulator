@@ -13,5 +13,8 @@ namespace Magisterka
         public static int pointsOnCharac = 20;
 
         public static double step = stepValues[0];
+
+        public static double airHeatCapacity = 1016; //J/kg/C
+        public static double heaterFluidHeatCapacity = 4200; //J/kg/C
     }
 }

@@ -48,6 +48,10 @@ namespace Magisterka
             {
                 CofCStackpanel.Visibility = Visibility.Collapsed;
             }
+            if (!(currentObject is HVACHeater))
+            {
+                MaxWaterFlowStackpanel.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void CopyCoeffs()
@@ -58,6 +62,10 @@ namespace Magisterka
             if(currentObject.HasSingleTimeConstant)
             {
                 TimeConstTextBox.Text = currentObject.TimeConstant.ToString();
+            }
+            if (currentObject is HVACHeater)
+            {
+                MaxWaterFlowTextBox.Text = ((HVACHeater)currentObject).MaximalHotWaterFlow.ToString();
             }
         }
 
@@ -72,9 +80,13 @@ namespace Magisterka
                 {
                     currentObject.TimeConstant = Convert.ToDouble(TimeConstTextBox.Text);
                 }
+                if(currentObject is HVACHeater)
+                {
+                    ((HVACHeater)currentObject).MaximalHotWaterFlow = Convert.ToDouble(MaxWaterFlowTextBox.Text);
+                }
                 return true;
             }
-            catch(InvalidCastException)
+            catch(InvalidCastException ex)
             {
                 MessageBox.Show("Wpisz poprawne współczynniki");
                 return false;

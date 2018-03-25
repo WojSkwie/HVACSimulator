@@ -51,6 +51,7 @@ namespace Magisterka
         }
         public double EmptyChannelPressureDrop { get; set; }
         public double InputTemperature { get; set; }
+        public double TESTTEMP { get; set; }
 
         protected void SubscribeToAllItems()
         {
@@ -175,10 +176,16 @@ namespace Magisterka
 
         public void CalculateTemperatures()
         {
+            if (FlowRate == 0) return;
             double temperature = InputTemperature;
             foreach(HVACObject obj in HVACObjectsList)
             {
-                temperature = obj.CalculateOutputTemperature(temperature);
+                if (!obj.IsPresent) continue;
+                temperature = obj.CalculateOutputTemperature(temperature, FlowRate);
+                if(obj is HVACHeater)
+                {
+                    TESTTEMP = temperature;
+                }
             }
         }
     }

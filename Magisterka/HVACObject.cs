@@ -15,7 +15,7 @@ namespace Magisterka
         public double ACoeff { get; set; }
         public double BCoeff { get; set; }
         public double CCoeff { get; set; }
-        private bool _IsPresent;
+        private bool _IsPresent = true;
         public bool IsPresent
         {
             get { return _IsPresent; }
@@ -31,6 +31,8 @@ namespace Magisterka
         public double OutputTemperature { get; set; }
         public bool HasSingleTimeConstant { get; set; }
         public double TimeConstant { get; set; }
+        public double HeatTransferCoeff { get; set; }
+        public double HeatExchangeSurface { get; set; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -53,7 +55,7 @@ namespace Magisterka
             MessageBox.Show(error);
         }
 
-        public virtual double CalculateOutputTemperature(double inputTemperature)
+        public virtual double CalculateOutputTemperature(double inputTemperature, double airFlow)
         {
             return (OutputTemperature = inputTemperature);
         }

@@ -55,6 +55,8 @@ namespace Magisterka
             UpdateAllDynamicObjects();
             PressureDropSupplyNumeric.Value = supplyChannel.FanPressureDrop;
             FlowRateSupplyNumeric.Value = supplyChannel.FlowRate;
+            supplyChannel.CalculateTemperatures();
+            HEATERTEMP.Value = supplyChannel.TESTTEMP;
         }
 
         private void UpdateAllDynamicObjects()
@@ -65,6 +67,13 @@ namespace Magisterka
                 if(obj is HVACFan)
                 {
                     ActualSpeedSupplyNumeric.Value = ((HVACFan)obj).ActualSpeedPercent;
+                }
+            }
+            foreach (HVACObject obj in supplyChannel.HVACObjectsList)
+            {
+                if (obj is HVACHeater)
+                {
+                    ActualHotWaterTemperatureNumeric.Value = ((HVACHeater)obj).ActualHotWaterTemperature;
                 }
             }
         }
@@ -206,5 +215,32 @@ namespace Magisterka
             supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
             DrawSupplyItems();
         }
+
+        private void SetHotWaterTemperatureNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            if (SetHotWaterTemperatureNumeric.Value != null)
+            {
+                supplyChannel.SetHeaterWaterTemperature((double)SetHotWaterTemperatureNumeric.Value);
+            }
+        }
+
+        private void ActualHotWaterTemperatureNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            double value = (double)ActualHotWaterTemperatureNumeric.Value;
+            if (value.ToString().Length > 5)
+            {
+                string truncated = value.ToString("0.000");
+                ActualHotWaterTemperatureNumeric.Value = double.Parse(truncated);
+            }
+        }
+
+        private void HotWaterFlowPercentNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            if (HotWaterFlowPercentNumeric.Value != null)
+            {
+                supplyChannel.SetHotWaterFlow((double)HotWaterFlowPercentNumeric.Value);
+            }
+        }
+
     }
 }
