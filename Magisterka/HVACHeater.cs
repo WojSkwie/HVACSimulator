@@ -51,12 +51,20 @@ namespace Magisterka
         public override double CalculateOutputTemperature(double inputTemperatureOfAir, double airFlow)
         {
             double massAirFlow = MolierCalculations.FindAirDensity(inputTemperatureOfAir) * airFlow;
+            double W1 = HotWaterFlowPercent * MaximalHotWaterFlow / 100 * Constants.heaterFluidHeatCapacity;
+            double W2 = massAirFlow * Constants.airHeatCapacity;
+            double Nominator = 1 - Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
+            double Denominator = 1 - W1 / W2 * Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
+            double Phi = Nominator / Denominator;
+            double outputTemperature = (inputTemperatureOfAir - 273) + (ActualHotWaterTemperature - inputTemperatureOfAir) * W1 / W2 * Phi;
+            return outputTemperature + 273;
+            /*double massAirFlow = MolierCalculations.FindAirDensity(inputTemperatureOfAir) * airFlow;
             double A = MaximalHotWaterFlow * HotWaterFlowPercent / 100 * Constants.heaterFluidHeatCapacity / massAirFlow;
             double B = (1 / (MaximalHotWaterFlow * HotWaterFlowPercent / 100 * Constants.heaterFluidHeatCapacity) - 1 / (massAirFlow * Constants.airHeatCapacity));
             double Nominator = (1 - A) * (ActualHotWaterTemperature - 273) + (Math.Exp(HeatTransferCoeff * HeatExchangeSurface * B) - 1) * (inputTemperatureOfAir - 273);
             double Denominator = Math.Exp(HeatTransferCoeff * HeatExchangeSurface * B) - A;
             double outputFluidTemperature = Nominator / Denominator;
-            return outputFluidTemperature+273;
+            return outputFluidTemperature + 273;*/
             /*double outputTemperature = (ActualHotWaterTemperature - outputFluidTemperature) * (MaximalHotWaterFlow * HotWaterFlowPercent / 100 * Constants.heaterFluidHeatCapacity)
                 / (massAirFlow * Constants.airHeatCapacity) + (inputTemperatureOfAir - 273);*/
             //return outputTemperature + 273;
