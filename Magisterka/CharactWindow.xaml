@@ -47,9 +47,13 @@
                 <TextBox x:Name="TimeConstTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
                 <Label x:Name="TimeConstLabel" Content="Stała czasowa" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
-            <StackPanel x:Name="MaxWaterFlowStackpanel" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+            <StackPanel x:Name="MaxWaterFlowStackpanel" Visibility="Collapsed" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
                 <TextBox x:Name="MaxWaterFlowTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
                 <Label x:Name="MaxWaterFlowLabel" Content="Maksymalny przepływ wody" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+            <StackPanel x:Name="CoolerTemperatureStackpanel" Visibility="Collapsed" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+                <TextBox x:Name="CoolerTemperatureTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
+                <Label x:Name="CoolerTemperatureLabel" Content="Temperatura chłodnicy" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
         </StackPanel>
     </Grid>

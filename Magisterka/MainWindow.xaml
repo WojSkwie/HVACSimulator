@@ -103,8 +103,6 @@
                     <Controls:NumericUpDown Name="HotWaterFlowPercentNumeric" HorizontalAlignment="Left" Margin="274,375,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="0" ValueChanged="HotWaterFlowPercentNumeric_ValueChanged" Maximum="100" Minimum="0" UpDownButtonsWidth="17" TextAlignment="Left"/>
                     <Label Content="Wysterowanie pompy płynu w nagrzewnicy [%]" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top"/>
 
-                    <Controls:NumericUpDown Name="HEATERTEMP" HorizontalAlignment="Left" Margin="184,406,0,0"  VerticalAlignment="Top" Height="23" Width="229" Interval="1" Value="0" HideUpDownButtons="True" IsReadOnly="True" ValueChanged="ActualHotWaterTemperatureNumeric_ValueChanged" TextAlignment="Left"/>
-
 
 
                 </Grid>

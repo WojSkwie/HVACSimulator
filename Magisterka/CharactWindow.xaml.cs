@@ -48,9 +48,13 @@ namespace Magisterka
             {
                 CofCStackpanel.Visibility = Visibility.Collapsed;
             }
-            if (!(currentObject is HVACHeater))
+            if (currentObject is HVACHeater)
             {
-                MaxWaterFlowStackpanel.Visibility = Visibility.Collapsed;
+                MaxWaterFlowStackpanel.Visibility = Visibility.Visible;
+            }
+            if(currentObject is HVACCooler)
+            {
+                CoolerTemperatureStackpanel.Visibility = Visibility.Visible;
             }
         }
 

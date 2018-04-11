@@ -25,7 +25,6 @@ namespace Magisterka
 
         public void UpdateParams()
         {
-            
             foreach (HVACObject obj in HVACObjectsList)
             {
                 if(obj is IDynamicObject)

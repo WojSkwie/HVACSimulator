@@ -28,11 +28,12 @@ namespace Magisterka
         public string Name { get; set; }
         public bool IsMovable { get; set; }
         public string ImageSource { get; set; }
-        public double OutputTemperature { get; set; }
+        //public double OutputTemperature { get; set; }
         public bool HasSingleTimeConstant { get; set; }
         public double TimeConstant { get; set; }
         public double HeatTransferCoeff { get; set; }
         public double HeatExchangeSurface { get; set; }
+        public Air OutputAir { get; set; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -55,9 +56,14 @@ namespace Magisterka
             MessageBox.Show(error);
         }
 
-        public virtual double CalculateOutputTemperature(double inputTemperature, double airFlow)
+        public virtual Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        {
+            return (OutputAir = (Air)inputAir.Clone());
+        }
+
+        /*public virtual double CalculateOutputTemperature(double inputTemperature, double airFlow)
         {
             return (OutputTemperature = inputTemperature);
-        }
+        }*/
     }
 }

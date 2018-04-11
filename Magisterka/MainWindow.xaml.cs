@@ -55,8 +55,8 @@ namespace Magisterka
             UpdateAllDynamicObjects();
             PressureDropSupplyNumeric.Value = supplyChannel.FanPressureDrop;
             FlowRateSupplyNumeric.Value = supplyChannel.FlowRate;
-            supplyChannel.CalculateTemperatures();
-            HEATERTEMP.Value = supplyChannel.TESTTEMP;
+            supplyChannel.CalculateAirParameters();
+            
         }
 
         private void UpdateAllDynamicObjects()
@@ -76,6 +76,8 @@ namespace Magisterka
                     ActualHotWaterTemperatureNumeric.Value = ((HVACHeater)obj).ActualHotWaterTemperature;
                 }
             }
+            //Air test = new Air(60, 20, EAirHum.relative);
+            //double temp = MolierCalculations.HumidityRelativeToSpecific(test);
         }
 
         private void ChangeTimerSpan(int milliseconds)

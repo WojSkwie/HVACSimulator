@@ -90,6 +90,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Air.cs" />
     <Compile Include="AirChannel.cs" />
     <Compile Include="ChannelCharactWindow.xaml.cs">
       <DependentUpon>ChannelCharactWindow.xaml</DependentUpon>
