@@ -19,10 +19,9 @@ namespace Magisterka
 
         public static double CalculateSaturationVaporPressure(double temperature)
         {
-            double Es = 611.2 * Math.Exp(17.67 * (temperature) / (temperature + 273.16 - 29.65));
+            //double Es = 611.2 * Math.Exp(17.67 * (temperature) / (temperature + 273.16 - 29.65));
+            double Es = 610.5 * Math.Exp(17.269 * (temperature) / (temperature + 237.3));
             return Es;
-            //double pressure = 0.6108 * Math.Exp(17.27 * temperature / (temperature + 237.3));
-            //return pressure;
         }
 
         public static double HumiditySpecificToRelative(Air air)
@@ -38,15 +37,12 @@ namespace Magisterka
             double Es = CalculateSaturationVaporPressure(air.Temperature);//6.122 * Math.Exp
             double E = air.RelativeHumidity / 100.0 * Es;
             double p_mb = 101325.0;// 100.0;
-            double Specific = (0.622 * E) / (p_mb - (0.378 * E));
+            //double Specific = 0.6222 * E / (p_mb - E);
+            double Specific = (0.6222 * E) / (p_mb - (0.378 * E));
             return Specific;
 
         }
 
-        /*public static double HumidityRelativeToAbsulute(Air air)
-        {
-
-        }*/
         /// <returns>Dew point as temperature</returns>
         public static double CalculateDewPoint(Air air)
         {

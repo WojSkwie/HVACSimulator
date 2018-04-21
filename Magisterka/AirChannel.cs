@@ -14,7 +14,7 @@ namespace Magisterka
 
         protected AirChannel()
         {
-            InputAir = new Air(50, 80, EAirHum.relative);
+            InputAir = new Air(10, 10, EAirHum.relative);
         }
         
         protected double _FlowRate;

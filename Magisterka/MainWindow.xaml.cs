@@ -71,13 +71,11 @@ namespace Magisterka
             }
             foreach (HVACObject obj in supplyChannel.HVACObjectsList)
             {
-                if (obj is HVACHeater)
+                if (obj is HVACTemperatureActiveObject)
                 {
-                    ActualHotWaterTemperatureNumeric.Value = ((HVACHeater)obj).ActualHotWaterTemperature;
+                    ActualHotWaterTemperatureNumeric.Value = ((HVACTemperatureActiveObject)obj).ActualWaterTemperature;
                 }
             }
-            //Air test = new Air(60, 20, EAirHum.relative);
-            //double temp = MolierCalculations.HumidityRelativeToSpecific(test);
         }
 
         private void ChangeTimerSpan(int milliseconds)

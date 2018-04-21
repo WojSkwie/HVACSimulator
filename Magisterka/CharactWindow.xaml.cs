@@ -48,14 +48,14 @@ namespace Magisterka
             {
                 CofCStackpanel.Visibility = Visibility.Collapsed;
             }
-            if (currentObject is HVACHeater)
+            if (currentObject is HVACTemperatureActiveObject)
             {
                 MaxWaterFlowStackpanel.Visibility = Visibility.Visible;
             }
-            if(currentObject is HVACCooler)
+            /*if(currentObject is HVACCooler)
             {
                 CoolerTemperatureStackpanel.Visibility = Visibility.Visible;
-            }
+            }*/
         }
 
         private void CopyCoeffs()
@@ -67,10 +67,14 @@ namespace Magisterka
             {
                 TimeConstTextBox.Text = currentObject.TimeConstant.ToString();
             }
-            if (currentObject is HVACHeater)
+            if (currentObject is HVACTemperatureActiveObject)
             {
-                MaxWaterFlowTextBox.Text = ((HVACHeater)currentObject).MaximalHotWaterFlow.ToString();
+                MaxWaterFlowTextBox.Text = ((HVACTemperatureActiveObject)currentObject).MaximalWaterFlow.ToString();
             }
+            /*if(currentObject is HVACCooler)
+            {
+                CoolerTemperatureTextBox.Text = ((HVACCooler)currentObject).SurfaceTemperature.ToString();
+            }*/
         }
 
         private bool CommitCoeffs()
@@ -84,9 +88,9 @@ namespace Magisterka
                 {
                     currentObject.TimeConstant = Convert.ToDouble(TimeConstTextBox.Text);
                 }
-                if(currentObject is HVACHeater)
+                if(currentObject is HVACTemperatureActiveObject)
                 {
-                    ((HVACHeater)currentObject).MaximalHotWaterFlow = Convert.ToDouble(MaxWaterFlowTextBox.Text);
+                    ((HVACTemperatureActiveObject)currentObject).MaximalWaterFlow = Convert.ToDouble(MaxWaterFlowTextBox.Text);
                 }
                 return true;
             }

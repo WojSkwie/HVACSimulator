@@ -52,7 +52,7 @@ namespace Magisterka
             {
                 if(obj is HVACHeater)
                 {
-                    ((HVACHeater)obj).SetHotWaterTemperature = temperature;
+                    ((HVACHeater)obj).SetWaterTemperature = temperature;
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace Magisterka
             {
                 if (obj is HVACHeater)
                 {
-                    ((HVACHeater)obj).HotWaterFlowPercent = flow;
+                    ((HVACHeater)obj).WaterFlowPercent = flow;
                 }
             }
         }

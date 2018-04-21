@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Magisterka
 {
-    public sealed class HVACHeater : HVACObject, IDynamicObject
+    public sealed class HVACHeater : HVACTemperatureActiveObject, IDynamicObject
     {
         public HVACHeater()
         {
@@ -20,21 +20,15 @@ namespace Magisterka
             BCoeff = 1;
             CCoeff = 0;
             TimeConstant = 5;
-            SetHotWaterTemperature = 80;
-            ActualHotWaterTemperature = 80;
-            HotWaterFlowPercent = 100;
+            SetWaterTemperature = 80;
+            ActualWaterTemperature = 80;
+            WaterFlowPercent = 100;
             HeatExchangeSurface = 1;
             HeatTransferCoeff = 200;
-            MaximalHotWaterFlow = 1;
+            MaximalWaterFlow = 1;
 
             ImageSource = @"images\heater.png";
         }
-
-        public double HotWaterFlowPercent { get; set; }
-        public double MaximalHotWaterFlow { get; set; }
-
-        public double ActualHotWaterTemperature { get; set; }
-        public double SetHotWaterTemperature { get; set; }
  
 
         public void UpdateParams()
@@ -44,35 +38,23 @@ namespace Magisterka
                 OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
                 return;
             }
-            double derivative = (SetHotWaterTemperature - ActualHotWaterTemperature) / TimeConstant;
-            ActualHotWaterTemperature += derivative * Constants.step;
+            double derivative = (SetWaterTemperature - ActualWaterTemperature) / TimeConstant;
+            ActualWaterTemperature += derivative * Constants.step;
         }
 
         public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
         {
             double massAirFlow = MolierCalculations.FindAirDensity(inputAir.Temperature) * airFlow;
-            double W1 = HotWaterFlowPercent * MaximalHotWaterFlow / 100 * Constants.heaterFluidHeatCapacity;
+            double W1 = WaterFlowPercent * MaximalWaterFlow / 100 * Constants.heaterFluidHeatCapacity;
             double W2 = massAirFlow * Constants.airHeatCapacity;
             double Nominator = 1 - Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Denominator = 1 - W1 / W2 * Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Phi = Nominator / Denominator;
-            double outputTemperature = (inputAir.Temperature - 273) + (ActualHotWaterTemperature - inputAir.Temperature) * W1 / W2 * Phi;
+            double outputTemperature = (inputAir.Temperature - 273) + (ActualWaterTemperature - inputAir.Temperature) * W1 / W2 * Phi;
             Air outputAir = new Air(outputTemperature, inputAir.SpecificHumidity, EAirHum.specific);
             return outputAir;
-            //return outputTemperature + 273;
-            //return base.CalculateOutputAirParameters(inputAir);
         }
 
-        /*public override double CalculateOutputTemperature(double inputTemperatureOfAir, double airFlow)
-        {
-            double massAirFlow = MolierCalculations.FindAirDensity(inputTemperatureOfAir) * airFlow;
-            double W1 = HotWaterFlowPercent * MaximalHotWaterFlow / 100 * Constants.heaterFluidHeatCapacity;
-            double W2 = massAirFlow * Constants.airHeatCapacity;
-            double Nominator = 1 - Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
-            double Denominator = 1 - W1 / W2 * Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
-            double Phi = Nominator / Denominator;
-            double outputTemperature = (inputTemperatureOfAir - 273) + (ActualHotWaterTemperature - inputTemperatureOfAir) * W1 / W2 * Phi;
-            return outputTemperature + 273;
-        }*/
+        
     }
 }
