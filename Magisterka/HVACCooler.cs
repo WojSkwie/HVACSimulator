@@ -8,15 +8,7 @@ namespace Magisterka
 {
     public class HVACCooler : HVACTemperatureActiveObject, IDynamicObject
     {
-        /*public double SurfaceTemperature { get; set; }
-
-        public double HotWaterFlowPercent { get; set; }
-        public double MaximalHotWaterFlow { get; set; }
-
-        public double ActualHotWaterTemperature { get; set; }
-        public double SetHotWaterTemperature { get; set; }*/
-
-
+       
         public HVACCooler()
         {
             IsGenerativeFlow = false;
@@ -27,7 +19,14 @@ namespace Magisterka
             BCoeff = 1;
             CCoeff = 0;
 
-            //SurfaceTemperature = 5;
+            TimeConstant = 1;
+
+            SetWaterTemperature = 5;
+            ActualWaterTemperature = 5;
+            WaterFlowPercent = 100;
+            HeatExchangeSurface = 1;
+            HeatTransferCoeff = 200;
+            MaximalWaterFlow = 1;
 
             ImageSource = @"images\cooler.png";
         }
@@ -42,23 +41,36 @@ namespace Magisterka
             double Nominator = 1 - Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Denominator = 1 - W1 / W2 * Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Phi = Nominator / Denominator;
-            double outputTemperature = (inputAir.Temperature - 273) + (ActualWaterTemperature - inputAir.Temperature) * W1 / W2 * Phi;
-            Air outputAir = new Air(outputTemperature, inputAir.SpecificHumidity, EAirHum.specific);
-            
+            double outputTemperatureKelvin = (inputAir.Temperature - 273) + (ActualWaterTemperature - inputAir.Temperature) * W1 / W2 * Phi;
+            double outputTemperature = outputTemperatureKelvin + 273;
 
             if (dewPoint > ActualWaterTemperature) 
-            {//wykroplenie
-
+            {
+                ///wykroplenie z wykorzystaniem remapowania 
+                Air airAtCoolerDewPoint = new Air(ActualWaterTemperature, 100, EAirHum.relative);
+                double oldRange = inputAir.Temperature - airAtCoolerDewPoint.Temperature;
+                double newRange = inputAir.SpecificHumidity - airAtCoolerDewPoint.SpecificHumidity;
+                double newSpecificHumidity = (((outputTemperature - airAtCoolerDewPoint.Temperature) * newRange) / oldRange) + airAtCoolerDewPoint.SpecificHumidity;
+                Air outputAir = new Air(outputTemperature, newSpecificHumidity, EAirHum.specific);
+                return outputAir; //TODO jezeli wilgotność ponad 100%
             }
             else
-            {//bez wykroplenia
-                
+            {
+                ///bez wykroplenia
+                Air outputAir = new Air(outputTemperature, inputAir.SpecificHumidity, EAirHum.specific);
+                return outputAir;
             }
         }
 
         public void UpdateParams()
         {
-            Console.Write("TODO UPDATE PARAMS COOLER\n"); //TODO
+            if (TimeConstant <= 0)
+            {
+                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
+                return;
+            }
+            double derivative = (SetWaterTemperature - ActualWaterTemperature) / TimeConstant;
+            ActualWaterTemperature += derivative * Constants.step;
         }
     }
 }

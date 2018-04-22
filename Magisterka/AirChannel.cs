@@ -14,11 +14,14 @@ namespace Magisterka
 
         protected AirChannel()
         {
-            InputAir = new Air(10, 10, EAirHum.relative);
+            InputAir = new Air(40, 40, EAirHum.relative);
         }
         
         protected double _FlowRate;
         protected double _FanPressureDrop;
+
+        public double TEMP { get; set; }
+        public double TEMP2 { get; set; }
 
         public double FlowRate
         {
@@ -183,8 +186,30 @@ namespace Magisterka
             {
                 if (!obj.IsPresent) continue;
                 air = obj.CalculateOutputAirParameters(air, FlowRate);
-                //temperature = obj.CalculateOutputTemperature(temperature, FlowRate);
+                if(obj is HVACCooler)
+                {
+                    TEMP = air.Temperature;
+                    TEMP2 = air.SpecificHumidity;
+                }
             }
+        }
+
+        public void CalculateAirParametersBeforeExchanger()
+        {
+            if (FlowRate == 0) return;
+            Air air = InputAir;
+
+            foreach(HVACObject obj in HVACObjectsList)
+            {
+                if (obj is HVACInletExchange || obj is HVACOutletExchange) break;
+                air = obj.CalculateOutputAirParameters(air, FlowRate);
+            }
+
+        }
+
+        public void CalculateAirParametersFromExchanger()
+        {
+
         }
     }
 }

@@ -100,10 +100,20 @@
                     <Label Content="Zadana temperatura płynu w nagrzewnicy [&#186;C]" HorizontalAlignment="Left" Margin="10,313,0,0" VerticalAlignment="Top"/>
                     <Label Content="Aktualna temperatura płynu w nagrzewnicy [&#186;C]" HorizontalAlignment="Left" Margin="10,344,0,0" VerticalAlignment="Top"/>
 
-                    <Controls:NumericUpDown Name="HotWaterFlowPercentNumeric" HorizontalAlignment="Left" Margin="274,375,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="0" ValueChanged="HotWaterFlowPercentNumeric_ValueChanged" Maximum="100" Minimum="0" UpDownButtonsWidth="17" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="HotWaterFlowPercentNumeric" HorizontalAlignment="Left" Margin="274,375,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="100" ValueChanged="HotWaterFlowPercentNumeric_ValueChanged" Maximum="100" Minimum="0" UpDownButtonsWidth="17" TextAlignment="Left"/>
                     <Label Content="Wysterowanie pompy płynu w nagrzewnicy [%]" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top"/>
 
 
+                    <Controls:NumericUpDown Name="SetColdWaterTemperatureNumeric" HorizontalAlignment="Left" Margin="274,406,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="5" ValueChanged="SetColdWaterTemperatureNumeric_ValueChanged" Maximum="150" Minimum="10" UpDownButtonsWidth="17" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="ActualColdWaterTemperatureNumeric" HorizontalAlignment="Left" Margin="274,437,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="5" HideUpDownButtons="True" IsReadOnly="True" ValueChanged="ActualColdWaterTemperatureNumeric_ValueChanged" TextAlignment="Left"/>
+                    <Label Content="Zadana temperatura płynu w chłodnicy [&#186;C]" HorizontalAlignment="Left" Margin="10,406,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Aktualna temperatura płynu w chłodnicy [&#186;C]" HorizontalAlignment="Left" Margin="10,437,0,0" VerticalAlignment="Top"/>
+
+                    <Controls:NumericUpDown Name="ColdWaterFlowPercentNumeric" HorizontalAlignment="Left" Margin="274,468,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="100" ValueChanged="ColdWaterFlowPercentNumeric_ValueChanged" Maximum="100" Minimum="0" UpDownButtonsWidth="17" TextAlignment="Left"/>
+                    <Label Content="Wysterowanie pompy płynu w chłodnicy [%]" HorizontalAlignment="Left" Margin="10,468,0,0" VerticalAlignment="Top"/>
+
+                    <Controls:NumericUpDown Name="TEMP" HorizontalAlignment="Left" Margin="274,520,0,0"  VerticalAlignment="Top" Height="23" Width="139" HideUpDownButtons="True" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="TEMP2" HorizontalAlignment="Left" Margin="274,550,0,0"  VerticalAlignment="Top" Height="23" Width="139" HideUpDownButtons="True" TextAlignment="Left"/>
 
                 </Grid>
             </TabItem>

@@ -56,7 +56,8 @@ namespace Magisterka
             PressureDropSupplyNumeric.Value = supplyChannel.FanPressureDrop;
             FlowRateSupplyNumeric.Value = supplyChannel.FlowRate;
             supplyChannel.CalculateAirParameters();
-            
+            TEMP.Value = supplyChannel.TEMP;
+            TEMP2.Value = supplyChannel.TEMP2;
         }
 
         private void UpdateAllDynamicObjects()
@@ -242,5 +243,30 @@ namespace Magisterka
             }
         }
 
+        private void SetColdWaterTemperatureNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            if(SetColdWaterTemperatureNumeric.Value != null)
+            {
+                supplyChannel.SetColdWaterFlow((double)SetColdWaterTemperatureNumeric.Value);
+            }
+        }
+
+        private void ActualColdWaterTemperatureNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            double value = (double)ActualColdWaterTemperatureNumeric.Value;
+            if (value.ToString().Length > 5)
+            {
+                string truncated = value.ToString("0.000");
+                ActualColdWaterTemperatureNumeric.Value = double.Parse(truncated);
+            }
+        }
+
+        private void ColdWaterFlowPercentNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            if (ColdWaterFlowPercentNumeric.Value != null)
+            {
+                supplyChannel.SetColdWaterFlow((double)ColdWaterFlowPercentNumeric.Value);
+            }
+        }
     }
 }

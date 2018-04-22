@@ -50,8 +50,8 @@ namespace Magisterka
             double Nominator = 1 - Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Denominator = 1 - W1 / W2 * Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Phi = Nominator / Denominator;
-            double outputTemperature = (inputAir.Temperature - 273) + (ActualWaterTemperature - inputAir.Temperature) * W1 / W2 * Phi;
-            Air outputAir = new Air(outputTemperature, inputAir.SpecificHumidity, EAirHum.specific);
+            double outputTemperatureKelvin = (inputAir.Temperature - 273) + (ActualWaterTemperature - inputAir.Temperature) * W1 / W2 * Phi;
+            Air outputAir = new Air(outputTemperatureKelvin + 273, inputAir.SpecificHumidity, EAirHum.specific);
             return outputAir;
         }
 
