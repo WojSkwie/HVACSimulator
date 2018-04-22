@@ -19,7 +19,7 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
-namespace Magisterka
+namespace HVACSimulator
 {
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
@@ -28,23 +28,22 @@ namespace Magisterka
     {
         private cRegulator regulator;
         private DispatcherTimer mainTimer;
-        private HVACSupplyChannel supplyChannel;
-        private List<Image> imagesSupplyChannnel;
+        private ExchangerViewModel ExchangerViewModel;
 
         public MainWindow()
         {
+
+
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
-            supplyChannel = new HVACSupplyChannel();
-            imagesSupplyChannnel = new List<Image>();
+            ExchangerViewModel = new ExchangerViewModel();
 
             InitializeComponent();
 
             mainTimer.Tick += MainTimer_Tick;
-            supplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
-            
+            ExchangerViewModel.supplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
 
-            DataContext = supplyChannel;
+            DataContext = ExchangerViewModel; //TODO
             AddImagesToLists();
             DrawSupplyItems();
             
@@ -53,30 +52,19 @@ namespace Magisterka
         private void MainTimer_Tick(object sender, EventArgs e)
         {
             UpdateAllDynamicObjects();
-            PressureDropSupplyNumeric.Value = supplyChannel.FanPressureDrop;
-            FlowRateSupplyNumeric.Value = supplyChannel.FlowRate;
-            supplyChannel.CalculateAirParameters();
-            TEMP.Value = supplyChannel.TEMP;
-            TEMP2.Value = supplyChannel.TEMP2;
+            ActualSpeedSupplyNumeric.Value = ExchangerViewModel.GetSpeedFromSupplyChannel();
+            ActualHotWaterTemperatureNumeric.Value = ExchangerViewModel.GetHotWaterTempeartureFromSuppyChannel();
+            ActualColdWaterTemperatureNumeric.Value = ExchangerViewModel.GetColdWaterTemperatureFromSupplyChannel();
+            PressureDropSupplyNumeric.Value = ExchangerViewModel.GetPressureDropFromSupplyChannel();
+            FlowRateSupplyNumeric.Value = ExchangerViewModel.GetFlowRateFromSupplyChannel();
+            ExchangerViewModel.supplyChannel.CalculateAirParameters();
+            TEMP.Value = ExchangerViewModel.supplyChannel.TEMP;
+            TEMP2.Value = ExchangerViewModel.supplyChannel.TEMP2;
         }
 
         private void UpdateAllDynamicObjects()
         {
-            supplyChannel.UpdateParams();
-            foreach(HVACObject obj in supplyChannel.HVACObjectsList)
-            {
-                if(obj is HVACFan)
-                {
-                    ActualSpeedSupplyNumeric.Value = ((HVACFan)obj).ActualSpeedPercent;
-                }
-            }
-            foreach (HVACObject obj in supplyChannel.HVACObjectsList)
-            {
-                if (obj is HVACTemperatureActiveObject)
-                {
-                    ActualHotWaterTemperatureNumeric.Value = ((HVACTemperatureActiveObject)obj).ActualWaterTemperature;
-                }
-            }
+            ExchangerViewModel.UpdateParams();
         }
 
         private void ChangeTimerSpan(int milliseconds)
@@ -144,40 +132,40 @@ namespace Magisterka
 
         private void AddImagesToLists()
         {
-            imagesSupplyChannnel.Add(imgin1);
-            imagesSupplyChannnel.Add(new Image());
-            imagesSupplyChannnel.Add(imgin2);
-            imagesSupplyChannnel.Add(imgin3);
-            imagesSupplyChannnel.Add(imgin4);
-            imagesSupplyChannnel.Add(imgin5);
+            ExchangerViewModel.imagesSupplyChannnel.Add(imgin1);
+            ExchangerViewModel.imagesSupplyChannnel.Add(new Image());
+            ExchangerViewModel.imagesSupplyChannnel.Add(imgin2);
+            ExchangerViewModel.imagesSupplyChannnel.Add(imgin3);
+            ExchangerViewModel.imagesSupplyChannnel.Add(imgin4);
+            ExchangerViewModel.imagesSupplyChannnel.Add(imgin5);
         }
 
         private void DrawSupplyItems()
         {
-            for(int i = 0; i < supplyChannel.HVACObjectsList.Count; i++)
+            for(int i = 0; i < ExchangerViewModel.supplyChannel.HVACObjectsList.Count; i++)
             {
-                HVACObject obj = supplyChannel.HVACObjectsList[i];
-                imagesSupplyChannnel[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative));
-                imagesSupplyChannnel[i].Visibility = supplyChannel.HVACObjectsList[i].IsPresent ? Visibility.Visible : Visibility.Hidden;
+                HVACObject obj = ExchangerViewModel.supplyChannel.HVACObjectsList[i];
+                ExchangerViewModel.imagesSupplyChannnel[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative));
+                ExchangerViewModel.imagesSupplyChannnel[i].Visibility = ExchangerViewModel.supplyChannel.HVACObjectsList[i].IsPresent ? Visibility.Visible : Visibility.Hidden;
             }
         }
         
 
-        private void UpButton_Click(object sender, RoutedEventArgs e)
+        /*private void UpButton_Click(object sender, RoutedEventArgs e)
         {
             int index = supplyDataGrid.SelectedIndex;
             if (index < 0) return;
-            supplyChannel.MoveObject(index, -1);
-            supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
+            ExchangerViewModel.supplyChannel.MoveObject(index, -1);
+            supplyDataGrid.ItemsSource = ExchangerViewModel.supplyChannel.HVACObjectsList;
             DrawSupplyItems();
             
-        }
+        }*/
 
         private void EditCharItem_Click(object sender, RoutedEventArgs e)
         {
             int index = supplyDataGrid.SelectedIndex;
             if (index < 0) { return; }
-            var currentItem = supplyChannel.HVACObjectsList[index];
+            var currentItem = ExchangerViewModel.supplyChannel.HVACObjectsList[index];
             if (currentItem is IModifiableCharact)
             {
                 (currentItem as IModifiableCharact).ModifyCharacteristics();
@@ -188,7 +176,7 @@ namespace Magisterka
         {
             if(SetSpeedSupplyNumeric.Value != null)
             {
-                supplyChannel.SetSpeedFan((double)SetSpeedSupplyNumeric.Value);
+                ExchangerViewModel.supplyChannel.SetSpeedFan((double)SetSpeedSupplyNumeric.Value);
             }
         }
 
@@ -204,7 +192,7 @@ namespace Magisterka
 
         private void EditCharChan_Click(object sender, RoutedEventArgs e)
         {
-            supplyChannel.ModifyCharacteristics();
+            ExchangerViewModel.supplyChannel.ModifyCharacteristics();
         }
 
         private void MoveButton_Click(object sender, RoutedEventArgs e)
@@ -212,8 +200,8 @@ namespace Magisterka
             int index = supplyDataGrid.SelectedIndex;
             int direction = Convert.ToInt32(((Button)sender).Tag);
             if (index < 0) return;
-            supplyChannel.MoveObject(index, direction);
-            supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
+            ExchangerViewModel.supplyChannel.MoveObject(index, direction);
+            supplyDataGrid.ItemsSource = ExchangerViewModel.supplyChannel.HVACObjectsList;
             DrawSupplyItems();
         }
 
@@ -221,7 +209,7 @@ namespace Magisterka
         {
             if (SetHotWaterTemperatureNumeric.Value != null)
             {
-                supplyChannel.SetHeaterWaterTemperature((double)SetHotWaterTemperatureNumeric.Value);
+                ExchangerViewModel.supplyChannel.SetHeaterWaterTemperature((double)SetHotWaterTemperatureNumeric.Value);
             }
         }
 
@@ -239,7 +227,7 @@ namespace Magisterka
         {
             if (HotWaterFlowPercentNumeric.Value != null)
             {
-                supplyChannel.SetHotWaterFlow((double)HotWaterFlowPercentNumeric.Value);
+                ExchangerViewModel.supplyChannel.SetHotWaterFlow((double)HotWaterFlowPercentNumeric.Value);
             }
         }
 
@@ -247,7 +235,7 @@ namespace Magisterka
         {
             if(SetColdWaterTemperatureNumeric.Value != null)
             {
-                supplyChannel.SetColdWaterFlow((double)SetColdWaterTemperatureNumeric.Value);
+                ExchangerViewModel.supplyChannel.SetColdWaterFlow((double)SetColdWaterTemperatureNumeric.Value);
             }
         }
 
@@ -265,7 +253,7 @@ namespace Magisterka
         {
             if (ColdWaterFlowPercentNumeric.Value != null)
             {
-                supplyChannel.SetColdWaterFlow((double)ColdWaterFlowPercentNumeric.Value);
+                ExchangerViewModel.supplyChannel.SetColdWaterFlow((double)ColdWaterFlowPercentNumeric.Value);
             }
         }
     }

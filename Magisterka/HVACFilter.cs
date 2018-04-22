@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Magisterka
+namespace HVACSimulator
 {
     public sealed class HVACFilter : HVACObject
     {

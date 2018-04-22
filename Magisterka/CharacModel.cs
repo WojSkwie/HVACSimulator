@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magisterka
+namespace HVACSimulator
 {
     public class CharacModel : INotifyPropertyChanged
     {

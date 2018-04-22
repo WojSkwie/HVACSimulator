@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magisterka
+namespace HVACSimulator
 {
-    public class HVACExhaustChannel
+    public class HVACExhaustChannel : AirChannel, IDynamicObject
     {
+        public void UpdateParams()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

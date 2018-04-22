@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Magisterka
+namespace HVACSimulator
 {
     public sealed class HVACSupplyChannel : AirChannel, IDynamicObject, INotifyPropertyChanged
     {

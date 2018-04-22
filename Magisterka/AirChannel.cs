@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magisterka
+namespace HVACSimulator
 {
     public abstract class AirChannel : INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact
     {

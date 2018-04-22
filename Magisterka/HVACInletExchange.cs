@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magisterka
+namespace HVACSimulator
 {
     public class HVACInletExchange : HVACObject, IDynamicObject
     {
@@ -13,6 +13,7 @@ namespace Magisterka
             IsGenerativeFlow = false;
             Name = "Kanał wymiennika";
             IsMovable = false;
+            IsMutable = false;
 
             //TODO dopytać
             ACoeff = 0;

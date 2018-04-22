@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Magisterka
+namespace HVACSimulator
 {
     public abstract class HVACObject : INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation
     {
+        public bool IsMutable { get; protected set; } = true;
         public bool IsGenerativeFlow { get; set; }
         public double ACoeff { get; set; }
         public double BCoeff { get; set; }
@@ -26,12 +27,10 @@ namespace Magisterka
             }
         }
         public string Name { get; set; }
-        public bool IsMovable { get; set; }
+        public bool IsMovable { get; protected set; }
         public string ImageSource { get; set; }
         public bool HasSingleTimeConstant { get; set; }
         public double TimeConstant { get; set; }
-        //public double HeatTransferCoeff { get; set; }
-        //public double HeatExchangeSurface { get; set; }
         public Air OutputAir { get; set; }
 
 

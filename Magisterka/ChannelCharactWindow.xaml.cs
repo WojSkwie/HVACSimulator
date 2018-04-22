@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Magisterka
+namespace HVACSimulator
 {
     /// <summary>
     /// Interaction logic for ChannelCharactWindow.xaml
