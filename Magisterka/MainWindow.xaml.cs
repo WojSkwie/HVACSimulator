@@ -44,11 +44,12 @@ namespace HVACSimulator
 
             mainTimer.Tick += MainTimer_Tick;
             ExchangerViewModel.supplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
-
-            DataContext = ExchangerViewModel; //TODO
             AddImagesToLists();
             DrawSupplyItems();
-            SeriesViewModel.CreateDataListsForObjects(ExchangerViewModel.supplyChannel.HVACObjectsList);
+
+
+            DataContext = ExchangerViewModel;
+            
             
         }
 
@@ -107,6 +108,11 @@ namespace HVACSimulator
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            if (GlobalParameters.SimulationBegan) return;
+            GlobalParameters.SimulationBegan = false;
+            SeriesViewModel.CreateDataListsForObjects(ExchangerViewModel.supplyChannel.HVACObjectsList);
+            PresentObjectsDropDown.DataContext = SeriesViewModel;
+            Plot.DataContext = SeriesViewModel;
             mainTimer.Start();
         }
 
@@ -118,6 +124,7 @@ namespace HVACSimulator
 
         private void ResetSimulation()
         {
+            if (!GlobalParameters.SimulationBegan) return;
             throw new NotImplementedException();
         }
 

@@ -23,6 +23,7 @@ namespace HVACSimulator
         }
 
         public static double SimulationTime { get; private set; }
+        public static bool SimulationBegan { get; set; }
 
         public static void IncrementTime()
         {

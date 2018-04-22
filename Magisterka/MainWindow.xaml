@@ -30,7 +30,17 @@
             </TabItem>
             <TabItem Header="Wykresy">
                 <Grid Background="Transparent" >
-                    <oxy:Plot Title="{Binding PlotTitle}" Margin="20,20">
+                    <Controls:DropDownButton x:Name="PresentObjectsDropDown" ItemsSource="{Binding PresentObjects}" Content="Wybierz obiekt" DisplayMemberPath="Name" Margin="20,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Controls:DropDownButton.DataContext>
+                            <local:SeriesViewModel></local:SeriesViewModel>
+                        </Controls:DropDownButton.DataContext>
+                    </Controls:DropDownButton>
+                    <Controls:DropDownButton x:Name="TempHumidDropDown" ItemsSource="{Binding ParametersList}" Content="Wybierz parametr" Margin="250,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <Controls:DropDownButton.DataContext>
+                            <local:SeriesViewModel></local:SeriesViewModel>
+                        </Controls:DropDownButton.DataContext>
+                    </Controls:DropDownButton>
+                    <oxy:Plot x:Name="Plot" Title="{Binding PlotTitle}" Margin="20,50,20,20">
                         <oxy:Plot.DataContext>
                             <local:SeriesViewModel/>
                         </oxy:Plot.DataContext>

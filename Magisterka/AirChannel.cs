@@ -118,9 +118,9 @@ namespace HVACSimulator
             double Ap, Bp, Cp;
             GatherParametersFromObjects(out A, out B, out C, out Ap, out Bp, out Cp);
 
-            double delta = MyMath.CalculateDelta(A, B, C);
+            double delta = MathUtil.CalculateDelta(A, B, C);
             if(delta < 0 ) { OnSimulationErrorOccured("Charakterystyki nie mają punktu wspólnego"); }
-            double[] roots = MyMath.FindRoots(A, B, C, delta);
+            double[] roots = MathUtil.FindRoots(A, B, C, delta);
             double flow;
             if(roots[0] > 0 )
             {
@@ -135,7 +135,7 @@ namespace HVACSimulator
                 OnSimulationErrorOccured("Charakterystyki nie mają dodatniego punktu wspólnego");
                 return;
             }
-            double pressure = MyMath.QuadEquaVal(Ap, Bp, Cp, flow);
+            double pressure = MathUtil.QuadEquaVal(Ap, Bp, Cp, flow);
             if(pressure < 0)
             {
                 OnSimulationErrorOccured("Ujemna wartość spadku ciśnienia");

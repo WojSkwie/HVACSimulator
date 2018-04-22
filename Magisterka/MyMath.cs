@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public static class MyMath
+    public static class MathUtil
     {
         /// <summary>
         /// Finds value of quadratic equation for given X
