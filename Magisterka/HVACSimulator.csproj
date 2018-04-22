@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="ExchangerViewModel.cs" />
+    <Compile Include="GlobalParameters.cs" />
     <Compile Include="HVACCooler.cs" />
     <Compile Include="HVACExhaustChannel.cs" />
     <Compile Include="HVACFan.cs" />

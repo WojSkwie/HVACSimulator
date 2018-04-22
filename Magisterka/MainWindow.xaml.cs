@@ -29,6 +29,7 @@ namespace HVACSimulator
         private cRegulator regulator;
         private DispatcherTimer mainTimer;
         private ExchangerViewModel ExchangerViewModel;
+        private SeriesViewModel SeriesViewModel;
 
         public MainWindow()
         {
@@ -37,6 +38,7 @@ namespace HVACSimulator
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
             ExchangerViewModel = new ExchangerViewModel();
+            SeriesViewModel = new SeriesViewModel();
 
             InitializeComponent();
 
@@ -46,6 +48,7 @@ namespace HVACSimulator
             DataContext = ExchangerViewModel; //TODO
             AddImagesToLists();
             DrawSupplyItems();
+            SeriesViewModel.CreateDataListsForObjects(ExchangerViewModel.supplyChannel.HVACObjectsList);
             
         }
 

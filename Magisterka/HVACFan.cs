@@ -14,6 +14,7 @@ namespace HVACSimulator
             IsGenerativeFlow = true;
             Name = "Wentylator";
             IsMovable = true;
+            IsMutable = false;
 
             ActualSpeedPercent = 0;
             SetSpeedPercent = 0;
