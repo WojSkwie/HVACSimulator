@@ -49,6 +49,7 @@ namespace HVACSimulator
 
 
             DataContext = ExchangerViewModel;
+            supplyDataGrid.DataContext = ExchangerViewModel.supplyChannel;
             
             
         }
