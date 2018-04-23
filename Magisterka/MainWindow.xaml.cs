@@ -63,6 +63,9 @@ namespace HVACSimulator
             PressureDropSupplyNumeric.Value = ExchangerViewModel.GetPressureDropFromSupplyChannel();
             FlowRateSupplyNumeric.Value = ExchangerViewModel.GetFlowRateFromSupplyChannel();
             ExchangerViewModel.supplyChannel.CalculateAirParameters();
+
+            GlobalParameters.IncrementTime();
+
             TEMP.Value = ExchangerViewModel.supplyChannel.TEMP;
             TEMP2.Value = ExchangerViewModel.supplyChannel.TEMP2;
         }
@@ -109,12 +112,16 @@ namespace HVACSimulator
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            if (GlobalParameters.SimulationBegan) return;
-            GlobalParameters.SimulationBegan = false;
-            SeriesViewModel.CreateDataListsForObjects(ExchangerViewModel.supplyChannel.HVACObjectsList);
-            PresentObjectsDropDown.DataContext = SeriesViewModel;
-            Plot.DataContext = SeriesViewModel;
+            if (GlobalParameters.SimulationState == EState.running) return;
+            if (GlobalParameters.SimulationState == EState.stopped) 
+            {
+                SeriesViewModel.InitializeModelFromList(ExchangerViewModel.supplyChannel.HVACObjectsList);
+                PresentObjectsDropDown.DataContext = SeriesViewModel;
+                Plot.DataContext = SeriesViewModel;
+            }
             mainTimer.Start();
+            GlobalParameters.SimulationState = EState.running;
+
         }
 
         private void pauseButton_Click(object sender, RoutedEventArgs e)
@@ -125,7 +132,7 @@ namespace HVACSimulator
 
         private void ResetSimulation()
         {
-            if (!GlobalParameters.SimulationBegan) return;
+            if (GlobalParameters.SimulationState == EState.stopped) return;
             throw new NotImplementedException();
         }
 

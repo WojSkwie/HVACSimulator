@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public abstract class HVACObject : INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation
+    public abstract class HVACObject : INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation, IReturnsPlotData
     {
         public bool IsMutable { get; protected set; } = true;
         public bool IsGenerativeFlow { get; set; }
@@ -32,6 +32,7 @@ namespace HVACSimulator
         public bool HasSingleTimeConstant { get; set; }
         public double TimeConstant { get; set; }
         public Air OutputAir { get; set; }
+        public List<PlotData> PlotDataList { get; set; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -57,6 +58,13 @@ namespace HVACSimulator
         public virtual Air CalculateOutputAirParameters(Air inputAir, double airFlow)
         {
             return (OutputAir = (Air)inputAir.Clone());
+        }
+
+        public PlotData GetPlotData(EDataType dataType)
+        {
+            if (!PlotDataList.Any(item => item.DataType == dataType)) return null;
+            PlotData plotData = PlotDataList.First(item => item.DataType == dataType);
+            return plotData;
         }
     }
 }

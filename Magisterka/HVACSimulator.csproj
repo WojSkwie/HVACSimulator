@@ -115,8 +115,10 @@
     <Compile Include="IDynamicObject.cs" />
     <Compile Include="IModifiableCharact.cs" />
     <Compile Include="INotifyErrorSimulation.cs" />
+    <Compile Include="IReturnsPlotData.cs" />
     <Compile Include="MolierCalculations.cs" />
     <Compile Include="MyMath.cs" />
+    <Compile Include="PlotData.cs" />
     <Compile Include="SeriesModel.cs" />
     <Compile Include="USB.cs">
       <SubType>Component</SubType>

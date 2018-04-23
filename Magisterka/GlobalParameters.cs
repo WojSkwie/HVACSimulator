@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
+    public enum EState
+    {
+        running,
+        paused,
+        stopped,
+    }
+
     public sealed class GlobalParameters
     {
         private static GlobalParameters _Instance;
         private GlobalParameters()
         {
+            SimulationState = EState.stopped;
             ResetTime();
         }
         public static GlobalParameters Instance
@@ -23,7 +31,7 @@ namespace HVACSimulator
         }
 
         public static double SimulationTime { get; private set; }
-        public static bool SimulationBegan { get; set; }
+        public static EState SimulationState { get; set; }
 
         public static void IncrementTime()
         {
