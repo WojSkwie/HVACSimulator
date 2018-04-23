@@ -8,7 +8,7 @@ namespace HVACSimulator
 {
     public class HVACInletExchange : HVACObject, IDynamicObject
     {
-        public HVACInletExchange()
+        public HVACInletExchange() : base()
         {
             IsGenerativeFlow = false;
             Name = "Kanał wymiennika";

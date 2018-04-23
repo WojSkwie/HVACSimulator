@@ -9,7 +9,7 @@ namespace HVACSimulator
 {
     public sealed class HVACFan : HVACObject, IDynamicObject
     {
-        public HVACFan()
+        public HVACFan() : base()
         {
             IsGenerativeFlow = true;
             Name = "Wentylator";

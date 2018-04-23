@@ -9,7 +9,7 @@ namespace HVACSimulator
     public class HVACCooler : HVACTemperatureActiveObject, IDynamicObject
     {
        
-        public HVACCooler()
+        public HVACCooler() : base()
         {
             IsGenerativeFlow = false;
             Name = "Chłodnica";

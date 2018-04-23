@@ -11,12 +11,12 @@ namespace HVACSimulator
 {
     public abstract class HVACObject : INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation, IReturnsPlotData
     {
-        public bool IsMutable { get; protected set; } = true;
+        public bool IsMutable { get; protected set; } 
         public bool IsGenerativeFlow { get; set; }
         public double ACoeff { get; set; }
         public double BCoeff { get; set; }
         public double CCoeff { get; set; }
-        private bool _IsPresent = true;
+        private bool _IsPresent;
         public bool IsPresent
         {
             get { return _IsPresent; }
@@ -33,6 +33,13 @@ namespace HVACSimulator
         public double TimeConstant { get; set; }
         public Air OutputAir { get; set; }
         public List<PlotData> PlotDataList { get; set; }
+
+        public HVACObject()
+        {
+            PlotDataList = new List<PlotData>();
+            IsMutable = true;
+            _IsPresent = true;
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

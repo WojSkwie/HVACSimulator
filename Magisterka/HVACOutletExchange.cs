@@ -9,8 +9,9 @@ namespace HVACSimulator
     public class HVACOutletExchange : HVACObject, IDynamicObject
     {
 
-        public HVACOutletExchange()
+        public HVACOutletExchange() :base()
         {
+            
             IsGenerativeFlow = false;
             Name = "Kanał wymiennika";
             IsMovable = false;

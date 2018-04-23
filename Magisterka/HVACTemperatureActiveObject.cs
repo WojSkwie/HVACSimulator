@@ -8,6 +8,10 @@ namespace HVACSimulator
 {
     public class HVACTemperatureActiveObject : HVACObject
     {
+        public HVACTemperatureActiveObject() : base()
+        {
+
+        }
         public double WaterFlowPercent { get; set; }
         public double MaximalWaterFlow { get; set; }
 

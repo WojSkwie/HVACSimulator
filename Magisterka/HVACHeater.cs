@@ -8,7 +8,7 @@ namespace HVACSimulator
 {
     public sealed class HVACHeater : HVACTemperatureActiveObject, IDynamicObject
     {
-        public HVACHeater()
+        public HVACHeater() : base()
         {
             IsGenerativeFlow = false;
             Name = "Nagrzewnica";

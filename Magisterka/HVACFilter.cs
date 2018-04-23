@@ -9,7 +9,7 @@ namespace HVACSimulator
 {
     public sealed class HVACFilter : HVACObject
     {
-        public HVACFilter()
+        public HVACFilter() : base()
         {
             IsGenerativeFlow = false;
             Name = "Filtr";

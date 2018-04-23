@@ -30,16 +30,16 @@
             </TabItem>
             <TabItem Header="Wykresy">
                 <Grid Background="Transparent" >
-                    <Controls:DropDownButton x:Name="PresentObjectsDropDown" ItemsSource="{Binding PresentObjects}" Content="Wybierz obiekt" DisplayMemberPath="Name" Margin="20,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <Controls:DropDownButton.DataContext>
+                    <Controls:SplitButton x:Name="PresentObjectsSplitButton" ItemsSource="{Binding PresentObjects}" DisplayMemberPath="Name" Margin="20,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Selected="PresentObjectsSplitButton_Selected">
+                        <Controls:SplitButton.DataContext>
                             <local:SeriesViewModel></local:SeriesViewModel>
-                        </Controls:DropDownButton.DataContext>
-                    </Controls:DropDownButton>
-                    <Controls:DropDownButton x:Name="TempHumidDropDown" ItemsSource="{Binding ParametersList}" Content="Wybierz parametr" Margin="250,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <Controls:DropDownButton.DataContext>
+                        </Controls:SplitButton.DataContext>
+                    </Controls:SplitButton>
+                    <Controls:SplitButton x:Name="PlotDataSplitButton"  Margin="250,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Selected="PlotDataSplitButton_Selected">
+                        <Controls:SplitButton.DataContext>
                             <local:SeriesViewModel></local:SeriesViewModel>
-                        </Controls:DropDownButton.DataContext>
-                    </Controls:DropDownButton>
+                        </Controls:SplitButton.DataContext>
+                    </Controls:SplitButton>
                     <oxy:Plot x:Name="Plot" Title="{Binding PlotTitle}" Margin="20,50,20,20">
                         <oxy:Plot.DataContext>
                             <local:SeriesViewModel/>

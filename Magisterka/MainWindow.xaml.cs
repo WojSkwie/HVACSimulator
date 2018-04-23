@@ -50,8 +50,9 @@ namespace HVACSimulator
 
             DataContext = ExchangerViewModel;
             supplyDataGrid.DataContext = ExchangerViewModel.supplyChannel;
-            
-            
+            //LoadDropDownItems();
+
+
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -116,7 +117,7 @@ namespace HVACSimulator
             if (GlobalParameters.SimulationState == EState.stopped) 
             {
                 SeriesViewModel.InitializeModelFromList(ExchangerViewModel.supplyChannel.HVACObjectsList);
-                PresentObjectsDropDown.DataContext = SeriesViewModel;
+                PresentObjectsSplitButton.DataContext = SeriesViewModel;
                 Plot.DataContext = SeriesViewModel;
             }
             mainTimer.Start();
@@ -126,7 +127,7 @@ namespace HVACSimulator
 
         private void pauseButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            GlobalParameters.SimulationState = EState.paused;
             mainTimer.Stop();
         }
 
@@ -167,17 +168,6 @@ namespace HVACSimulator
                 ExchangerViewModel.imagesSupplyChannnel[i].Visibility = ExchangerViewModel.supplyChannel.HVACObjectsList[i].IsPresent ? Visibility.Visible : Visibility.Hidden;
             }
         }
-        
-
-        /*private void UpButton_Click(object sender, RoutedEventArgs e)
-        {
-            int index = supplyDataGrid.SelectedIndex;
-            if (index < 0) return;
-            ExchangerViewModel.supplyChannel.MoveObject(index, -1);
-            supplyDataGrid.ItemsSource = ExchangerViewModel.supplyChannel.HVACObjectsList;
-            DrawSupplyItems();
-            
-        }*/
 
         private void EditCharItem_Click(object sender, RoutedEventArgs e)
         {
@@ -274,5 +264,30 @@ namespace HVACSimulator
                 ExchangerViewModel.supplyChannel.SetColdWaterFlow((double)ColdWaterFlowPercentNumeric.Value);
             }
         }
+
+        private void PresentObjectsSplitButton_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlotDataSplitButton_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        /*private void LoadDropDownItems()
+        {
+            PlotDataSplitButton.ItemsSource = Enum.GetValues(typeof(EDataType))
+                .Cast<Enum>()
+                .Select(value => new
+                {
+                    (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
+                    value
+                })
+                .ToList();
+            PlotDataSplitButton.DisplayMemberPath = "Description";
+            //TempHumidDropDown.value = "value";
+
+        }*/
     }
 }
