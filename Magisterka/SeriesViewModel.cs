@@ -13,6 +13,8 @@ namespace HVACSimulator
         public List<DataPoint> ActualPoints { get; private set; }
         public string PlotTitle { get; set; }
         public string SeriesTitle { get; set; }
+        public string XAxisTitle { get; set; }
+        public string YAxisTitle { get; set; }
         public List<HVACObject> PresentObjects { get; set; } 
         public List<string> ParametersList { get; set; } 
 
@@ -20,16 +22,11 @@ namespace HVACSimulator
         {
             this.PlotTitle = "Wykres";
             this.SeriesTitle = "Wartość";
+            this.XAxisTitle = "Oś X";
+            this.YAxisTitle = "Oś Y";
             this.ActualPoints = new List<DataPoint>();
-            //this.AllDataPointsTempLists = new List<List<DataPoint>>();
-            //this.AllDataPointsHumidLists = new List<List<DataPoint>>();
-            //this.DescriptionsLists = new List<List<string>>();
             this.PresentObjects = new List<HVACObject>();
-            this.ParametersList = new List<string>
-            {
-                "Temperatura",
-                "Wilgotność"
-            };
+            
         }
 
         public void InitializeModelFromList(ObservableCollection<HVACObject> inList)
@@ -38,23 +35,19 @@ namespace HVACSimulator
             PresentObjects.AddRange(inList.Where(item => item.IsPresent));
         }
 
-        /*public void AddPointsFromObjects()
-        {
-            for(int i = 0; i < PresentObjects.Count; i++)
-            {
-                double actualTime = GlobalParameters.SimulationTime;
-            }
-        }*/
         public void ResetModel()
         {
-            ActualPoints.Clear();
+            ActualPoints = new List<DataPoint>();
             PresentObjects.Clear();
         }
 
         public void SetObjectToDrawPlot(HVACObject obj, EDataType dataType)
         {
-            //int index = PresentObjects.IndexOf(obj);
-            //ActualPoints = AllDataPointsLists[index];
+            PlotData plotData = ((IReturnsPlotData)obj).GetPlotData(dataType);
+            ActualPoints = plotData.PointsList;
+            PlotTitle = plotData.PlotTile;
+            XAxisTitle = plotData.XAxisTitle;
+            YAxisTitle = plotData.YAxisTitle;
         }
         
     }

@@ -30,12 +30,12 @@
             </TabItem>
             <TabItem Header="Wykresy">
                 <Grid Background="Transparent" >
-                    <Controls:SplitButton x:Name="PresentObjectsSplitButton" ItemsSource="{Binding PresentObjects}" DisplayMemberPath="Name" Margin="20,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Selected="PresentObjectsSplitButton_Selected">
+                    <Controls:SplitButton x:Name="PresentObjectsSplitButton" ItemsSource="{Binding PresentObjects}" DisplayMemberPath="Name" Margin="20,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="PresentObjectsSplitButton_SelectionChanged">
                         <Controls:SplitButton.DataContext>
                             <local:SeriesViewModel></local:SeriesViewModel>
                         </Controls:SplitButton.DataContext>
                     </Controls:SplitButton>
-                    <Controls:SplitButton x:Name="PlotDataSplitButton"  Margin="250,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Selected="PlotDataSplitButton_Selected">
+                    <Controls:SplitButton x:Name="PlotDataSplitButton"  Margin="250,10" Width="200" Height="30" DisplayMemberPath="DataType.Description"  HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="PlotDataSplitButton_SelectionChanged">
                         <Controls:SplitButton.DataContext>
                             <local:SeriesViewModel></local:SeriesViewModel>
                         </Controls:SplitButton.DataContext>
@@ -44,9 +44,12 @@
                         <oxy:Plot.DataContext>
                             <local:SeriesViewModel/>
                         </oxy:Plot.DataContext>
-                        <oxy:LineSeries Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding Points}">
-
+                        <oxy:LineSeries Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding Points}" >
                         </oxy:LineSeries>
+                        <oxy:Plot.Axes>
+                            <oxy:LinearAxis Position="Bottom" Title="{Binding XAxisTitle}" />
+                            <oxy:LinearAxis Position="Left"  Title="{Binding YAxisTitle}"/>
+                        </oxy:Plot.Axes>
                     </oxy:Plot>
 
                 </Grid>

@@ -120,7 +120,7 @@
     <Compile Include="MolierCalculations.cs" />
     <Compile Include="MyMath.cs" />
     <Compile Include="PlotData.cs" />
-    <Compile Include="SeriesModel.cs" />
+    <Compile Include="SeriesViewModel.cs" />
     <Compile Include="USB.cs">
       <SubType>Component</SubType>
     </Compile>

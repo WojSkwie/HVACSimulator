@@ -30,11 +30,12 @@ namespace HVACSimulator
         private DispatcherTimer mainTimer;
         private ExchangerViewModel ExchangerViewModel;
         private SeriesViewModel SeriesViewModel;
+        private GlobalParameters GlobalParameters = GlobalParameters.Instance;
 
         public MainWindow()
         {
 
-
+            
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
             ExchangerViewModel = new ExchangerViewModel();
@@ -265,15 +266,28 @@ namespace HVACSimulator
             }
         }
 
-        private void PresentObjectsSplitButton_Selected(object sender, RoutedEventArgs e)
+        private void PresentObjectsSplitButton_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            HVACObject obj = (HVACObject)((SplitButton)sender).SelectedItem;
+            if (obj == null) return;
+            PlotDataSplitButton.ItemsSource = obj.PlotDataList;
+        }
+
+        private void PlotDataSplitButton_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        /*private void PresentObjectsSplitButton_Selected(object sender, RoutedEventArgs e)
+        {
+            HVACObject obj = (HVACObject)((SplitButton)sender).SelectedItem;
+            PlotDataSplitButton.ItemsSource = obj.PlotDataList;
         }
 
         private void PlotDataSplitButton_Selected(object sender, RoutedEventArgs e)
         {
 
-        }
+        }*/
 
         /*private void LoadDropDownItems()
         {
