@@ -30,15 +30,15 @@ namespace HVACSimulator
             }
         }
 
-        public static double SimulationTime { get; private set; }
-        public static EState SimulationState { get; set; }
+        public double SimulationTime { get; private set; }
+        public EState SimulationState { get; set; }
 
-        public static void IncrementTime()
+        public void IncrementTime()
         {
             SimulationTime += Constants.step;
         }
 
-        public static void ResetTime()
+        public void ResetTime()
         {
             SimulationTime = 0;
         }

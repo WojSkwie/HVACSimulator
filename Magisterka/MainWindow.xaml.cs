@@ -30,12 +30,11 @@ namespace HVACSimulator
         private DispatcherTimer mainTimer;
         private ExchangerViewModel ExchangerViewModel;
         private SeriesViewModel SeriesViewModel;
-        private GlobalParameters GlobalParameters = GlobalParameters.Instance;
+        private GlobalParameters GlobalParameters;
 
         public MainWindow()
         {
-
-            
+            GlobalParameters = GlobalParameters.Instance;
             regulator = new cRegulator();
             mainTimer = new DispatcherTimer();
             ExchangerViewModel = new ExchangerViewModel();
