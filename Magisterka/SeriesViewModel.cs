@@ -25,8 +25,7 @@ namespace HVACSimulator
             this.XAxisTitle = "Oś X";
             this.YAxisTitle = "Oś Y";
             this.ActualPoints = new List<DataPoint>();
-            this.PresentObjects = new List<HVACObject>();
-            
+            this.PresentObjects = new List<HVACObject>(); 
         }
 
         public void InitializeModelFromList(ObservableCollection<HVACObject> inList)
@@ -48,7 +47,12 @@ namespace HVACSimulator
             PlotTitle = plotData.PlotTile;
             XAxisTitle = plotData.XAxisTitle;
             YAxisTitle = plotData.YAxisTitle;
+            obj.NewPointCreated += OnNewPointCreated;
         }
-        
+
+        private void OnNewPointCreated(object sender, DataPoint e)
+        {
+            ActualPoints.Add(e); ;
+        }
     }
 }

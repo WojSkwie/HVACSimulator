@@ -44,7 +44,7 @@
                         <oxy:Plot.DataContext>
                             <local:SeriesViewModel/>
                         </oxy:Plot.DataContext>
-                        <oxy:LineSeries Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding Points}" >
+                        <oxy:LineSeries x:Name="PlotSeries" Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding ActualPoints}" >
                         </oxy:LineSeries>
                         <oxy:Plot.Axes>
                             <oxy:LinearAxis Position="Bottom" Title="{Binding XAxisTitle}" />

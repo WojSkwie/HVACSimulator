@@ -50,6 +50,7 @@ namespace HVACSimulator
 
             DataContext = ExchangerViewModel;
             supplyDataGrid.DataContext = ExchangerViewModel.supplyChannel;
+            Plot.DataContext = SeriesViewModel;
             //LoadDropDownItems();
 
 
@@ -66,6 +67,10 @@ namespace HVACSimulator
             ExchangerViewModel.supplyChannel.CalculateAirParameters();
 
             GlobalParameters.IncrementTime();
+            PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
+            Plot.InvalidatePlot(true);
+            //var test = PlotSeries.ItemsSource;
+            //Plot.ActualModel.
 
             TEMP.Value = ExchangerViewModel.supplyChannel.TEMP;
             TEMP2.Value = ExchangerViewModel.supplyChannel.TEMP2;
@@ -274,33 +279,9 @@ namespace HVACSimulator
 
         private void PlotDataSplitButton_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            SeriesViewModel.SetObjectToDrawPlot((HVACObject)PresentObjectsSplitButton.SelectedItem, ((PlotData)PlotDataSplitButton.SelectedItem).DataType);
         }
 
-        /*private void PresentObjectsSplitButton_Selected(object sender, RoutedEventArgs e)
-        {
-            HVACObject obj = (HVACObject)((SplitButton)sender).SelectedItem;
-            PlotDataSplitButton.ItemsSource = obj.PlotDataList;
-        }
-
-        private void PlotDataSplitButton_Selected(object sender, RoutedEventArgs e)
-        {
-
-        }*/
-
-        /*private void LoadDropDownItems()
-        {
-            PlotDataSplitButton.ItemsSource = Enum.GetValues(typeof(EDataType))
-                .Cast<Enum>()
-                .Select(value => new
-                {
-                    (Attribute.GetCustomAttribute(value.GetType().GetField(value.ToString()), typeof(DescriptionAttribute)) as DescriptionAttribute).Description,
-                    value
-                })
-                .ToList();
-            PlotDataSplitButton.DisplayMemberPath = "Description";
-            //TempHumidDropDown.value = "value";
-
-        }*/
+        
     }
 }
