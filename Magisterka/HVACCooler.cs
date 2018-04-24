@@ -51,15 +51,19 @@ namespace HVACSimulator
                 double oldRange = inputAir.Temperature - airAtCoolerDewPoint.Temperature;
                 double newRange = inputAir.SpecificHumidity - airAtCoolerDewPoint.SpecificHumidity;
                 double newSpecificHumidity = (((outputTemperature - airAtCoolerDewPoint.Temperature) * newRange) / oldRange) + airAtCoolerDewPoint.SpecificHumidity;
-                Air outputAir = new Air(outputTemperature, newSpecificHumidity, EAirHum.specific);
-                return outputAir; //TODO jezeli wilgotność ponad 100%
+                OutputAir = new Air(outputTemperature, newSpecificHumidity, EAirHum.specific);
+                //return outputAir; //TODO jezeli wilgotność ponad 100%
             }
             else
             {
                 ///bez wykroplenia
-                Air outputAir = new Air(outputTemperature, inputAir.SpecificHumidity, EAirHum.specific);
-                return outputAir;
+                OutputAir = new Air(outputTemperature, inputAir.SpecificHumidity, EAirHum.specific);
             }
+            AddDataPointFromAir(OutputAir, EDataType.humidity);
+            AddDataPointFromAir(OutputAir, EDataType.temperature);
+            return OutputAir;
+
+            
         }
 
         public void UpdateParams()

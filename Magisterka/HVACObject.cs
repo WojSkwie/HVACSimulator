@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace HVACSimulator
         public double BCoeff { get; set; }
         public double CCoeff { get; set; }
         private bool _IsPresent;
+        private GlobalParameters GlobalParameters;
         public bool IsPresent
         {
             get { return _IsPresent; }
@@ -36,14 +38,17 @@ namespace HVACSimulator
 
         public HVACObject()
         {
+            GlobalParameters = GlobalParameters.Instance;
             PlotDataList = new List<PlotData>();
             IsMutable = true;
             _IsPresent = true;
+            InitializePlotDataList();
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<string> SimulationErrorOccured;
+        public event EventHandler<DataPoint> NewPointCreated;
 
         private void OnPropertyChanged(string propertyName)
         {
@@ -64,7 +69,39 @@ namespace HVACSimulator
 
         public virtual Air CalculateOutputAirParameters(Air inputAir, double airFlow)
         {
-            return (OutputAir = (Air)inputAir.Clone());
+            OutputAir = (Air)inputAir.Clone();
+            AddDataPointFromAir(OutputAir, EDataType.humidity);
+            AddDataPointFromAir(OutputAir, EDataType.temperature);
+            return OutputAir;
+
+        }
+
+        private void InitializePlotDataList()
+        {
+            PlotData tempPlotData = new PlotData(EDataType.temperature, "Czas [s]", "Temperatura *C", Name); //TODO stopnie
+            PlotDataList.Add(tempPlotData);
+            PlotData humidPlotData = new PlotData(EDataType.humidity, "Czas [s]", "Wilgotność [%RH]", Name);
+            PlotDataList.Add(humidPlotData);
+        }
+
+        public void AddDataPointFromAir(Air air, EDataType dataType)
+        {
+            PlotData plotData = PlotDataList.Single(item => item.DataType == dataType);
+            DataPoint newPoint;
+            switch (dataType)
+            {
+                case EDataType.temperature:
+                    newPoint = new DataPoint(GlobalParameters.SimulationTime, air.Temperature);
+                    break;
+                case EDataType.humidity:
+                    newPoint = new DataPoint(GlobalParameters.SimulationTime, air.RelativeHumidity);
+                    break;
+                default:
+                    MessageBox.Show("Niewłaściwy rodzaj pobieranych danych z obiektu " + this.ToString());
+                    return;
+            }
+            plotData.PointsList.Add(newPoint);
+            OnNewPointCreated(newPoint);
         }
 
         public PlotData GetPlotData(EDataType dataType)
@@ -72,6 +109,11 @@ namespace HVACSimulator
             if (!PlotDataList.Any(item => item.DataType == dataType)) return null;
             PlotData plotData = PlotDataList.First(item => item.DataType == dataType);
             return plotData;
+        }
+
+        public void OnNewPointCreated(DataPoint dataPoint)
+        {
+            NewPointCreated?.Invoke(this, dataPoint);
         }
     }
 }

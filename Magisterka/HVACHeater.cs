@@ -52,6 +52,8 @@ namespace HVACSimulator
             double Phi = Nominator / Denominator;
             double outputTemperatureKelvin = (inputAir.Temperature - 273) + (ActualWaterTemperature - inputAir.Temperature) * W1 / W2 * Phi;
             Air outputAir = new Air(outputTemperatureKelvin + 273, inputAir.SpecificHumidity, EAirHum.specific);
+            AddDataPointFromAir(OutputAir, EDataType.humidity);
+            AddDataPointFromAir(OutputAir, EDataType.temperature);
             return outputAir;
         }
 

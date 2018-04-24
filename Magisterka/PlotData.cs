@@ -28,11 +28,6 @@ namespace HVACSimulator
         public string YAxisTitle { get; set; }
         public string PlotTile { get; set; }
 
-        public PlotData()
-        {
-
-        }
-
         public PlotData(EDataType dataType, string xAxisTitle, string yAxisTitle, string plotTile)
         {
             PointsList = new List<DataPoint>();
