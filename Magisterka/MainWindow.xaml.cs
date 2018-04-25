@@ -51,9 +51,7 @@ namespace HVACSimulator
             DataContext = ExchangerViewModel;
             supplyDataGrid.DataContext = ExchangerViewModel.supplyChannel;
             Plot.DataContext = SeriesViewModel;
-            //LoadDropDownItems();
-
-
+            PlotSeries.DataContext = SeriesViewModel;
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -279,6 +277,8 @@ namespace HVACSimulator
 
         private void PlotDataSplitButton_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            SeriesViewModel.ResetModel();
+            if (PlotDataSplitButton.SelectedItem == null) return;
             SeriesViewModel.SetObjectToDrawPlot((HVACObject)PresentObjectsSplitButton.SelectedItem, ((PlotData)PlotDataSplitButton.SelectedItem).DataType);
         }
 

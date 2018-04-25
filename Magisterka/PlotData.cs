@@ -1,6 +1,7 @@
 ﻿using OxyPlot;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -21,20 +22,34 @@ namespace HVACSimulator
 
     public class PlotData
     {
-        public List<DataPoint> PointsList { get; set; }
+        public ObservableCollection<DataPoint> PointsList { get; set; }
         public EDataType DataType { get; set; }
 
         public string XAxisTitle { get; set; }
         public string YAxisTitle { get; set; }
         public string PlotTile { get; set; }
 
+        public event EventHandler<DataPoint> NewPointCreated;
+
         public PlotData(EDataType dataType, string xAxisTitle, string yAxisTitle, string plotTile)
         {
-            PointsList = new List<DataPoint>();
+            PointsList = new ObservableCollection<DataPoint>();
             DataType = dataType;
             XAxisTitle = xAxisTitle;
             YAxisTitle = yAxisTitle;
             PlotTile = plotTile;
         }
+
+        public void AddPointWithEvent(DataPoint dataPoint)
+        {
+            PointsList.Add(dataPoint);
+            OnNewPointCreated(dataPoint);
+        }
+
+        public void OnNewPointCreated(DataPoint dataPoint)
+        {
+            NewPointCreated?.Invoke(this, dataPoint);
+        }
+
     }
 }

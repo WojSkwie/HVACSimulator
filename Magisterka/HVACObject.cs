@@ -48,7 +48,6 @@ namespace HVACSimulator
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<string> SimulationErrorOccured;
-        public event EventHandler<DataPoint> NewPointCreated;
 
         private void OnPropertyChanged(string propertyName)
         {
@@ -97,11 +96,12 @@ namespace HVACSimulator
                     newPoint = new DataPoint(GlobalParameters.SimulationTime, air.RelativeHumidity);
                     break;
                 default:
-                    MessageBox.Show("Niewłaściwy rodzaj pobieranych danych z obiektu " + this.ToString());
+                    OnSimulationErrorOccured("Niewłaściwy rodzaj pobieranych danych z obiektu " + this.ToString());
                     return;
             }
-            plotData.PointsList.Add(newPoint);
-            OnNewPointCreated(newPoint);
+            plotData.AddPointWithEvent(newPoint);
+            //plotData.PointsList.Add(newPoint);
+            //OnNewPointCreated(newPoint);
         }
 
         public PlotData GetPlotData(EDataType dataType)
@@ -111,9 +111,6 @@ namespace HVACSimulator
             return plotData;
         }
 
-        public void OnNewPointCreated(DataPoint dataPoint)
-        {
-            NewPointCreated?.Invoke(this, dataPoint);
-        }
+        
     }
 }

@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HVACSimulator"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:oxy="http://oxyplot.org/wpf"
         mc:Ignorable="d"
         ResizeMode="NoResize" 
@@ -35,16 +36,24 @@
                             <local:SeriesViewModel></local:SeriesViewModel>
                         </Controls:SplitButton.DataContext>
                     </Controls:SplitButton>
-                    <Controls:SplitButton x:Name="PlotDataSplitButton"  Margin="250,10" Width="200" Height="30" DisplayMemberPath="DataType.Description"  HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="PlotDataSplitButton_SelectionChanged">
+                    <Controls:SplitButton x:Name="PlotDataSplitButton" Margin="250,10" Width="200" Height="30" DisplayMemberPath="DataType" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="PlotDataSplitButton_SelectionChanged">
                         <Controls:SplitButton.DataContext>
                             <local:SeriesViewModel></local:SeriesViewModel>
                         </Controls:SplitButton.DataContext>
+                        <Controls:SplitButton.Resources>
+                            <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+                                <ObjectDataProvider.MethodParameters>
+                                    <x:Type TypeName="local:EDataType"/>
+                                </ObjectDataProvider.MethodParameters>
+                            </ObjectDataProvider>
+                        </Controls:SplitButton.Resources>
                     </Controls:SplitButton>
                     <oxy:Plot x:Name="Plot" Title="{Binding PlotTitle}" Margin="20,50,20,20">
                         <oxy:Plot.DataContext>
                             <local:SeriesViewModel/>
                         </oxy:Plot.DataContext>
-                        <oxy:LineSeries x:Name="PlotSeries" Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding ActualPoints}" >
+                        <oxy:LineSeries x:Name="PlotSeries" Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding ActualPoints, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, PresentationTraceSources.TraceLevel=High}" >
                         </oxy:LineSeries>
                         <oxy:Plot.Axes>
                             <oxy:LinearAxis Position="Bottom" Title="{Binding XAxisTitle}" />
@@ -117,8 +126,8 @@
                     <Label Content="Zadane Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top"/>
                     <Label Content="Aktualne Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top"/>
 
-                    <Controls:NumericUpDown Name="PressureDropSupplyNumeric" HorizontalAlignment="Left" Margin="274,251,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="{Binding FanPressureDrop, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HideUpDownButtons="True" TextAlignment="Left" HasDecimals="True"/>
-                    <Controls:NumericUpDown Name="FlowRateSupplyNumeric" HorizontalAlignment="Left" Margin="274,282,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="{Binding FlowRate, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" IsReadOnly="True" TextAlignment="Left" HasDecimals="True"/>
+                    <Controls:NumericUpDown Name="PressureDropSupplyNumeric" HorizontalAlignment="Left" Margin="274,251,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="{Binding supplyChannel.FanPressureDrop, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" HideUpDownButtons="True" TextAlignment="Left" HasDecimals="True"/>
+                    <Controls:NumericUpDown Name="FlowRateSupplyNumeric" HorizontalAlignment="Left" Margin="274,282,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="{Binding supplyChannel.FlowRate, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" IsReadOnly="True" TextAlignment="Left" HasDecimals="True"/>
                     <Label Content="Spadek ciśnienia w kanale wlotowym [Pa]" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top"/>
                     <Label Content="Natężnie przepływu w kanale wlotowym [m3/s]" HorizontalAlignment="Left" Margin="10,282,0,0" VerticalAlignment="Top"/>
 

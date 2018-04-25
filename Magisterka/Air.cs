@@ -54,6 +54,11 @@ namespace HVACSimulator
             }
         }
 
+        private Air()
+        {
+
+        }
+
         public void OnSimulationErrorOccured(string error)
         {
             throw new NotImplementedException();
@@ -61,7 +66,11 @@ namespace HVACSimulator
 
         public object Clone()
         {
-            return new Air(Temperature, SpecificHumidity, EAirHum.specific);
+            Air clone = new Air();
+            clone.Temperature = this.Temperature;
+            clone._RelativeHumidity = this.RelativeHumidity;
+            clone._SpecificHumidity = this.SpecificHumidity;
+            return clone;
             
         }
     }
