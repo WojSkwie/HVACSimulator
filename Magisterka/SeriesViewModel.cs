@@ -38,7 +38,7 @@ namespace HVACSimulator
         public void ResetModel()
         {
             ActualPoints = new ObservableCollection<DataPoint>();
-            PresentObjects.Clear();
+            //PresentObjects.Clear();
             if(ActualDataPointer != null ) ActualDataPointer.NewPointCreated -= OnNewPointCreated;
             
         }

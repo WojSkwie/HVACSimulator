@@ -270,6 +270,8 @@ namespace HVACSimulator
 
         private void PresentObjectsSplitButton_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            PlotDataSplitButton.ItemsSource = null; 
+            if (((SplitButton)sender).SelectedItem == null) return;
             HVACObject obj = (HVACObject)((SplitButton)sender).SelectedItem;
             if (obj == null) return;
             PlotDataSplitButton.ItemsSource = obj.PlotDataList;
