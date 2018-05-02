@@ -31,6 +31,7 @@ namespace HVACSimulator
         private ExchangerViewModel ExchangerViewModel;
         private SeriesViewModel SeriesViewModel;
         private GlobalParameters GlobalParameters;
+        private ExportFactory ExportFactory;
 
         public MainWindow()
         {
@@ -39,6 +40,7 @@ namespace HVACSimulator
             mainTimer = new DispatcherTimer();
             ExchangerViewModel = new ExchangerViewModel();
             SeriesViewModel = new SeriesViewModel();
+            ExportFactory = new ExportFactory();
 
             InitializeComponent();
 
@@ -284,6 +286,11 @@ namespace HVACSimulator
             SeriesViewModel.SetObjectToDrawPlot((HVACObject)PresentObjectsSplitButton.SelectedItem, ((PlotData)PlotDataSplitButton.SelectedItem).DataType);
         }
 
-        
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
+        {
+            //ExportManager.ExportPlotData(ExportManager.testData, EFileFormat.csv);
+            IExportsPlotData exporter = ExportFactory.GetExportObject(EFileFormat.csv);
+            exporter.ExportPlotData(ExportFactory.testData);
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace HVACSimulator
 
         public string XAxisTitle { get; set; }
         public string YAxisTitle { get; set; }
-        public string PlotTile { get; set; }
+        public string PlotTitle { get; set; }
 
         public event EventHandler<DataPoint> NewPointCreated;
 
@@ -37,7 +37,7 @@ namespace HVACSimulator
             DataType = dataType;
             XAxisTitle = xAxisTitle;
             YAxisTitle = yAxisTitle;
-            PlotTile = plotTile;
+            PlotTitle = plotTile;
         }
 
         public void AddPointWithEvent(DataPoint dataPoint)

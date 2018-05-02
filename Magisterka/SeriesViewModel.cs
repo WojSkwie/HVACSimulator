@@ -47,7 +47,7 @@ namespace HVACSimulator
         {
             PlotData plotData = ((IReturnsPlotData)obj).GetPlotData(dataType);
             ActualPoints = plotData.PointsList;
-            PlotTitle = plotData.PlotTile;
+            PlotTitle = plotData.PlotTitle;
             XAxisTitle = plotData.XAxisTitle;
             YAxisTitle = plotData.YAxisTitle;
             plotData.NewPointCreated += OnNewPointCreated;
