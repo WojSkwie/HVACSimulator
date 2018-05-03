@@ -37,5 +37,18 @@ namespace HVACSimulator
             }
         }
 
+        public IExportsPlotData GetExportObject(EFileFormat fileFormat, string name)
+        {
+            switch (fileFormat)
+            {
+                case EFileFormat.csv:
+                    return new ExportManagerCSV(name);
+                case EFileFormat.xls:
+                    return new ExportManagerXLS(name);
+                default:
+                    throw new NotSupportedException("Brak możliwości eksportu do pliku z takim rozszerzeniem");
+            }
+        }
+
     }
 }

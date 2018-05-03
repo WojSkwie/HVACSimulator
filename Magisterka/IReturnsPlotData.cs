@@ -11,6 +11,8 @@ namespace HVACSimulator
     {
         PlotData GetPlotData(EDataType dataType);
 
+        List<PlotData> GetAllPlotData();
+
         /*event EventHandler<DataPoint> NewPointCreated;
         void OnNewPointCreated(DataPoint dataPoint);*/
         

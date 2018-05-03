@@ -124,6 +124,7 @@
     <Compile Include="INotifyErrorSimulation.cs" />
     <Compile Include="IResetSimulationParameters.cs" />
     <Compile Include="IReturnsPlotData.cs" />
+    <Compile Include="LINQExtension.cs" />
     <Compile Include="MolierCalculations.cs" />
     <Compile Include="MyMath.cs" />
     <Compile Include="PlotData.cs" />

@@ -111,6 +111,9 @@ namespace HVACSimulator
             return plotData;
         }
 
-        
+        public List<PlotData> GetAllPlotData()
+        {
+            return PlotDataList;
+        }
     }
 }

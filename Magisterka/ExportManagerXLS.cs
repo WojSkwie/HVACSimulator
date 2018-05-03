@@ -8,6 +8,16 @@ namespace HVACSimulator
 {
     public class ExportManagerXLS : IExportsPlotData
     {
+        public ExportManagerXLS(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ExportManagerXLS()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ExportPlotData(PlotData plotData)
         {
             throw new NotImplementedException();

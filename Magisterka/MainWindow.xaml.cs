@@ -18,6 +18,7 @@ using ahuRegulator;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace HVACSimulator
 {
@@ -288,9 +289,30 @@ namespace HVACSimulator
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
-            //ExportManager.ExportPlotData(ExportManager.testData, EFileFormat.csv);
-            IExportsPlotData exporter = ExportFactory.GetExportObject(EFileFormat.csv);
+            if(FileFormatSplitButton.SelectedItem == null) { this.ShowMessageAsync("Błąd", "Wybierz z listy rozszerzenie pliku"); return; }
+            EFileFormat fileFormat = (EFileFormat)FileFormatSplitButton.SelectedItem;
+
+            IExportsPlotData exporter = ExportFactory.GetExportObject(fileFormat);
             exporter.ExportPlotData(ExportFactory.testData);
         }
+
+        private void ExportAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (FileFormatSplitButton.SelectedItem == null) { this.ShowMessageAsync("Błąd", "Wybierz z listy rozszerzenie pliku"); return; }
+            EFileFormat fileFormat = (EFileFormat)FileFormatSplitButton.SelectedItem;
+
+            IExportsPlotData exporter = ExportFactory.GetExportObject(fileFormat);
+
+            List<PlotData> plotDataList = new List<PlotData>();
+
+            foreach(IReturnsPlotData obj in SeriesViewModel.PresentObjects)
+            {
+                plotDataList.AddRange(obj.GetAllPlotData());
+            }
+            exporter.ExportPlotDataRange(plotDataList);
+            //exporter.ExportPlotDataRange()
+        }
+
+        
     }
 }

@@ -16,8 +16,8 @@ namespace HVACSimulator
             IsMovable = true;
             IsMutable = false;
 
-            ActualSpeedPercent = 0;
-            SetSpeedPercent = 0;
+            ActualSpeedPercent = 0.01;
+            SetSpeedPercent = 0.01;
             TimeConstant = 5;
             HasSingleTimeConstant = true;
 

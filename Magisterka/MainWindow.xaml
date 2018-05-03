@@ -14,6 +14,16 @@
     <Window.DataContext>
         <local:ExchangerViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        
+            <ObjectDataProvider x:Key="dataFromEnumFileFormat" MethodName="GetValues"
+                                        ObjectType="{x:Type sys:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="local:EFileFormat"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        
+    </Window.Resources>
     <Grid>
 
         <TabControl HorizontalAlignment="Stretch" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="Auto" Background="#121212">
@@ -31,25 +41,7 @@
             </TabItem>
             <TabItem Header="Wykresy">
                 <Grid Background="Transparent" >
-                    <Controls:SplitButton x:Name="PresentObjectsSplitButton" ItemsSource="{Binding PresentObjects}" DisplayMemberPath="Name" Margin="20,10" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="PresentObjectsSplitButton_SelectionChanged">
-                        <Controls:SplitButton.DataContext>
-                            <local:SeriesViewModel></local:SeriesViewModel>
-                        </Controls:SplitButton.DataContext>
-                    </Controls:SplitButton>
-                    <Controls:SplitButton x:Name="PlotDataSplitButton" Margin="250,10" Width="200" Height="30" DisplayMemberPath="DataType" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="PlotDataSplitButton_SelectionChanged">
-                        <Controls:SplitButton.DataContext>
-                            <local:SeriesViewModel></local:SeriesViewModel>
-                        </Controls:SplitButton.DataContext>
-                        <Controls:SplitButton.Resources>
-                            <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
-                        ObjectType="{x:Type sys:Enum}">
-                                <ObjectDataProvider.MethodParameters>
-                                    <x:Type TypeName="local:EDataType"/>
-                                </ObjectDataProvider.MethodParameters>
-                            </ObjectDataProvider>
-                        </Controls:SplitButton.Resources>
-                    </Controls:SplitButton>
-                    <oxy:Plot x:Name="Plot" Title="{Binding PlotTitle}" Margin="20,50,20,20">
+                    <oxy:Plot x:Name="Plot" Title="{Binding PlotTitle}" Margin="20,80,20,20">
                         <oxy:Plot.DataContext>
                             <local:SeriesViewModel/>
                         </oxy:Plot.DataContext>
@@ -60,7 +52,36 @@
                             <oxy:LinearAxis Position="Left"  Title="{Binding YAxisTitle}"/>
                         </oxy:Plot.Axes>
                     </oxy:Plot>
-                    <Button x:Name="ExportButton" Content="Eksportuj" HorizontalAlignment="Left" Margin="1089,10,0,0" VerticalAlignment="Top" Width="75" Click="ExportButton_Click"/>
+                    <StackPanel HorizontalAlignment="Left" Height="Auto" Margin="20,10,0,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+                        <Label Content="Obiekt:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Controls:SplitButton x:Name="PresentObjectsSplitButton" ItemsSource="{Binding PresentObjects}" DisplayMemberPath="Name" Margin="0,0,10,0" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="PresentObjectsSplitButton_SelectionChanged">
+                            <Controls:SplitButton.DataContext>
+                                <local:SeriesViewModel/>
+                            </Controls:SplitButton.DataContext>
+                        </Controls:SplitButton>
+                        <Label Content="Parametr:" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Controls:SplitButton x:Name="PlotDataSplitButton" Margin="0,0,0,0" Width="200" Height="30" DisplayMemberPath="DataType" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="PlotDataSplitButton_SelectionChanged">
+                            <Controls:SplitButton.Resources>
+                                <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+                                    <ObjectDataProvider.MethodParameters>
+                                        <x:Type TypeName="local:EDataType"/>
+                                    </ObjectDataProvider.MethodParameters>
+                                </ObjectDataProvider>
+                            </Controls:SplitButton.Resources>
+                            <Controls:SplitButton.DataContext>
+                                <local:SeriesViewModel/>
+                            </Controls:SplitButton.DataContext>
+                        </Controls:SplitButton>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Height="Auto" Margin="0,10,10,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+                        <TextBox Height="23" TextWrapping="Wrap" Text="" Width="120" Margin="0,0,10,0"/>
+                        <Controls:SplitButton x:Name="FileFormatSplitButton"   Margin="0,0,10,0" Width="50" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource dataFromEnumFileFormat}}">
+                            
+                        </Controls:SplitButton>
+                        <Button x:Name="ExportAllButton" Content="Eksportuj&#x0a;wszystko" Height="40" Margin="0,0,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Click="ExportAllButton_Click"/>
+                        <Button x:Name="ExportButton" Content="Eksportuj" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="ExportButton_Click"/>
+                    </StackPanel>
 
                 </Grid>
             </TabItem>
@@ -119,10 +140,10 @@
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
-                    <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="180" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" />
+                    <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="201" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" />
                     <Label Name="steplengthLabel" Content="1 sek." HorizontalAlignment="Left" Margin="306,129,0,0" VerticalAlignment="Top"/>
                     <Slider Name="steplengthSlider" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" Minimum="1" Maximum="6" ValueChanged="steplengthSlider_ValueChanged" />
-                    <Controls:NumericUpDown Name="SetSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="274,189,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="0" ValueChanged="SetSpeedSupplyNumeric_ValueChanged" Maximum="100" Minimum="0" UpDownButtonsWidth="17" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="SetSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="274,189,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="0.01" ValueChanged="SetSpeedSupplyNumeric_ValueChanged" Maximum="100" Minimum="0.01" UpDownButtonsWidth="17" TextAlignment="Left"/>
                     <Controls:NumericUpDown Name="ActualSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="274,220,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="0" HideUpDownButtons="True" IsReadOnly="True" ValueChanged="ActualSpeedSupplyNumeric_ValueChanged" TextAlignment="Left"/>
                     <Label Content="Zadane Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top"/>
                     <Label Content="Aktualne Wysterowanie wentylatora [%]" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top"/>

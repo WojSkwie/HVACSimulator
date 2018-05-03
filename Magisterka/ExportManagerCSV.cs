@@ -17,7 +17,7 @@ namespace HVACSimulator
             csv = new CsvWriter(new StreamWriter("Export_" + DateTime.Now.ToString().Replace(":","-") +".csv"));
         }
 
-        public ExportManagerCSV(String path)
+        public ExportManagerCSV(string path)
         {
             csv = new CsvWriter(new StreamWriter(path + ".csv"));
         }
@@ -40,7 +40,35 @@ namespace HVACSimulator
 
         public void ExportPlotDataRange(List<PlotData> plotDataList)
         {
-            throw new NotImplementedException();
+            int maxCount = plotDataList.Max(item => item.PointsList.Count);
+            int maxIndex = plotDataList.Select(item => item.PointsList.Count).MaxIndex();
+            csv.WriteField("Eksport zbiorczy danych");
+            csv.NextRecord();
+            csv.WriteField("Lista obiektów ->");
+            foreach(PlotData plotData in plotDataList)
+            {
+                csv.WriteField(plotData.PlotTitle);
+            }
+            csv.NextRecord();
+
+            csv.WriteField(plotDataList[maxIndex].XAxisTitle);
+            foreach (PlotData plotData in plotDataList)
+            {
+                csv.WriteField(plotData.YAxisTitle);
+            }
+            csv.NextRecord();
+
+            for (int i = 0; i < maxCount; i++)
+            {
+                csv.WriteField(plotDataList[maxIndex].PointsList[i].X);
+                foreach(PlotData plotData in plotDataList)
+                {
+                    if (i < plotData.PointsList.Count) csv.WriteField(plotData.PointsList[i].Y);
+                    else csv.WriteField(" ");
+                }
+            }
+
+            csv.Dispose();
         }
     }
 }
