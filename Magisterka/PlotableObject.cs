@@ -27,6 +27,9 @@ namespace HVACSimulator
             return PlotDataList;
         }
 
+        protected abstract void InitializePlotDataList();
+
+
 
     }
 }

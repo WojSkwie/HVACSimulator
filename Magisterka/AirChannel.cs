@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,9 +16,11 @@ namespace HVACSimulator
 
         protected AirChannel() :base()
         {
+            GlobalParameters = GlobalParameters.Instance;
             InputAir = new Air(40, 40, EAirHum.relative);
         }
-        
+
+        protected GlobalParameters GlobalParameters;
         protected double _FlowRate;
         protected double _FanPressureDrop;
 
@@ -57,6 +60,7 @@ namespace HVACSimulator
         public double EmptyChannelPressureDrop { get; set; }
         public Air InputAir { get; set; }
         public List<Image> ImagesList;
+        public string Name { get; set; }
 
         protected void SubscribeToAllItems()
         {
@@ -147,6 +151,9 @@ namespace HVACSimulator
             FlowRate = flow;
             FanPressureDrop = pressure;
 
+            AddFlowDataFromAirParams();
+            AddPressureDataFromAirParams();
+
         }
 
         public void OnSimulationErrorOccured(string error)
@@ -214,6 +221,19 @@ namespace HVACSimulator
 
         }
 
+        protected void AddFlowDataFromAirParams()
+        {
+            PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.flowRate);
+            DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, FlowRate);
+            plotData.AddPointWithEvent(newPoint);
+        }
+
+        protected void AddPressureDataFromAirParams()
+        {
+            PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.pressureDrop);
+            DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, FanPressureDrop);
+            plotData.AddPointWithEvent(newPoint);
+        }
         /*public override PlotData GetPlotData(EDataType dataType)
         {
             throw new NotImplementedException();

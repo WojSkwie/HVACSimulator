@@ -16,8 +16,13 @@ namespace HVACSimulator
         temperature,
 
         [Description("Wilgotność")]
-        humidity
+        humidity,
 
+        [Description("Natężenie przepływu")]
+        flowRate,
+
+        [Description("Spadek ciśnienia")]
+        pressureDrop,
     }
 
     public class PlotData

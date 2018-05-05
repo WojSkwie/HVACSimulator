@@ -13,6 +13,8 @@ namespace HVACSimulator
             HVACObjectsList.Add(new HVACFilter());
             HVACObjectsList.Add(new HVACOutletExchange());
             SubscribeToAllItems();
+            Name = "Kanał wywiewny";
+            InitializePlotDataList();
         }
 
         public void UpdateParams()
@@ -24,6 +26,11 @@ namespace HVACSimulator
                     ((IDynamicObject)obj).UpdateParams();
                 }
             }
+        }
+
+        protected override void InitializePlotDataList()
+        {
+            
         }
     }
 }

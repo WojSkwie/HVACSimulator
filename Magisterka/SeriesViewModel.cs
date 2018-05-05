@@ -15,7 +15,7 @@ namespace HVACSimulator
         public string SeriesTitle { get; set; }
         public string XAxisTitle { get; set; }
         public string YAxisTitle { get; set; }
-        public List<HVACObject> PresentObjects { get; set; } 
+        public List<PlotableObject> PresentObjects { get; set; } 
         public List<string> ParametersList { get; set; }
         private PlotData ActualDataPointer { get; set; }
 
@@ -26,13 +26,18 @@ namespace HVACSimulator
             this.XAxisTitle = "Oś X";
             this.YAxisTitle = "Oś Y";
             this.ActualPoints = new ObservableCollection<DataPoint>();
-            this.PresentObjects = new List<HVACObject>(); 
+            this.PresentObjects = new List<PlotableObject>(); 
         }
 
         public void InitializeModelFromList(ObservableCollection<HVACObject> inList)
         {
             if (!inList.Any(item => item.IsPresent)) return;
             PresentObjects.AddRange(inList.Where(item => item.IsPresent));
+        }
+
+        public void AddAirChannel(AirChannel airChannel)
+        {
+            PresentObjects.Add(airChannel);
         }
 
         public void ResetModel()
@@ -43,7 +48,7 @@ namespace HVACSimulator
             
         }
 
-        public void SetObjectToDrawPlot(HVACObject obj, EDataType dataType)
+        public void SetObjectToDrawPlot(PlotableObject obj, EDataType dataType)
         {
             PlotData plotData = obj.GetPlotData(dataType);
             ActualPoints = plotData.PointsList;

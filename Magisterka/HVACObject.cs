@@ -75,7 +75,7 @@ namespace HVACSimulator
 
         }
 
-        private void InitializePlotDataList()
+        protected override void InitializePlotDataList()
         {
             PlotData tempPlotData = new PlotData(EDataType.temperature, "Czas [s]", "Temperatura *C", Name); //TODO stopnie
             PlotDataList.Add(tempPlotData);

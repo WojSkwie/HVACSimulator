@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,6 +22,9 @@ namespace HVACSimulator
             HVACObjectsList.Add(new HVACFan());
             HVACObjectsList.Add(new HVACFilter());
             SubscribeToAllItems();
+            Name = "Kanał nawiewny";
+            InitializePlotDataList();
+
         } 
 
         public void UpdateParams()
@@ -88,6 +92,14 @@ namespace HVACSimulator
                     ((HVACCooler)obj).WaterFlowPercent = flow;
                 }
             }
+        }
+
+        protected override void InitializePlotDataList()
+        {
+            PlotData tempPlotData = new PlotData(EDataType.flowRate, "Czas [s]", "Natężenie przepływu [m3/s]", Name); //TODO stopnie
+            PlotDataList.Add(tempPlotData);
+            PlotData humidPlotData = new PlotData(EDataType.pressureDrop, "Czas [s]", "Spadek ciśnienia [Pa]", Name);
+            PlotDataList.Add(humidPlotData);
         }
     }
 }
