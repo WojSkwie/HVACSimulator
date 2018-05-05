@@ -5,14 +5,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public abstract class AirChannel : INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact
+    public abstract class AirChannel : PlotableObject, INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact
     {
         public ObservableCollection<HVACObject> HVACObjectsList { get; set; } = new ObservableCollection<HVACObject>();
 
-        protected AirChannel()
+        protected AirChannel() :base()
         {
             InputAir = new Air(40, 40, EAirHum.relative);
         }
@@ -55,6 +56,7 @@ namespace HVACSimulator
         }
         public double EmptyChannelPressureDrop { get; set; }
         public Air InputAir { get; set; }
+        public List<Image> ImagesList;
 
         protected void SubscribeToAllItems()
         {
@@ -207,9 +209,19 @@ namespace HVACSimulator
 
         }
 
-        public void CalculateAirParametersFromExchanger()
+        public void CalculateAirParametersAfterExchanger()
         {
 
         }
+
+        /*public override PlotData GetPlotData(EDataType dataType)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<PlotData> GetAllPlotData()
+        {
+            throw new NotImplementedException();
+        }*/
     }
 }

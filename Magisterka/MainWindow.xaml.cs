@@ -47,12 +47,15 @@ namespace HVACSimulator
 
             mainTimer.Tick += MainTimer_Tick;
             ExchangerViewModel.supplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
-            AddImagesToLists();
-            DrawSupplyItems();
-
+            ExchangerViewModel.exhaustChannel.ChannelPresenceChanged += PresenceChangedInExchaustChannel;
+            AddImagesSupply();
+            AddImagesExhaust();
+            DrawItemsForChannel(ExchangerViewModel.supplyChannel);
+            DrawItemsForChannel(ExchangerViewModel.exhaustChannel);
 
             DataContext = ExchangerViewModel;
             supplyDataGrid.DataContext = ExchangerViewModel.supplyChannel;
+            extractDataGrid.DataContext = ExchangerViewModel.exhaustChannel;
             Plot.DataContext = SeriesViewModel;
             PlotSeries.DataContext = SeriesViewModel;
         }
@@ -70,8 +73,6 @@ namespace HVACSimulator
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
             Plot.InvalidatePlot(true);
-            //var test = PlotSeries.ItemsSource;
-            //Plot.ActualModel.
 
             TEMP.Value = ExchangerViewModel.supplyChannel.TEMP;
             TEMP2.Value = ExchangerViewModel.supplyChannel.TEMP2;
@@ -152,10 +153,16 @@ namespace HVACSimulator
 
         private void PresenceChangedInSupplyChannel(object sender, EventArgs e)
         {
-            DrawSupplyItems();
+            DrawItemsForChannel(ExchangerViewModel.supplyChannel);
         }
 
-        private void AddImagesToLists()
+        private void PresenceChangedInExchaustChannel(object sender, EventArgs e)
+        {
+            DrawItemsForChannel(ExchangerViewModel.exhaustChannel);
+        }
+
+
+        private void AddImagesSupply()
         {
             ExchangerViewModel.imagesSupplyChannnel.Add(imgin1);
             ExchangerViewModel.imagesSupplyChannnel.Add(new Image());
@@ -165,13 +172,29 @@ namespace HVACSimulator
             ExchangerViewModel.imagesSupplyChannnel.Add(imgin5);
         }
 
-        private void DrawSupplyItems()
+        private void AddImagesExhaust()
+        {
+            ExchangerViewModel.imagesExhaustChannel.Add(imgout1);
+            ExchangerViewModel.imagesExhaustChannel.Add(new Image());
+        }
+
+        /*private void DrawSupplyItems()
         {
             for(int i = 0; i < ExchangerViewModel.supplyChannel.HVACObjectsList.Count; i++)
             {
                 HVACObject obj = ExchangerViewModel.supplyChannel.HVACObjectsList[i];
                 ExchangerViewModel.imagesSupplyChannnel[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative));
                 ExchangerViewModel.imagesSupplyChannnel[i].Visibility = ExchangerViewModel.supplyChannel.HVACObjectsList[i].IsPresent ? Visibility.Visible : Visibility.Hidden;
+            }
+        }*/
+
+        private void DrawItemsForChannel(AirChannel airChannel)
+        {
+            for (int i = 0; i < airChannel.HVACObjectsList.Count; i++)
+            {
+                HVACObject obj = airChannel.HVACObjectsList[i];
+                airChannel.ImagesList[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative));
+                airChannel.ImagesList[i].Visibility = airChannel.HVACObjectsList[i].IsPresent ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -215,8 +238,10 @@ namespace HVACSimulator
             int direction = Convert.ToInt32(((Button)sender).Tag);
             if (index < 0) return;
             ExchangerViewModel.supplyChannel.MoveObject(index, direction);
-            supplyDataGrid.ItemsSource = ExchangerViewModel.supplyChannel.HVACObjectsList;
-            DrawSupplyItems();
+            //supplyDataGrid.ItemsSource = ExchangerViewModel.supplyChannel.HVACObjectsList; //TODO jeżeli przesuwanie przestanie działać to tutaj może być przyczyna
+            DrawItemsForChannel(ExchangerViewModel.supplyChannel);
+            //DrawItemsForChannel(ExchangerViewModel.exhaustChannel);
+            //DrawSupplyItems();
         }
 
         private void SetHotWaterTemperatureNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
@@ -309,7 +334,7 @@ namespace HVACSimulator
 
             List<PlotData> plotDataList = new List<PlotData>();
 
-            foreach(IReturnsPlotData obj in SeriesViewModel.PresentObjects)
+            foreach(PlotableObject obj in SeriesViewModel.PresentObjects)
             {
                 plotDataList.AddRange(obj.GetAllPlotData());
             }

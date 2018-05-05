@@ -45,7 +45,7 @@ namespace HVACSimulator
 
         public void SetObjectToDrawPlot(HVACObject obj, EDataType dataType)
         {
-            PlotData plotData = ((IReturnsPlotData)obj).GetPlotData(dataType);
+            PlotData plotData = obj.GetPlotData(dataType);
             ActualPoints = plotData.PointsList;
             PlotTitle = plotData.PlotTitle;
             XAxisTitle = plotData.XAxisTitle;

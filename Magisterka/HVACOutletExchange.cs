@@ -15,6 +15,7 @@ namespace HVACSimulator
             IsGenerativeFlow = false;
             Name = "Kanał wymiennika";
             IsMovable = false;
+            IsMutable = false;
 
             //TODO dopytać
             ACoeff = 0;

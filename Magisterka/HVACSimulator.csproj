@@ -142,6 +142,7 @@
     <Compile Include="LINQExtension.cs" />
     <Compile Include="MolierCalculations.cs" />
     <Compile Include="MyMath.cs" />
+    <Compile Include="PlotableObject.cs" />
     <Compile Include="PlotData.cs" />
     <Compile Include="SeriesViewModel.cs" />
     <Compile Include="USB.cs">

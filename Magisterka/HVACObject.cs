@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public abstract class HVACObject : INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation, IReturnsPlotData
+    public abstract class HVACObject : PlotableObject, INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation//, IReturnsPlotData
     {
         public bool IsMutable { get; protected set; } 
         public bool IsGenerativeFlow { get; set; }
@@ -34,12 +34,12 @@ namespace HVACSimulator
         public bool HasSingleTimeConstant { get; set; }
         public double TimeConstant { get; set; }
         public Air OutputAir { get; set; }
-        public List<PlotData> PlotDataList { get; set; }
+        //public List<PlotData> PlotDataList { get; set; }
 
-        public HVACObject()
+        public HVACObject() :base()
         {
             GlobalParameters = GlobalParameters.Instance;
-            PlotDataList = new List<PlotData>();
+            //PlotDataList = new List<PlotData>();
             IsMutable = true;
             _IsPresent = true;
             InitializePlotDataList();
@@ -104,17 +104,17 @@ namespace HVACSimulator
             //OnNewPointCreated(newPoint);
         }
 
-        public PlotData GetPlotData(EDataType dataType)
+        /*public override PlotData GetPlotData(EDataType dataType)
         {
             if (!PlotDataList.Any(item => item.DataType == dataType)) return null;
             PlotData plotData = PlotDataList.First(item => item.DataType == dataType);
             return plotData;
         }
 
-        public List<PlotData> GetAllPlotData()
+        public override List<PlotData> GetAllPlotData()
         {
             return PlotDataList;
-        }
+        }*/
 
         protected void SetPlotDataNames()
         {

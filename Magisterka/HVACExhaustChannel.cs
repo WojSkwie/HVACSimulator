@@ -8,9 +8,22 @@ namespace HVACSimulator
 {
     public class HVACExhaustChannel : AirChannel, IDynamicObject
     {
+        public HVACExhaustChannel() :base()
+        {
+            HVACObjectsList.Add(new HVACFilter());
+            HVACObjectsList.Add(new HVACOutletExchange());
+            SubscribeToAllItems();
+        }
+
         public void UpdateParams()
         {
-            //throw new NotImplementedException();
+            foreach (HVACObject obj in HVACObjectsList)
+            {
+                if (obj is IDynamicObject)
+                {
+                    ((IDynamicObject)obj).UpdateParams();
+                }
+            }
         }
     }
 }
