@@ -75,7 +75,9 @@
                         </Controls:SplitButton>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right" Height="Auto" Margin="0,10,10,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
-                        <TextBox Height="23" TextWrapping="Wrap" Text="" Width="120" Margin="0,0,10,0"/>
+                        <Label Content="Nazwa pliku:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Height="23" TextWrapping="Wrap" MaxLength="20" Text="" Width="120" Margin="0,0,10,0"/>
+                        <Label Content="Rozszerzenie:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <Controls:SplitButton x:Name="FileFormatSplitButton"   Margin="0,0,10,0" Width="50" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource dataFromEnumFileFormat}}">
                             
                         </Controls:SplitButton>
@@ -140,7 +142,20 @@
                             </ContextMenu>
                         </DataGrid.ContextMenu>
                     </DataGrid>
-                    <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="201" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" />
+                    <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" Height="201" Margin="838,404,0,0" VerticalAlignment="Top" Width="336" Background="White" AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserSortColumns="False" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
+                            <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                                <DataGridCheckBoxColumn.CellStyle>
+                                    <Style TargetType="DataGridCell" >
+                                        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center" />
+                                        <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
+                                        <Setter Property="IsEnabled" Value="{Binding IsMutable}" />
+                                    </Style>
+                                </DataGridCheckBoxColumn.CellStyle>
+                            </DataGridCheckBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <Label Name="steplengthLabel" Content="1 sek." HorizontalAlignment="Left" Margin="306,129,0,0" VerticalAlignment="Top"/>
                     <Slider Name="steplengthSlider" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" Minimum="1" Maximum="6" ValueChanged="steplengthSlider_ValueChanged" />
                     <Controls:NumericUpDown Name="SetSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="274,189,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="0.01" ValueChanged="SetSpeedSupplyNumeric_ValueChanged" Maximum="100" Minimum="0.01" UpDownButtonsWidth="17" TextAlignment="Left"/>

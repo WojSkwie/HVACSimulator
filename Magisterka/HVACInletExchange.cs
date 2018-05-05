@@ -21,6 +21,7 @@ namespace HVACSimulator
             CCoeff = 0;
 
             ImageSource = @"refactor";
+            SetPlotDataNames();
         }
 
         public void UpdateParams()

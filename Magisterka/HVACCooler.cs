@@ -29,6 +29,8 @@ namespace HVACSimulator
             MaximalWaterFlow = 1;
 
             ImageSource = @"images\cooler.png";
+
+            SetPlotDataNames();
         }
 
         public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)

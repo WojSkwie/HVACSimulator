@@ -290,10 +290,14 @@ namespace HVACSimulator
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
             if(FileFormatSplitButton.SelectedItem == null) { this.ShowMessageAsync("Błąd", "Wybierz z listy rozszerzenie pliku"); return; }
+            PlotData dataToExport = PlotDataSplitButton.SelectedItem as PlotData;
+            if (dataToExport == null) { this.ShowMessageAsync("Błąd", "Wybierz obiekt i parametr do eksportowania"); return; }
+            if (dataToExport.PointsList.Count == 0) { this.ShowMessageAsync("Błąd", "Brak danych do wyeksportowania"); return; }
+
             EFileFormat fileFormat = (EFileFormat)FileFormatSplitButton.SelectedItem;
 
             IExportsPlotData exporter = ExportFactory.GetExportObject(fileFormat);
-            exporter.ExportPlotData(ExportFactory.testData);
+            exporter.ExportPlotData(dataToExport);
         }
 
         private void ExportAllButton_Click(object sender, RoutedEventArgs e)
@@ -309,8 +313,8 @@ namespace HVACSimulator
             {
                 plotDataList.AddRange(obj.GetAllPlotData());
             }
+            if (plotDataList.Count == 0) { this.ShowMessageAsync("Błąd", "Brak danych do wyeksportowania"); return; }
             exporter.ExportPlotDataRange(plotDataList);
-            //exporter.ExportPlotDataRange()
         }
 
         

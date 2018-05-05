@@ -17,12 +17,12 @@ namespace HVACSimulator
     {
         public ExportFactory()
         {
-            testData.PointsList.Add(new OxyPlot.DataPoint(1, 1));
-            testData.PointsList.Add(new OxyPlot.DataPoint(2, 2));
+            //testData.PointsList.Add(new OxyPlot.DataPoint(1, 1));
+            //testData.PointsList.Add(new OxyPlot.DataPoint(2, 2));
 
         }
 
-        public PlotData testData = new PlotData(EDataType.temperature, "Xopis", "Yopis", "title");
+        //public PlotData testData = new PlotData(EDataType.temperature, "Xopis", "Yopis", "title");
 
         public IExportsPlotData GetExportObject(EFileFormat fileFormat)
         {

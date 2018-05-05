@@ -19,6 +19,8 @@ namespace HVACSimulator
             BCoeff = 1;
             CCoeff = 0;
             ImageSource = @"images\filter.png";
+
+            SetPlotDataNames();
         }
 
         

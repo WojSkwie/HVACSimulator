@@ -28,6 +28,8 @@ namespace HVACSimulator
             MaximalWaterFlow = 1;
 
             ImageSource = @"images\heater.png";
+
+            SetPlotDataNames();
         }
  
 

@@ -115,5 +115,13 @@ namespace HVACSimulator
         {
             return PlotDataList;
         }
+
+        protected void SetPlotDataNames()
+        {
+            foreach(PlotData plotData in PlotDataList)
+            {
+                plotData.PlotTitle = Name;
+            }
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace HVACSimulator
             CCoeff = 120;
 
             ImageSource = @"images\fan.png";
+            SetPlotDataNames();
         } 
         public double SetSpeedPercent { get; set; } 
         public double ActualSpeedPercent { get; set; } 

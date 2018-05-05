@@ -5,21 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace HVACSimulator
 {
     public class ExportManagerCSV : IExportsPlotData
     {
         private CsvWriter csv;
+        private Configuration configuration = new Configuration
+        {
+            Delimiter = ";"
+        };
 
         public ExportManagerCSV()
         {
-            csv = new CsvWriter(new StreamWriter("Export_" + DateTime.Now.ToString().Replace(":","-") +".csv"));
+            csv = new CsvWriter(new StreamWriter("Export_" + DateTime.Now.ToString().Replace(":", "-") + ".csv"), configuration);
         }
 
         public ExportManagerCSV(string path)
         {
-            csv = new CsvWriter(new StreamWriter(path + ".csv"));
+            string name = path + ".csv";
+            int counter = 1;
+            while (File.Exists(name)) 
+            {
+                name = path + counter + ".csv";
+                counter++;
+            }
+            csv = new CsvWriter(new StreamWriter(name), configuration);
+
         }
 
         public void ExportPlotData(PlotData plotData)
@@ -66,6 +79,7 @@ namespace HVACSimulator
                     if (i < plotData.PointsList.Count) csv.WriteField(plotData.PointsList[i].Y);
                     else csv.WriteField(" ");
                 }
+                csv.NextRecord();
             }
 
             csv.Dispose();
