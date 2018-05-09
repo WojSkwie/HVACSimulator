@@ -133,6 +133,7 @@
     <Compile Include="HVACOutletExchange.cs" />
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="HVACTemperatureActiveObject.cs" />
+    <Compile Include="IBoundableObject.cs" />
     <Compile Include="IDynamicObject.cs" />
     <Compile Include="IExportsPlotData.cs" />
     <Compile Include="IModifiableCharact.cs" />

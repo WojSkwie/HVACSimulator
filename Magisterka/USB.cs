@@ -90,9 +90,10 @@ namespace HVACSimulator
             CorrectFrameRead?.Invoke(this, frame);
         }
 
-        public bool TryWriteFrame(byte[] frame)
+        public bool DecoreAndTryWriteFrame(byte[] frame)
         {
             if (frame.Length == 0) return false;
+            frame = DecoreFrame(frame);
             try
             {
                 Write(frame, 0, frame.Length);
@@ -108,6 +109,17 @@ namespace HVACSimulator
                 OnSimulationErrorOccured("Port nie jest otwarty");
                 return false;
             }
+        }
+
+        public byte[] DecoreFrame(byte[] croppedFrame)
+        {
+            byte[] decoredFrame = new byte[frameBytes];
+            decoredFrame[0] = StartByte;
+            Array.Copy(croppedFrame, 0, decoredFrame, 1, croppedFrame.Length);
+            byte crc = CRC8(croppedFrame);
+            decoredFrame[croppedFrame.Length + 1] = crc;
+            decoredFrame[decoredFrame.Length - 1] = EndByte;
+            return decoredFrame;
         }
 
         private byte CRC8(byte[] frame)
