@@ -13,7 +13,16 @@ namespace HVACSimulator
     }
     public class Air : INotifyErrorSimulation, ICloneable
     {
-        public double Temperature { get; set; }
+        private double _Temperature;
+        public double Temperature
+        {
+            get { return _Temperature; }
+            set
+            {
+                _Temperature = value;
+                Enthalpy = MolierCalculations.CalculateEnthalpy(this);
+            }
+        }
         private double _SpecificHumidity;
         public double SpecificHumidity
         {
@@ -22,13 +31,10 @@ namespace HVACSimulator
             {
                 _SpecificHumidity = value;
                 _RelativeHumidity = MolierCalculations.HumiditySpecificToRelative(this);
+                Enthalpy = MolierCalculations.CalculateEnthalpy(this);
             }
         }
-
         private double _RelativeHumidity;
-
-        public event EventHandler<string> SimulationErrorOccured;
-
         public double RelativeHumidity
         {
             get { return _RelativeHumidity; }
@@ -38,6 +44,9 @@ namespace HVACSimulator
                 _SpecificHumidity = MolierCalculations.HumidityRelativeToSpecific(this);
             }
         }
+        public double Enthalpy { get; set; }
+
+        public event EventHandler<string> SimulationErrorOccured;
 
 
         public Air(double temperature, double humidity, EAirHum airHum)
@@ -66,10 +75,12 @@ namespace HVACSimulator
 
         public object Clone()
         {
-            Air clone = new Air();
-            clone.Temperature = this.Temperature;
-            clone._RelativeHumidity = this.RelativeHumidity;
-            clone._SpecificHumidity = this.SpecificHumidity;
+            Air clone = new Air
+            {
+                Temperature = this.Temperature,
+                _RelativeHumidity = this.RelativeHumidity,
+                _SpecificHumidity = this.SpecificHumidity
+            };
             return clone;
             
         }

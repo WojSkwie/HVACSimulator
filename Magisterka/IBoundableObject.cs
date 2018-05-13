@@ -21,6 +21,7 @@ namespace HVACSimulator
         void BoundedParamChanged(object sender, int parameter);
         void BoundParameter(EBoundableParameter boundableParameter, double minVal, double maxVal);
         void BoundParameter(EBoundableParameter boundableParameter);
+        double GetParameter(EBoundableParameter boundableParameter);
         void InitializeParameterList();
     }
 

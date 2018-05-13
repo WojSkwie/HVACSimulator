@@ -52,5 +52,12 @@ namespace HVACSimulator
             double DewPoint = Nominator / Denominator;
             return DewPoint;
         }
+
+        public static double CalculateEnthalpy(Air air)
+        {
+            double dryAirElthalpy = 1.007 * air.Temperature - 0.026;
+            double vaporEnthalpy = air.SpecificHumidity * (2501 + 1.84 * air.Temperature);
+            return vaporEnthalpy + dryAirElthalpy;
+        }
     }
 }
