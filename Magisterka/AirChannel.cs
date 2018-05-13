@@ -203,17 +203,16 @@ namespace HVACSimulator
             }
         }
 
-        public void CalculateAirParametersBeforeExchanger()
+        public Air CalculateAirParametersBeforeExchanger()
         {
-            if (FlowRate == 0) return;
+            if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = InputAir;
-
             foreach(HVACObject obj in HVACObjectsList)
             {
-                if (obj is HVACInletExchange || obj is HVACOutletExchange) break;
+                if (obj is HVACInletExchange || obj is HVACOutletExchange) return air;
                 air = obj.CalculateOutputAirParameters(air, FlowRate);
             }
-
+            throw new MissingMemberException("Brak układu odzysku ciepła w kanale");
         }
 
         public void CalculateAirParametersAfterExchanger()

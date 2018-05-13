@@ -10,8 +10,8 @@ namespace HVACSimulator
     {
         
         private const double ReferenceTemperatureDifference = 32 - 6;
-        public double ActualCoolingPower { get; set; } 
-        public double SetCoolingPower { get; set; }
+        public double ActualMaximalCoolingPower { get; set; } 
+        public double SetMaximalCoolingPower { get; set; }
         public double CoolingTimeConstant { get; set; }
 
         public HVACCooler() : base()
@@ -31,8 +31,8 @@ namespace HVACSimulator
             WaterFlowPercent = 100;
             //HeatExchangeSurface = 1;
             //HeatTransferCoeff = 200;
-            ActualCoolingPower = 0;
-            SetCoolingPower = 100;
+            ActualMaximalCoolingPower = 100;
+            SetMaximalCoolingPower = 100;
             CoolingTimeConstant = 10;
             MaximalWaterFlow = 1;
 
@@ -45,45 +45,33 @@ namespace HVACSimulator
         {
             double massAirFlow = MolierCalculations.FindAirDensity(inputAir.Temperature) * airFlow;
             double inputAirDewPoint = MolierCalculations.CalculateDewPoint(inputAir);
-            //Air airAtCoolerDewPoint = new Air(ActualWaterTemperature, 100, EAirHum.relative);
             double enthalpyDiff = 0;
             double energyDiff = 0;
-
+            Air MaximallyCooledAir;
             if (ActualWaterTemperature < inputAirDewPoint) ///wykroplenie
             {
-                Air MaximallyCooledAir = new Air(ActualWaterTemperature, 100, EAirHum.relative);
-                enthalpyDiff = inputAir.Enthalpy - MaximallyCooledAir.Enthalpy;
-                energyDiff = enthalpyDiff * massAirFlow;
-                if (ActualCoolingPower > energyDiff)
-                {
-                    OutputAir = MaximallyCooledAir;
-                }
-                else
-                {
-                    double temp = ActualWaterTemperature + (inputAir.Temperature - ActualWaterTemperature)
-                        * ((energyDiff - ActualCoolingPower) / energyDiff);
-                    double specHum = MaximallyCooledAir.SpecificHumidity + (inputAir.SpecificHumidity - MaximallyCooledAir.SpecificHumidity)
-                        * ((energyDiff - ActualCoolingPower) / energyDiff);
-                    OutputAir = new Air(temp, specHum, EAirHum.specific);
-                }
+                MaximallyCooledAir = new Air(ActualWaterTemperature, 100, EAirHum.relative);
             }
-            else ///bez wykroplenia
+            else
             {
-                Air MaximallyCooledAir = new Air(ActualWaterTemperature, inputAir.SpecificHumidity, EAirHum.specific);
-                enthalpyDiff = inputAir.Enthalpy - MaximallyCooledAir.Enthalpy;
-                energyDiff = enthalpyDiff * massAirFlow;
-                if(ActualCoolingPower > energyDiff)
-                {
-                    OutputAir = MaximallyCooledAir;
-                }
-                else
-                {
-                    double temp = ActualWaterTemperature + (inputAir.Temperature - ActualWaterTemperature)
-                        * ((energyDiff - ActualCoolingPower) / energyDiff);
-                    OutputAir = new Air(temp, inputAir.SpecificHumidity, EAirHum.specific);
-                    
-                }
-
+                MaximallyCooledAir = new Air(ActualWaterTemperature, inputAir.SpecificHumidity, EAirHum.specific);
+            }
+            enthalpyDiff = inputAir.Enthalpy - MaximallyCooledAir.Enthalpy;
+            energyDiff = enthalpyDiff * massAirFlow;
+            double coolingPower = ActualMaximalCoolingPower * (inputAir.Temperature - ActualWaterTemperature) / ReferenceTemperatureDifference;
+            coolingPower *= WaterFlowPercent / 100;
+            if (coolingPower > energyDiff)
+            {
+                OutputAir = MaximallyCooledAir;
+            }
+            else
+            {
+                double temp = ActualWaterTemperature + (inputAir.Temperature - ActualWaterTemperature)
+                        * ((energyDiff - coolingPower) / energyDiff);
+                double specHum = MaximallyCooledAir.SpecificHumidity + (inputAir.SpecificHumidity - MaximallyCooledAir.SpecificHumidity)
+                    * ((energyDiff - coolingPower) / energyDiff);
+                if (OutputAir.RelativeHumidity > 100) OutputAir.RelativeHumidity = 100; //TODO sprawdzić jak częśto występuje i jaka wartość
+                OutputAir = new Air(temp, specHum, EAirHum.specific);
             }
             AddDataPointFromAir(OutputAir, EDataType.humidity);
             AddDataPointFromAir(OutputAir, EDataType.temperature);
@@ -102,8 +90,8 @@ namespace HVACSimulator
             double derivative = (SetWaterTemperature - ActualWaterTemperature) / TimeConstant;
             ActualWaterTemperature += derivative * Constants.step;
 
-            derivative = (SetCoolingPower - ActualCoolingPower) / CoolingTimeConstant;
-            ActualCoolingPower += derivative * Constants.step;
+            derivative = (SetMaximalCoolingPower - ActualMaximalCoolingPower) / CoolingTimeConstant;
+            ActualMaximalCoolingPower += derivative * Constants.step;
         }
     }
 }

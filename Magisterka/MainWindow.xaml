@@ -186,8 +186,8 @@
                     <Label Content="Wysterowanie pompy płynu w nagrzewnicy [%]" HorizontalAlignment="Left" Margin="10,375,0,0" VerticalAlignment="Top"/>
 
 
-                    <Controls:NumericUpDown Name="SetColdWaterTemperatureNumeric" HorizontalAlignment="Left" Margin="274,406,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="5" ValueChanged="SetColdWaterTemperatureNumeric_ValueChanged" Maximum="150" Minimum="10" UpDownButtonsWidth="17" TextAlignment="Left"/>
-                    <Controls:NumericUpDown Name="ActualColdWaterTemperatureNumeric" HorizontalAlignment="Left" Margin="274,437,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="5" HideUpDownButtons="True" IsReadOnly="True" ValueChanged="ActualColdWaterTemperatureNumeric_ValueChanged" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="SetColdWaterTemperatureNumeric" HorizontalAlignment="Left" Margin="274,406,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="6" ValueChanged="SetColdWaterTemperatureNumeric_ValueChanged" Maximum="150" Minimum="1" UpDownButtonsWidth="17" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="ActualColdWaterTemperatureNumeric" HorizontalAlignment="Left" Margin="274,437,0,0"  VerticalAlignment="Top" Height="23" Width="139" Interval="1" Value="6" HideUpDownButtons="True" IsReadOnly="True" ValueChanged="ActualColdWaterTemperatureNumeric_ValueChanged" TextAlignment="Left"/>
                     <Label Content="Zadana temperatura płynu w chłodnicy [&#186;C]" HorizontalAlignment="Left" Margin="10,406,0,0" VerticalAlignment="Top"/>
                     <Label Content="Aktualna temperatura płynu w chłodnicy [&#186;C]" HorizontalAlignment="Left" Margin="10,437,0,0" VerticalAlignment="Top"/>
 

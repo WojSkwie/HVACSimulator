@@ -69,6 +69,8 @@ namespace HVACSimulator
             PressureDropSupplyNumeric.Value = ExchangerViewModel.GetPressureDropFromSupplyChannel();
             FlowRateSupplyNumeric.Value = ExchangerViewModel.GetFlowRateFromSupplyChannel();
             ExchangerViewModel.supplyChannel.CalculateAirParameters();
+            //Air supplyExchangerAir = ExchangerViewModel.supplyChannel.CalculateAirParametersBeforeExchanger();
+            //Air exchaustExchangerAir = ExchangerViewModel.exhaustChannel.CalculateAirParametersBeforeExchanger();
 
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
@@ -275,7 +277,7 @@ namespace HVACSimulator
         {
             if(SetColdWaterTemperatureNumeric.Value != null)
             {
-                ExchangerViewModel.supplyChannel.SetColdWaterFlow((double)SetColdWaterTemperatureNumeric.Value);
+                ExchangerViewModel.supplyChannel.SetCoolerWaterTemperature((double)SetColdWaterTemperatureNumeric.Value);
             }
         }
 
@@ -342,7 +344,5 @@ namespace HVACSimulator
             if (plotDataList.Count == 0) { this.ShowMessageAsync("Błąd", "Brak danych do wyeksportowania"); return; }
             exporter.ExportPlotDataRange(plotDataList);
         }
-
-        
     }
 }
