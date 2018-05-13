@@ -91,11 +91,12 @@
                 <Grid Background="Transparent" >
                     <Image Name="imgexchanger" HorizontalAlignment="Center" Margin="418,14,10,239" VerticalAlignment="Center" Height="Auto" Width="756" DataContext="HVACSupplyChannel" Source="images\wymiennikblank.png" />
                     <Image Name="imgin1" HorizontalAlignment="Left" Height="72" Margin="448,62,0,0" VerticalAlignment="Top" Width="32" Source="images\filter.png" />
-                    <Image Name="imgin2" HorizontalAlignment="Left" Height="68" Margin="830,225,0,0" VerticalAlignment="Top" Width="50" Source="images\heater.png" />
-                    <Image Name="imgin3" HorizontalAlignment="Left" Height="68" Margin="900,225,0,0" VerticalAlignment="Top" Width="50" Source="images\cooler.png" />
-                    <Image Name="imgin4" HorizontalAlignment="Left" Height="72" Margin="970,225,0,0" VerticalAlignment="Top" Width="72" Source="images\fan.png" />
+                    <Image Name="imgin2" HorizontalAlignment="Left" Height="68" Margin="910,225,0,0" VerticalAlignment="Top" Width="50" Source="images\heater.png" />
+                    <Image Name="imgin3" HorizontalAlignment="Left" Height="68" Margin="960,225,0,0" VerticalAlignment="Top" Width="50" Source="images\cooler.png" />
+                    <Image Name="imgin4" HorizontalAlignment="Left" Height="72" Margin="1020,225,0,0" VerticalAlignment="Top" Width="72" Source="images\fan.png" />
                     <Image Name="imgin5" HorizontalAlignment="Left" Height="72" Margin="1110,220,0,0" VerticalAlignment="Top" Width="32" Source="images\filter.png" />
                     <Image Name="imgout1" HorizontalAlignment="Left" Height="72" Margin="1110,62,0,0" VerticalAlignment="Top" Width="32" Source="images\filter.png" />
+                    <Image Name="imgmix" HorizontalAlignment="Left" Height="Auto" Margin="775,166,0,0" VerticalAlignment="Top" Width="120" Source="images\mixing.png" />
                     <Button Name="startButton" Content="Start" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="startButton_Click"/>
                     <Button Name="stopButton" Content="Stop" HorizontalAlignment="Left" Margin="134,14,0,0" VerticalAlignment="Top" Width="74" Height="40" Click="stopButton_Click"/>
                     <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="pauseButton_Click"/>
