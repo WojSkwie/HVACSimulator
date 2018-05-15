@@ -8,6 +8,8 @@ namespace HVACSimulator
 {
     public class HVACInletExchange : HVACObject, IDynamicObject
     {
+        public Air ExchnagedAir { get; set; }
+
         public HVACInletExchange() : base()
         {
             IsGenerativeFlow = false;
@@ -22,6 +24,11 @@ namespace HVACSimulator
 
             ImageSource = @"refactor";
             SetPlotDataNames();
+        }
+
+        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        {
+            return ExchnagedAir;
         }
 
         public void UpdateParams()

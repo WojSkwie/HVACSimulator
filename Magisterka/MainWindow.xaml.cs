@@ -68,9 +68,9 @@ namespace HVACSimulator
             ActualColdWaterTemperatureNumeric.Value = ExchangerViewModel.GetColdWaterTemperatureFromSupplyChannel();
             PressureDropSupplyNumeric.Value = ExchangerViewModel.GetPressureDropFromSupplyChannel();
             FlowRateSupplyNumeric.Value = ExchangerViewModel.GetFlowRateFromSupplyChannel();
-            ExchangerViewModel.supplyChannel.CalculateAirParameters();
-            //Air supplyExchangerAir = ExchangerViewModel.supplyChannel.CalculateAirParametersBeforeExchanger();
-            //Air exchaustExchangerAir = ExchangerViewModel.exhaustChannel.CalculateAirParametersBeforeExchanger();
+            //ExchangerViewModel.supplyChannel.CalculateAirParameters();
+            Air exchaustExchangerAir = ExchangerViewModel.exhaustChannel.CalculateAirParametersBeforeExchanger();
+            Air supplyExchangerAir = ExchangerViewModel.supplyChannel.CalculateAirParametersBeforeExchanger();
 
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;

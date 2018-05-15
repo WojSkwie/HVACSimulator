@@ -76,8 +76,6 @@ namespace HVACSimulator
             AddDataPointFromAir(OutputAir, EDataType.humidity);
             AddDataPointFromAir(OutputAir, EDataType.temperature);
             return OutputAir;
-
-
         }
 
         public void UpdateParams()

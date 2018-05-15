@@ -129,6 +129,7 @@
     <Compile Include="HVACFilter.cs" />
     <Compile Include="HVACHeater.cs" />
     <Compile Include="HVACInletExchange.cs" />
+    <Compile Include="HVACMixingBox.cs" />
     <Compile Include="HVACObject.cs" />
     <Compile Include="HVACOutletExchange.cs" />
     <Compile Include="HVACSupplyChannel.cs" />

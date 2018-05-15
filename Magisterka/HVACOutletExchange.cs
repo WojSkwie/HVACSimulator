@@ -8,7 +8,7 @@ namespace HVACSimulator
 {
     public class HVACOutletExchange : HVACObject, IDynamicObject
     {
-
+        public Air ExchangedAir { get; set; }
         public HVACOutletExchange() :base()
         {
             
@@ -23,6 +23,11 @@ namespace HVACSimulator
             CCoeff = 0;
 
             ImageSource = @"refactor";
+        }
+
+        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        {
+            return ExchangedAir;
         }
 
         public void UpdateParams()
