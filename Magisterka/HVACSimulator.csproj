@@ -124,6 +124,7 @@
     <Compile Include="ExportManagerXLS.cs" />
     <Compile Include="GlobalParameters.cs" />
     <Compile Include="HVACCooler.cs" />
+    <Compile Include="HVACExchanger.cs" />
     <Compile Include="HVACExhaustChannel.cs" />
     <Compile Include="HVACFan.cs" />
     <Compile Include="HVACFilter.cs" />

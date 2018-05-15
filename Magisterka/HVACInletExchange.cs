@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACInletExchange : HVACObject, IDynamicObject
+    public class HVACInletExchange : HVACObject
     {
-        public Air ExchnagedAir { get; set; }
+        //public Air ExchnagedAir { get; set; }
 
         public HVACInletExchange() : base()
         {
@@ -26,15 +26,15 @@ namespace HVACSimulator
             SetPlotDataNames();
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        /*public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
         {
             return ExchnagedAir;
-        }
+        }*/
 
-        public void UpdateParams()
+        /*public void UpdateParams()
         {
             Console.Write("TODO UPDATE INLET"); //TODO
             //throw new NotImplementedException();
-        }
+        }*/
     }
 }

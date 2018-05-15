@@ -75,9 +75,6 @@ namespace HVACSimulator
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
             Plot.InvalidatePlot(true);
-
-            TEMP.Value = ExchangerViewModel.supplyChannel.TEMP;
-            TEMP2.Value = ExchangerViewModel.supplyChannel.TEMP2;
         }
 
         private void UpdateAllDynamicObjects()
@@ -169,6 +166,7 @@ namespace HVACSimulator
         {
             ExchangerViewModel.imagesSupplyChannnel.Add(imgin1);
             ExchangerViewModel.imagesSupplyChannnel.Add(new Image());
+            ExchangerViewModel.imagesSupplyChannnel.Add(new Image());
             ExchangerViewModel.imagesSupplyChannnel.Add(imgin2);
             ExchangerViewModel.imagesSupplyChannnel.Add(imgin3);
             ExchangerViewModel.imagesSupplyChannnel.Add(imgin4);
@@ -178,6 +176,7 @@ namespace HVACSimulator
         private void AddImagesExhaust()
         {
             ExchangerViewModel.imagesExhaustChannel.Add(imgout1);
+            ExchangerViewModel.imagesExhaustChannel.Add(new Image());
             ExchangerViewModel.imagesExhaustChannel.Add(new Image());
         }
 

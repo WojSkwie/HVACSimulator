@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACOutletExchange : HVACObject, IDynamicObject
+    public class HVACOutletExchange : HVACObject
     {
-        public Air ExchangedAir { get; set; }
+        //public Air ExchangedAir { get; set; }
         public HVACOutletExchange() :base()
         {
             
@@ -25,14 +25,14 @@ namespace HVACSimulator
             ImageSource = @"refactor";
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        /*public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
         {
-            return ExchangedAir;
-        }
+            //return ExchangedAir;
+        }*/
 
-        public void UpdateParams()
+        /*public void UpdateParams()
         {
             //throw new NotImplementedException(); //TODO
-        }
+        }*/
     }
 }

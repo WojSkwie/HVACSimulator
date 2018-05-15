@@ -17,6 +17,7 @@ namespace HVACSimulator
             
             HVACObjectsList.Add(new HVACFilter());
             HVACObjectsList.Add(new HVACInletExchange());
+            HVACObjectsList.Add(new HVACMixingBox(true));
             HVACObjectsList.Add(new HVACHeater());
             HVACObjectsList.Add(new HVACCooler());
             HVACObjectsList.Add(new HVACFan());

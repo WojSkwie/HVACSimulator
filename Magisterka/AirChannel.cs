@@ -24,9 +24,6 @@ namespace HVACSimulator
         protected double _FlowRate;
         protected double _FanPressureDrop;
 
-        public double TEMP { get; set; }
-        public double TEMP2 { get; set; }
-
         public double FlowRate
         {
             get
@@ -195,11 +192,6 @@ namespace HVACSimulator
             {
                 if (!obj.IsPresent) continue;
                 air = obj.CalculateOutputAirParameters(air, FlowRate);
-                if(obj is HVACCooler)
-                {
-                    TEMP = air.Temperature;
-                    TEMP2 = air.SpecificHumidity;
-                }
             }
         }
 
@@ -247,14 +239,5 @@ namespace HVACSimulator
             DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, FanPressureDrop);
             plotData.AddPointWithEvent(newPoint);
         }
-        /*public override PlotData GetPlotData(EDataType dataType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override List<PlotData> GetAllPlotData()
-        {
-            throw new NotImplementedException();
-        }*/
     }
 }

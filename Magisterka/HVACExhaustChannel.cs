@@ -11,6 +11,7 @@ namespace HVACSimulator
         public HVACExhaustChannel() :base()
         {
             HVACObjectsList.Add(new HVACFilter());
+            HVACObjectsList.Add(new HVACMixingBox(false));
             HVACObjectsList.Add(new HVACOutletExchange());
             SubscribeToAllItems();
             Name = "Kanał wywiewny";
