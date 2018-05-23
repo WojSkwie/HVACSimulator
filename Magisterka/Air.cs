@@ -44,7 +44,7 @@ namespace HVACSimulator
                 _SpecificHumidity = MolierCalculations.HumidityRelativeToSpecific(this);
             }
         }
-        public double Enthalpy { get; set; }
+        public double Enthalpy { get; private set; }
 
         public event EventHandler<string> SimulationErrorOccured;
 

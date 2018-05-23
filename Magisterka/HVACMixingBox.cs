@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,9 @@ namespace HVACSimulator
     {
         private HVACMixingBox CoupledMixingBox;
         private bool InSupply;
+        /// <summary>
+        /// Procent powietrza użytego ponownie
+        /// </summary>
         public double MixingPercent { get; set; }
         public HVACMixingBox(bool inSupply)
         {
@@ -20,7 +24,7 @@ namespace HVACSimulator
             InSupply = inSupply;
             ImageSource = @"images\fan.png";
             SetPlotDataNames();
-
+           
             MixingPercent = 100;
         }
 
@@ -33,10 +37,10 @@ namespace HVACSimulator
         {
             if(InSupply)
             {
-                double specHum = inputAir.SpecificHumidity * (100 - MixingPercent) / 100 +
-                    CoupledMixingBox.OutputAir.SpecificHumidity * MixingPercent / 100;
-                double temp = inputAir.Temperature * (100 - MixingPercent) / 100 +
-                    CoupledMixingBox.OutputAir.Temperature * MixingPercent / 100;
+                double specHum = (inputAir.SpecificHumidity * (100 - MixingPercent) +
+                    CoupledMixingBox.OutputAir.SpecificHumidity * MixingPercent) / 100; //średnia ważona
+                double temp = (inputAir.Temperature * (100 - MixingPercent) +
+                    CoupledMixingBox.OutputAir.Temperature * MixingPercent) / 100; //średnia ważona
                 OutputAir = new Air(temp, specHum, EAirHum.specific);
                 AddDataPointFromAir(OutputAir, EDataType.temperature);
                 AddDataPointFromAir(OutputAir, EDataType.humidity);
