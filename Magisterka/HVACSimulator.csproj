@@ -118,6 +118,10 @@
       <DependentUpon>CharactWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="ExchangerCharacteristicWindow.xaml.cs">
+      <DependentUpon>ExchangerCharacteristicWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExchangerParamsViewModel.cs" />
     <Compile Include="ExchangerViewModel.cs" />
     <Compile Include="ExportFactory.cs" />
     <Compile Include="ExportManagerCSV.cs" />
@@ -144,7 +148,7 @@
     <Compile Include="IReturnsPlotData.cs" />
     <Compile Include="LINQExtension.cs" />
     <Compile Include="MolierCalculations.cs" />
-    <Compile Include="MyMath.cs" />
+    <Compile Include="MathUtil.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="PlotableObject.cs" />
     <Compile Include="PlotData.cs" />
@@ -157,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CharactWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExchangerCharacteristicWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
