@@ -343,5 +343,11 @@ namespace HVACSimulator
             if (plotDataList.Count == 0) { this.ShowMessageAsync("Błąd", "Brak danych do wyeksportowania"); return; }
             exporter.ExportPlotDataRange(plotDataList);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ExchangerCharacteristicWindow exchangerCharacteristicWindow = new ExchangerCharacteristicWindow(ExchangerViewModel.Exchanger);
+            exchangerCharacteristicWindow.ShowDialog();
+        }
     }
 }

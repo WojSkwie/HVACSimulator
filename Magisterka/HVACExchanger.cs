@@ -12,8 +12,8 @@ namespace HVACSimulator
         private HVACOutletExchange OutletExchange;
         private HVACInletExchange InletExchange;
 
-        public double MaximalEfficiencyPercent = 80;
-        public double EfficiencyDropoutCoefficient = 0.05;
+        public double MaximalEfficiencyPercent { get; set; } = 80;
+        public double EfficiencyDropoutCoefficient { get; set; } = 0.001;
         private const double ReferenceTemperatureDifference = 32 - 6; //TODO uwzględnić
 
         public double TimeConstant = 2;
@@ -78,10 +78,18 @@ namespace HVACSimulator
             MessageBox.Show(error);
         }
 
-        public void UpdateSetEfficiency(double airFlow)
+        public double UpdateSetEfficiency(double airFlow)
         {
             SetEfficiencyPercent = MaximalEfficiencyPercent * (1 - 2 / Math.PI 
                 * Math.Atan(airFlow * EfficiencyDropoutCoefficient));
+            return SetEfficiencyPercent;
+        }
+
+        public double UpdateSetEfficiency(double airFlow, double MaximalEff, double dropoutCoeff)
+        {
+            SetEfficiencyPercent = MaximalEff * (1 - 2 / Math.PI
+                * Math.Atan(airFlow * dropoutCoeff));
+            return SetEfficiencyPercent;
         }
 
         public void UpdateParams()

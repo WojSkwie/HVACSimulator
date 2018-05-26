@@ -15,6 +15,7 @@ namespace HVACSimulator
         public HVACExhaustChannel exhaustChannel;
         public List<Image> imagesSupplyChannnel;
         public List<Image> imagesExhaustChannel;
+        public HVACExchanger Exchanger;
 
 
         public ExchangerViewModel()
@@ -25,6 +26,7 @@ namespace HVACSimulator
             imagesExhaustChannel = new List<Image>();
             supplyChannel.ImagesList = imagesSupplyChannnel;
             exhaustChannel.ImagesList = imagesExhaustChannel;
+            Exchanger = new HVACExchanger(supplyChannel.GetInletExchange(), exhaustChannel.GetOutletExchange());
         }
 
         public void UpdateParams()

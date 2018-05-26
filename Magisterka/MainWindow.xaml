@@ -196,6 +196,7 @@
 
                     <Controls:NumericUpDown Name="TEMP" HorizontalAlignment="Left" Margin="274,520,0,0"  VerticalAlignment="Top" Height="23" Width="139" HideUpDownButtons="True" TextAlignment="Left"/>
                     <Controls:NumericUpDown Name="TEMP2" HorizontalAlignment="Left" Margin="274,550,0,0"  VerticalAlignment="Top" Height="23" Width="139" HideUpDownButtons="True" TextAlignment="Left"/>
+                    <Button Content="Button" HorizontalAlignment="Left" Margin="761,436,0,0" VerticalAlignment="Top" Width="72" Height="58" Click="Button_Click"/>
 
                 </Grid>
             </TabItem>

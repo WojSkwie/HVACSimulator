@@ -28,6 +28,15 @@ namespace HVACSimulator
 
         } 
 
+        public HVACInletExchange GetInletExchange()
+        {
+            foreach(HVACObject obj in HVACObjectsList)
+            {
+                if (obj is HVACInletExchange) return (HVACInletExchange)obj;
+            }
+            throw new Exception("Brak wlotu powietrza wymiennika w kanale nawiewnym");
+        }
+
         public void UpdateParams()
         {
             foreach (HVACObject obj in HVACObjectsList)

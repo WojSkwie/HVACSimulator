@@ -29,6 +29,15 @@ namespace HVACSimulator
             }
         }
 
+        public HVACOutletExchange GetOutletExchange()
+        {
+            foreach (HVACObject obj in HVACObjectsList)
+            {
+                if (obj is HVACOutletExchange) return (HVACOutletExchange)obj;
+            }
+            throw new Exception("Brak wylotu powietrza wymiennika w kanale wywiewnym");
+        }
+
         protected override void InitializePlotDataList()
         {
             
