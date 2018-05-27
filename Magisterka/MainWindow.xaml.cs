@@ -71,6 +71,9 @@ namespace HVACSimulator
             //ExchangerViewModel.supplyChannel.CalculateAirParameters();
             Air exchaustExchangerAir = ExchangerViewModel.exhaustChannel.CalculateAirParametersBeforeExchanger();
             Air supplyExchangerAir = ExchangerViewModel.supplyChannel.CalculateAirParametersBeforeExchanger();
+            ExchangerViewModel.Exchanger.CalculateExchangeAndSetOutputAir(supplyExchangerAir, exchaustExchangerAir);
+            ExchangerViewModel.exhaustChannel.CalculateAirParametersWithAndAfterExchanger();
+            ExchangerViewModel.supplyChannel.CalculateAirParametersWithAndAfterExchanger();
 
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
@@ -180,16 +183,6 @@ namespace HVACSimulator
             ExchangerViewModel.imagesExhaustChannel.Add(new Image());
         }
 
-        /*private void DrawSupplyItems()
-        {
-            for(int i = 0; i < ExchangerViewModel.supplyChannel.HVACObjectsList.Count; i++)
-            {
-                HVACObject obj = ExchangerViewModel.supplyChannel.HVACObjectsList[i];
-                ExchangerViewModel.imagesSupplyChannnel[i].Source = new BitmapImage(new Uri(obj.ImageSource, UriKind.Relative));
-                ExchangerViewModel.imagesSupplyChannnel[i].Visibility = ExchangerViewModel.supplyChannel.HVACObjectsList[i].IsPresent ? Visibility.Visible : Visibility.Hidden;
-            }
-        }*/
-
         private void DrawItemsForChannel(AirChannel airChannel)
         {
             for (int i = 0; i < airChannel.HVACObjectsList.Count; i++)
@@ -242,8 +235,7 @@ namespace HVACSimulator
             ExchangerViewModel.supplyChannel.MoveObject(index, direction);
             //supplyDataGrid.ItemsSource = ExchangerViewModel.supplyChannel.HVACObjectsList; //TODO jeżeli przesuwanie przestanie działać to tutaj może być przyczyna
             DrawItemsForChannel(ExchangerViewModel.supplyChannel);
-            //DrawItemsForChannel(ExchangerViewModel.exhaustChannel);
-            //DrawSupplyItems();
+            
         }
 
         private void SetHotWaterTemperatureNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)

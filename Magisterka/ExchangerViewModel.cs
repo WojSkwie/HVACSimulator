@@ -27,12 +27,22 @@ namespace HVACSimulator
             supplyChannel.ImagesList = imagesSupplyChannnel;
             exhaustChannel.ImagesList = imagesExhaustChannel;
             Exchanger = new HVACExchanger(supplyChannel.GetInletExchange(), exhaustChannel.GetOutletExchange());
+            CoupleMixingBoxes();
+        }
+        private void CoupleMixingBoxes()
+        {
+            HVACMixingBox first = supplyChannel.GetMixingBox();
+            HVACMixingBox second = exhaustChannel.GetMixingBox();
+            first.CoupleMixingBox(second);
+            second.CoupleMixingBox(first);
         }
 
         public void UpdateParams()
         {
             supplyChannel.UpdateParams();
             exhaustChannel.UpdateParams();
+            Exchanger.UpdateSetEfficiency(GetFlowRateFromSupplyChannel());
+            Exchanger.UpdateParams();
         }
 
         public double GetSpeedFromSupplyChannel()

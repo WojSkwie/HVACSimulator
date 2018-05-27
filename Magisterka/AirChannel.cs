@@ -207,24 +207,26 @@ namespace HVACSimulator
             return air;
         }
 
-        public Air CalculateAirParametersAfterExchanger(Air airAfterExchanger)
+        public void CalculateAirParametersWithAndAfterExchanger()
         {
-            if (FlowRate == 0) return airAfterExchanger; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
-            Air air = airAfterExchanger;
-            bool isAfter = false;
+            if (FlowRate == 0) return ; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
+            Air air = new Air(0, 0, EAirHum.relative); //powietrze słup. korzystam przez źle napisaną metode obliczającą
+            bool shouldStart = false;
             foreach(HVACObject obj in HVACObjectsList)
             {
-                if (obj is HVACInletExchange || obj is HVACOutletExchange) { isAfter = true; continue; }
-                if (isAfter) air = obj.CalculateOutputAirParameters(air, FlowRate);
+                if (obj is HVACInletExchange || obj is HVACOutletExchange) { shouldStart = true; }
+                if (shouldStart) air = obj.CalculateOutputAirParameters(air, FlowRate);
             }
-            return air;
         }
 
-        /*public Air CalculateAirParametersOnExchanger(Air supplyAir, Air exhaustAir)
+        public HVACMixingBox GetMixingBox()
         {
-            if (FlowRate == 0) return supplyAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
-
-        }*/
+            foreach(HVACObject obj in HVACObjectsList)
+            {
+                if (obj is HVACMixingBox) return (HVACMixingBox)obj;
+            }
+            throw new Exception("Brak komory mieszania w kanale");
+        }
 
         protected void AddFlowDataFromAirParams()
         {

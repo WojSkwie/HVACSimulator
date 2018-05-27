@@ -42,6 +42,7 @@ namespace HVACSimulator
             {
                 _RelativeHumidity = value;
                 _SpecificHumidity = MolierCalculations.HumidityRelativeToSpecific(this);
+                Enthalpy = MolierCalculations.CalculateEnthalpy(this);
             }
         }
         public double Enthalpy { get; private set; }
@@ -78,8 +79,8 @@ namespace HVACSimulator
             Air clone = new Air
             {
                 Temperature = this.Temperature,
-                _RelativeHumidity = this.RelativeHumidity,
-                _SpecificHumidity = this.SpecificHumidity
+                RelativeHumidity = this.RelativeHumidity,
+                SpecificHumidity = this.SpecificHumidity
             };
             return clone;
             
