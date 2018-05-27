@@ -8,7 +8,7 @@ namespace HVACSimulator
 {
     public class HVACInletExchange : HVACObject
     {
-        //public Air ExchnagedAir { get; set; }
+        
 
         public HVACInletExchange() : base()
         {
@@ -26,15 +26,13 @@ namespace HVACSimulator
             SetPlotDataNames();
         }
 
-        /*public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
         {
-            return ExchnagedAir;
-        }*/
+            AddDataPointFromAir(OutputAir, EDataType.humidity);
+            AddDataPointFromAir(OutputAir, EDataType.temperature);
+            return OutputAir;
+        }
 
-        /*public void UpdateParams()
-        {
-            Console.Write("TODO UPDATE INLET"); //TODO
-            //throw new NotImplementedException();
-        }*/
+        
     }
 }
