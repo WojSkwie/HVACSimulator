@@ -41,6 +41,7 @@ namespace HVACSimulator
         {
             supplyChannel.UpdateParams();
             exhaustChannel.UpdateParams();
+            exhaustChannel.FlowRate = supplyChannel.FlowRate;
             Exchanger.UpdateSetEfficiency(GetFlowRateFromSupplyChannel());
             Exchanger.UpdateParams();
         }

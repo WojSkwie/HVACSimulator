@@ -13,7 +13,7 @@ namespace HVACSimulator
         private HVACInletExchange InletExchange;
 
         public double MaximalEfficiencyPercent { get; set; } = 80;
-        public double EfficiencyDropoutCoefficient { get; set; } = 0.001;
+        public double EfficiencyDropoutCoefficient { get; set; } = 0.1;
         private const double ReferenceTemperatureDifference = 32 - 6; //TODO uwzględnić
 
         public double TimeConstant = 2;
@@ -48,7 +48,7 @@ namespace HVACSimulator
                 Air maximallyCooledAir;
                 double dewPoint = MolierCalculations.CalculateDewPoint(exhaustAir);
                 double tempDiff = exhaustAir.Temperature - supplyAir.Temperature;
-                double heatedTemp = supplyAir.Temperature + tempDiff * ActualEfficiencyPercent;
+                double heatedTemp = supplyAir.Temperature + tempDiff * ActualEfficiencyPercent / 100;
                 heatedAir = new Air(heatedTemp, supplyAir.SpecificHumidity, EAirHum.specific);
                 double energyAdded = heatedAir.Enthalpy - supplyAir.Enthalpy;
                 

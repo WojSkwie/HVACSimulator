@@ -14,10 +14,9 @@ namespace HVACSimulator
     {
         public ObservableCollection<HVACObject> HVACObjectsList { get; set; } = new ObservableCollection<HVACObject>();
 
-        protected AirChannel() :base()
+        protected AirChannel() : base()
         {
             GlobalParameters = GlobalParameters.Instance;
-            InputAir = new Air(40, 40, EAirHum.relative);
         }
 
         protected GlobalParameters GlobalParameters;

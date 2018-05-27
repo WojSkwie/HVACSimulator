@@ -79,7 +79,7 @@ namespace HVACSimulator
             Air clone = new Air
             {
                 Temperature = this.Temperature,
-                RelativeHumidity = this.RelativeHumidity,
+                //RelativeHumidity = this.RelativeHumidity,
                 SpecificHumidity = this.SpecificHumidity
             };
             return clone;

@@ -63,6 +63,7 @@ namespace HVACSimulator
         private void MainTimer_Tick(object sender, EventArgs e)
         {
             UpdateAllDynamicObjects();
+
             ActualSpeedSupplyNumeric.Value = ExchangerViewModel.GetSpeedFromSupplyChannel();
             ActualHotWaterTemperatureNumeric.Value = ExchangerViewModel.GetHotWaterTempeartureFromSuppyChannel();
             ActualColdWaterTemperatureNumeric.Value = ExchangerViewModel.GetColdWaterTemperatureFromSupplyChannel();
