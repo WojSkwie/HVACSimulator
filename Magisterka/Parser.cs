@@ -9,16 +9,19 @@ namespace HVACSimulator
 {
     public class Parser : INotifyErrorSimulation
     {
-        private int croppedFrameBytes = 9;
+        private int croppedFrameBytes = 10;
 
         public enum ECommand : byte
         {
             WriteAll = 0x01,
-            WriteOne = 0x02,
+            WriteOneAn = 0x02,
+            WriteOneDi = 0x03,
             ReadAll = 0x11,
-            ReadOne = 0x12,
+            ReadOneAn = 0x12,
+            ReadOneDi = 0x13,
             AnswerAll = 0x21,
-            AnswerOne = 0x22,
+            AnswerOneAn = 0x22,
+            AnswerOneDi = 0x23
         }
 
         public Parser()
@@ -35,7 +38,10 @@ namespace HVACSimulator
                 case (byte)ECommand.AnswerAll:
 
                     break;
-                case (byte)ECommand.AnswerOne:
+                case (byte)ECommand.AnswerOneAn:
+
+                    break;
+                case (byte)ECommand.AnswerOneDi:
 
                     break;
                 default:
@@ -57,7 +63,7 @@ namespace HVACSimulator
             {
                 case ECommand.ReadAll:
                     break;
-                case ECommand.ReadOne:
+                case ECommand.ReadOneAn:
                     if (dataToSend.Length != 1)
                     {
                         throw new ArgumentException("Niewłaściwa liczba danych wejściowych");
@@ -74,7 +80,7 @@ namespace HVACSimulator
                         frame[i + 1] = dataToSend[i];
                     }
                     break;
-                case ECommand.WriteOne:
+                case ECommand.WriteOneAn:
                     if (dataToSend.Length != 3)
                     {
                         throw new ArgumentException("Niewłaściwa liczba danych wejściowych");

@@ -10,7 +10,7 @@ namespace HVACSimulator
 {
     public class USB : SerialPort, INotifyErrorSimulation
     {
-        private int frameBytes = 12;
+        private int frameBytes = 13;
         private readonly string DeviceName = "HVACBoard";
 
         private const byte StartByte = 0xFE;
@@ -21,7 +21,7 @@ namespace HVACSimulator
 
         public USB()
         {
-            BaudRate = 9600;
+            BaudRate = 115200;
             Parity = Parity.None;
             StopBits = StopBits.One;
             DataBits = 8;
