@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public abstract class PlotableObject
+    public abstract class PlottableObject
     {
         public List<PlotData> PlotDataList { get; set; }
 
-        public PlotableObject()
+        public PlottableObject()
         {
             PlotDataList = new List<PlotData>();
         }

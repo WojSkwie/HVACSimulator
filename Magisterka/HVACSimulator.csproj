@@ -137,6 +137,7 @@
     <Compile Include="HVACMixingBox.cs" />
     <Compile Include="HVACObject.cs" />
     <Compile Include="HVACOutletExchange.cs" />
+    <Compile Include="HVACRoom.cs" />
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="HVACTemperatureActiveObject.cs" />
     <Compile Include="IBoundableObject.cs" />
@@ -150,7 +151,7 @@
     <Compile Include="MolierCalculations.cs" />
     <Compile Include="MathUtil.cs" />
     <Compile Include="Parser.cs" />
-    <Compile Include="PlotableObject.cs" />
+    <Compile Include="PlottableObject.cs" />
     <Compile Include="PlotData.cs" />
     <Compile Include="SeriesViewModel.cs" />
     <Compile Include="USB.cs">

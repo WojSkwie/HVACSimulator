@@ -20,12 +20,30 @@ namespace HVACSimulator
             IsGenerativeFlow = false;
             Name = "Komora mieszania";
             IsMovable = false;
-            IsMutable = false;
+            IsMutable = true;
             InSupply = inSupply;
             ImageSource = @"images\fan.png";
             SetPlotDataNames();
            
             MixingPercent = 100;
+        }
+
+        public override bool IsPresent
+        {
+            get => base.IsPresent;
+            set
+            {
+                this._IsPresent = value;
+                OnPropertyChanged("IsPresent");
+                if (value != IsPresent)
+                {
+                    IsPresent = value;
+                    if (CoupledMixingBox != null) 
+                    {
+                        CoupledMixingBox.IsPresent = value;
+                    }
+                }
+            }
         }
 
         public void CoupleMixingBox(HVACMixingBox mixingBox)

@@ -10,16 +10,16 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public abstract class HVACObject : PlotableObject, INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation//, IReturnsPlotData
+    public abstract class HVACObject : PlottableObject, INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation//, IReturnsPlotData
     {
         public bool IsMutable { get; protected set; } 
         public bool IsGenerativeFlow { get; set; }
         public double ACoeff { get; set; }
         public double BCoeff { get; set; }
         public double CCoeff { get; set; }
-        private bool _IsPresent;
+        protected bool _IsPresent;
         private GlobalParameters GlobalParameters;
-        public bool IsPresent
+        public virtual bool IsPresent
         {
             get { return _IsPresent; }
             set
@@ -36,7 +36,7 @@ namespace HVACSimulator
         public Air OutputAir { get; set; }
         //public List<PlotData> PlotDataList { get; set; }
 
-        public HVACObject() :base()
+        public HVACObject() : base()
         {
             GlobalParameters = GlobalParameters.Instance;
             //PlotDataList = new List<PlotData>();
@@ -49,7 +49,7 @@ namespace HVACSimulator
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<string> SimulationErrorOccured;
 
-        private void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

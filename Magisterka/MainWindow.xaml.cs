@@ -295,7 +295,7 @@ namespace HVACSimulator
         {
             PlotDataSplitButton.ItemsSource = null; 
             if (((SplitButton)sender).SelectedItem == null) return;
-            PlotableObject obj = (PlotableObject)((SplitButton)sender).SelectedItem;
+            PlottableObject obj = (PlottableObject)((SplitButton)sender).SelectedItem;
             if (obj == null) return;
             PlotDataSplitButton.ItemsSource = obj.PlotDataList;
         }
@@ -304,7 +304,7 @@ namespace HVACSimulator
         {
             SeriesViewModel.ResetModel();
             if (PlotDataSplitButton.SelectedItem == null) return;
-            SeriesViewModel.SetObjectToDrawPlot((PlotableObject)PresentObjectsSplitButton.SelectedItem, ((PlotData)PlotDataSplitButton.SelectedItem).DataType);
+            SeriesViewModel.SetObjectToDrawPlot((PlottableObject)PresentObjectsSplitButton.SelectedItem, ((PlotData)PlotDataSplitButton.SelectedItem).DataType);
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
@@ -329,7 +329,7 @@ namespace HVACSimulator
 
             List<PlotData> plotDataList = new List<PlotData>();
 
-            foreach(PlotableObject obj in SeriesViewModel.PresentObjects)
+            foreach(PlottableObject obj in SeriesViewModel.PresentObjects)
             {
                 plotDataList.AddRange(obj.GetAllPlotData());
             }

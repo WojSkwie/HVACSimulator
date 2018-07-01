@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public abstract class AirChannel : PlotableObject, INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact
+    public abstract class AirChannel : PlottableObject, INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact
     {
         public ObservableCollection<HVACObject> HVACObjectsList { get; set; } = new ObservableCollection<HVACObject>();
 
