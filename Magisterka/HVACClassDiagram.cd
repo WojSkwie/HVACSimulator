@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HVACSimulator.Air" Collapsed="true">
+    <Position X="1.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABAAAGAAAAgAAAAAAAAAAAAggAAAQAAAAAAAAEABA=</HashCode>
+      <FileName>Air.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.HVACObject" Collapsed="true">
+    <Position X="14" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAACIAEKAAgAAAIAEAIAQAhEAAECAAIAIAgQAAAAA=</HashCode>
+      <FileName>HVACObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.HVACFan" Collapsed="true">
+    <Position X="16" Y="7.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HVACFan.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.HVACFilter" Collapsed="true">
+    <Position X="16" Y="6.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>HVACFilter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HVACSimulator.HVACHeater" Collapsed="true">
+    <Position X="19.75" Y="6" Width="1.5" />
+    <InheritanceLine Type="HVACSimulator.HVACTemperatureActiveObject" FixedToPoint="true">
+      <Path>
+        <Point X="18.5" Y="5.97" />
+        <Point X="20.5" Y="5.97" />
+        <Point X="20.5" Y="6" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>HVACHeater.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.HVACTemperatureActiveObject" Collapsed="true">
+    <Position X="16" Y="5.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QAAACIAAAAAAAAAAAAAAAAAAAAEAQAAAAACAAAAAAAA=</HashCode>
+      <FileName>HVACTemperatureActiveObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HVACSimulator.HVACCooler" Collapsed="true">
+    <Position X="19.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAIAAAAAAAAAAAAAEAACAAAAAAAAIQAAAAAAAAA=</HashCode>
+      <FileName>HVACCooler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.HVACMixingBox" Collapsed="true">
+    <Position X="16" Y="4.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAIAEAAAAAAAAAAAAAAAAAAABAAAIAAAAAAAAQA=</HashCode>
+      <FileName>HVACMixingBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HVACSimulator.HVACOutletExchange" Collapsed="true">
+    <Position X="16" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>HVACOutletExchange.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HVACSimulator.HVACInletExchange" Collapsed="true">
+    <Position X="16" Y="2.5" Width="2.5" />
+    <InheritanceLine Type="HVACSimulator.HVACObject" FixedToPoint="true">
+      <Path>
+        <Point X="14.547" Y="4.25" />
+        <Point X="14.547" Y="2.125" />
+        <Point X="17.25" Y="2.125" />
+        <Point X="17.25" Y="2.5" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>HVACInletExchange.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HVACSimulator.Constants" Collapsed="true">
+    <Position X="11" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAABAAAAAgAAAAAAAAAAAAiAA=</HashCode>
+      <FileName>Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HVACSimulator.ExportFactory" Collapsed="true">
+    <Position X="1" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ExportFactory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HVACSimulator.ExportManagerCSV" Collapsed="true">
+    <Position X="1" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAACAAAAACBAAAAAAAAA=</HashCode>
+      <FileName>ExportManagerCSV.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.ExportManagerXLS" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAIAAAAAAEAIAACAAAAAAAAIA=</HashCode>
+      <FileName>ExportManagerXLS.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.GlobalParameters" Collapsed="true">
+    <Position X="12.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAEAAAAAEAAEAAAQACAAAAAAAA=</HashCode>
+      <FileName>GlobalParameters.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HVACSimulator.HVACExchanger" Collapsed="true">
+    <Position X="22" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAAAAAIAAAAEiEAAAAAAEAAAAAAAwDAACAAIAIAAAAA=</HashCode>
+      <FileName>HVACExchanger.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.HVACExhaustChannel" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>HVACExhaustChannel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.HVACSupplyChannel" Collapsed="true">
+    <Position X="3.5" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAICAAAAAAAICAAABAAAAICAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>HVACSupplyChannel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.AirChannel" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CABAAGQQgQAAgAgCqABAQAUYgAAAECIAAAAIAAQAAAA=</HashCode>
+      <FileName>AirChannel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HVACSimulator.MathUtil" Collapsed="true">
+    <Position X="9.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAIAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MathUtil.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="HVACSimulator.EAirHum" Collapsed="true">
+    <Position X="6.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Air.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HVACSimulator.EFileFormat" Collapsed="true">
+    <Position X="1" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBAAAAAAAA=</HashCode>
+      <FileName>ExportFactory.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HVACSimulator.EState" Collapsed="true">
+    <Position X="22" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAgAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>GlobalParameters.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

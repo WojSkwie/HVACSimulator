@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACExhaustChannel : AirChannel, IDynamicObject
+    public sealed class HVACExhaustChannel : AirChannel, IDynamicObject
     {
         public HVACExhaustChannel() :base()
         {

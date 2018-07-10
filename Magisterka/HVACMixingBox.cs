@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACMixingBox : HVACObject 
+    public sealed class HVACMixingBox : HVACObject 
     {
         private HVACMixingBox CoupledMixingBox;
         private bool InSupply;

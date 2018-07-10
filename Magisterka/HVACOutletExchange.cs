@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACOutletExchange : HVACObject
+    public sealed class HVACOutletExchange : HVACObject
     {
         //public Air ExchangedAir { get; set; }
         public HVACOutletExchange() :base()

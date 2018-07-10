@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACCooler : HVACTemperatureActiveObject, IDynamicObject
+    public sealed class HVACCooler : HVACTemperatureActiveObject, IDynamicObject
     {
         
         private const double ReferenceTemperatureDifference = 32 - 6;

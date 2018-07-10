@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACInletExchange : HVACObject
+    public sealed class HVACInletExchange : HVACObject
     {
         
 
