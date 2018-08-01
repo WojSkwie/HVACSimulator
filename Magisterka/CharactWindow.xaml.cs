@@ -30,7 +30,7 @@ namespace HVACSimulator
             CopyCoeffs();
         }
 
-        public CharacModel CharacModel { get; set; } = new CharacModel();
+        public CharacViewModel CharacModel { get; set; } = new CharacViewModel();
 
         private double CofA { get; set; }
         private double CofB { get; set; }

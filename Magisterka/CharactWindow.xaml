@@ -13,7 +13,7 @@
         
         Title="Charakterystyka" Height="400" Width="600">
     <Window.DataContext>
-        <local:CharacModel/>
+        <local:CharacViewModel/>
     </Window.DataContext>
     <Grid >
         <Grid.ColumnDefinitions>

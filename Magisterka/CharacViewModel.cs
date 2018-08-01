@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class CharacModel : INotifyPropertyChanged
+    public class CharacViewModel : INotifyPropertyChanged
     {
-        public CharacModel()
+        public CharacViewModel()
         {
             plotModel = new PlotModel();
             LineSeries = new LineSeries();

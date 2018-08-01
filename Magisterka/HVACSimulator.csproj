@@ -113,7 +113,7 @@
     <Compile Include="ChannelCharactWindow.xaml.cs">
       <DependentUpon>ChannelCharactWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CharacModel.cs" />
+    <Compile Include="CharacViewModel.cs" />
     <Compile Include="CharactWindow.xaml.cs">
       <DependentUpon>CharactWindow.xaml</DependentUpon>
     </Compile>
@@ -140,7 +140,7 @@
     <Compile Include="HVACRoom.cs" />
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="HVACTemperatureActiveObject.cs" />
-    <Compile Include="IBoundableObject.cs" />
+    <Compile Include="IBindableObject.cs" />
     <Compile Include="IDynamicObject.cs" />
     <Compile Include="IExportsPlotData.cs" />
     <Compile Include="IModifiableCharact.cs" />

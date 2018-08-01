@@ -11,7 +11,6 @@ namespace HVACSimulator
     public class USB : SerialPort, INotifyErrorSimulation
     {
         private int frameBytes = 13;
-        private readonly string DeviceName = "HVACBoard";
 
         private const byte StartByte = 0xFE;
         private const byte EndByte = 0xF0;
@@ -35,32 +34,32 @@ namespace HVACSimulator
             byte[] buffer = new byte[frameBytes];
             try
             {
-                while(true)
+                while (true)
                 {
                     Read(buffer, 0, 1);
                     if (buffer[0] == StartByte) break;
                 }
-                for(int i = 1; i < frameBytes; i++)
+                for (int i = 1; i < frameBytes; i++)
                 {
                     Read(buffer, i, 1);
                 }
-                if(buffer.Last() == EndByte)
+                if (buffer.Last() == EndByte)
                 {
                     byte[] croppedFrame = new byte[frameBytes - 3];
                     Array.Copy(buffer, 1, croppedFrame, 0, frameBytes - 3);
                     byte crcPC = CRC8(croppedFrame);
                     byte crcDevice = croppedFrame.Last();
-                    if(crcDevice == crcPC)
+                    if (crcDevice == crcPC)
                     {
                         OnCorrectFrameRead(buffer);
                     }
                 }
             }
-            catch(TimeoutException)
+            catch (TimeoutException)
             {
                 OnSimulationErrorOccured("Timeout odbioru USB");
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 OnSimulationErrorOccured("Port nie jest otwarty");
             }
@@ -69,9 +68,9 @@ namespace HVACSimulator
         public bool FindDevice()
         {
             string[] availablePorts = GetPortNames();
-            foreach(string name in availablePorts)
+            foreach (string name in availablePorts)
             {
-                if(name == DeviceName)
+                if (name == DeviceName)
                 {
                     return true;
                 }
@@ -99,12 +98,12 @@ namespace HVACSimulator
                 Write(frame, 0, frame.Length);
                 return true;
             }
-            catch(TimeoutException)
+            catch (TimeoutException)
             {
                 OnSimulationErrorOccured("Timeout wysyłania USB");
                 return false;
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 OnSimulationErrorOccured("Port nie jest otwarty");
                 return false;
