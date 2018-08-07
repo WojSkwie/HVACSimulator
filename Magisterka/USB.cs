@@ -70,10 +70,10 @@ namespace HVACSimulator
             string[] availablePorts = GetPortNames();
             foreach (string name in availablePorts)
             {
-                if (name == DeviceName)
+                /*if (name == DeviceName)
                 {
                     return true;
-                }
+                }*/
             }
             return false;
         }

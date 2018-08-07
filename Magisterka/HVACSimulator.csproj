@@ -108,6 +108,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdapterManager.cs" />
     <Compile Include="Air.cs" />
     <Compile Include="AirChannel.cs" />
     <Compile Include="ChannelCharactWindow.xaml.cs">
@@ -140,7 +141,9 @@
     <Compile Include="HVACRoom.cs" />
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="HVACTemperatureActiveObject.cs" />
+    <Compile Include="IBindableInput.cs" />
     <Compile Include="IBindableObject.cs" />
+    <Compile Include="IBindableOutput.cs" />
     <Compile Include="IDynamicObject.cs" />
     <Compile Include="IExportsPlotData.cs" />
     <Compile Include="IModifiableCharact.cs" />

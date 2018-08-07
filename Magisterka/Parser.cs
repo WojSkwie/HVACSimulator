@@ -11,6 +11,9 @@ namespace HVACSimulator
     {
         private int croppedFrameBytes = 10;
 
+        private List<IBindableObject> BindedInputs = new List<IBindableObject>();
+        private List<IBindableObject> BindedOutputs = new List<IBindableObject>();
+
         public enum ECommand : byte
         {
             WriteAll = 0x01,
@@ -21,12 +24,9 @@ namespace HVACSimulator
             ReadOneDi = 0x13,
             AnswerAll = 0x21,
             AnswerOneAn = 0x22,
-            AnswerOneDi = 0x23
-        }
-
-        public Parser()
-        {
-
+            AnswerOneDi = 0x23,
+            Echo = 0xAA,
+            AnswerEcho = 0x55
         }
 
         public event EventHandler<string> SimulationErrorOccured;
@@ -42,6 +42,9 @@ namespace HVACSimulator
 
                     break;
                 case (byte)ECommand.AnswerOneDi:
+
+                    break;
+                case (byte)ECommand.AnswerEcho:
 
                     break;
                 default:

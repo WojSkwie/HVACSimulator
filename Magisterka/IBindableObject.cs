@@ -6,23 +6,14 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public enum EBindableParameter
-    {
-        flowPercent,
-        temperature,
-
-    }
-    interface IBindableObject
+    
+    public interface IBindableObject
     {
         double Min { get; set; }
         double Max { get; set; }
-        List<EBindableParameter> AvailableParameters { get; }
+        int Index { get; set; }
 
-        void BoundedParamChanged(object sender, int parameter);
-        void BoundParameter(EBindableParameter boundableParameter, double minVal, double maxVal);
-        void BoundParameter(EBindableParameter boundableParameter);
-        double GetParameter(EBindableParameter boundableParameter);
-        void InitializeParameterList();
+        void InitializeParameters(params int[] indices);
     }
 
     

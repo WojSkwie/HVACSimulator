@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace HVACSimulator
 {
-    public sealed class HVACFan : HVACObject, IDynamicObject
+    public sealed class HVACFan : HVACObject, IDynamicObject, IBindableInput
     {
         public HVACFan() : base()
         {
@@ -29,7 +29,20 @@ namespace HVACSimulator
             SetPlotDataNames();
         } 
         public double SetSpeedPercent { get; set; } 
-        public double ActualSpeedPercent { get; set; } 
+        public double ActualSpeedPercent { get; set; }
+        public double Min { get; set; }
+        public double Max { get; set; }
+        public int Index { get; set; }
+
+        public void InitializeParameters(params int[] indices)
+        {
+            Index = 0;
+        }
+
+        public void SetParameter(double parameter)
+        {
+            throw new NotImplementedException();
+        }
 
         public void UpdateParams()
         {
