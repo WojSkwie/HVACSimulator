@@ -14,8 +14,9 @@ namespace HVACSimulator
 
     }
 
-    public interface IBindableOutput : IBindableObject
+    public interface IBindableAnalogOutput : IBindableAnalogObject
     {
+        List<int> AOIndices { get; set; }
         int GetParamter(int index);
     }
 }

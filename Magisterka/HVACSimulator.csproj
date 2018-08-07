@@ -111,6 +111,8 @@
     <Compile Include="AdapterManager.cs" />
     <Compile Include="Air.cs" />
     <Compile Include="AirChannel.cs" />
+    <Compile Include="BindableAnalogPort.cs" />
+    <Compile Include="BindableAnalogInputPort.cs" />
     <Compile Include="ChannelCharactWindow.xaml.cs">
       <DependentUpon>ChannelCharactWindow.xaml</DependentUpon>
     </Compile>
@@ -141,9 +143,11 @@
     <Compile Include="HVACRoom.cs" />
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="HVACTemperatureActiveObject.cs" />
-    <Compile Include="IBindableInput.cs" />
-    <Compile Include="IBindableObject.cs" />
-    <Compile Include="IBindableOutput.cs" />
+    <Compile Include="IBindableDigitalInput.cs" />
+    <Compile Include="IBindableDigitalObjectcs.cs" />
+    <Compile Include="IBindableAnalogInput.cs" />
+    <Compile Include="IBindableAnalogObject.cs" />
+    <Compile Include="IBindableAnalogOutput.cs" />
     <Compile Include="IDynamicObject.cs" />
     <Compile Include="IExportsPlotData.cs" />
     <Compile Include="IModifiableCharact.cs" />

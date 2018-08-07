@@ -8,7 +8,7 @@ namespace HVACSimulator
 {
     public class AdapterManager
     {
-        private List<IBindableInput> BindedInputs = new List<IBindableInput>();
-        private List<IBindableOutput> BindedOutputs = new List<IBindableOutput>();
+        private List<IBindableAnalogInput> BindedInputs = new List<IBindableAnalogInput>();
+        private List<IBindableAnalogOutput> BindedOutputs = new List<IBindableAnalogOutput>();
     }
 }

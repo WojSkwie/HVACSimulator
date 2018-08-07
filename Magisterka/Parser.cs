@@ -11,8 +11,8 @@ namespace HVACSimulator
     {
         private int croppedFrameBytes = 10;
 
-        private List<IBindableObject> BindedInputs = new List<IBindableObject>();
-        private List<IBindableObject> BindedOutputs = new List<IBindableObject>();
+        private List<IBindableAnalogObject> BindedInputs = new List<IBindableAnalogObject>();
+        private List<IBindableAnalogObject> BindedOutputs = new List<IBindableAnalogObject>();
 
         public enum ECommand : byte
         {

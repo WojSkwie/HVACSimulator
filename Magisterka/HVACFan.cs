@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace HVACSimulator
 {
-    public sealed class HVACFan : HVACObject, IDynamicObject, IBindableInput
+    public sealed class HVACFan : HVACObject, IDynamicObject, IBindableAnalogInput
     {
         public HVACFan() : base()
         {
@@ -30,18 +30,27 @@ namespace HVACSimulator
         } 
         public double SetSpeedPercent { get; set; } 
         public double ActualSpeedPercent { get; set; }
-        public double Min { get; set; }
-        public double Max { get; set; }
-        public int Index { get; set; }
+        public List<BindableAnalogInputPort> BindedInputs { get; set; }
 
-        public void InitializeParameters(params int[] indices)
+        public void InitializeParameters()
         {
-            Index = 0;
+            BindedInputs = new List<BindableAnalogInputPort>
+            {
+                new BindableAnalogInputPort(0, 100, EAnalogInput.fanSpeed)
+            };
+
         }
 
-        public void SetParameter(double parameter)
+        public void SetParameter(int parameter, EAnalogInput analogInput)
         {
-            throw new NotImplementedException();
+            if(analogInput == EAnalogInput.fanSpeed)
+            {
+                //SetSpeedPercent
+            }
+            else
+            {
+                OnSimulationErrorOccured(string.Format("Próba przypisania nieprawidłowego parametru jako wysterowanie wnetylatora: {0}", analogInput.ToString()));
+            }
         }
 
         public void UpdateParams()

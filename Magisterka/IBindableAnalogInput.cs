@@ -14,8 +14,9 @@ namespace HVACSimulator
         mixingBox = 3
 
     }
-    public interface IBindableInput : IBindableObject
+    public interface IBindableAnalogInput : IBindableAnalogObject
     {
-        void SetParameter(double parameter);
+        List<BindableAnalogInputPort> BindedInputs { get; set; }
+        void SetParameter(int parameter, EAnalogInput analogInput);
     }
 }

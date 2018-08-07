@@ -16,7 +16,5 @@ namespace HVACSimulator
 
         public static double airHeatCapacity = 1016; //J/kg/C
         public static double heaterFluidHeatCapacity = 4200; //J/kg/C
-
-        public static int max12BitsNumber = 4095;
     }
 }

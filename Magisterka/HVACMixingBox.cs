@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public sealed class HVACMixingBox : HVACObject 
+    public sealed class HVACMixingBox : HVACObject, IBindableAnalogInput
     {
         private HVACMixingBox CoupledMixingBox;
         private bool InSupply;
@@ -46,6 +46,10 @@ namespace HVACSimulator
             }
         }
 
+        public List<int> AIIndices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double Min { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double Max { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public void CoupleMixingBox(HVACMixingBox mixingBox)
         {
             CoupledMixingBox = mixingBox;
@@ -68,6 +72,16 @@ namespace HVACSimulator
             {
                 return base.CalculateOutputAirParameters(inputAir, airFlow);
             }
+        }
+
+        public void SetParameter(int parameter, EAnalogInput analogInput)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitializeParameters()
+        {
+            throw new NotImplementedException();
         }
     }
 }
