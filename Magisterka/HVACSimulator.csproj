@@ -111,6 +111,7 @@
     <Compile Include="AdapterManager.cs" />
     <Compile Include="Air.cs" />
     <Compile Include="AirChannel.cs" />
+    <Compile Include="BindableAnalogOutputPort.cs" />
     <Compile Include="BindableAnalogPort.cs" />
     <Compile Include="BindableAnalogInputPort.cs" />
     <Compile Include="ChannelCharactWindow.xaml.cs">
@@ -146,7 +147,6 @@
     <Compile Include="IBindableDigitalInput.cs" />
     <Compile Include="IBindableDigitalObjectcs.cs" />
     <Compile Include="IBindableAnalogInput.cs" />
-    <Compile Include="IBindableAnalogObject.cs" />
     <Compile Include="IBindableAnalogOutput.cs" />
     <Compile Include="IDynamicObject.cs" />
     <Compile Include="IExportsPlotData.cs" />

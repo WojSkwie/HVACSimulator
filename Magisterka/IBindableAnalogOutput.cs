@@ -14,9 +14,11 @@ namespace HVACSimulator
 
     }
 
-    public interface IBindableAnalogOutput : IBindableAnalogObject
+    public interface IBindableAnalogOutput 
     {
-        List<int> AOIndices { get; set; }
-        int GetParamter(int index);
+        void InitializeParametersList();
+        List<BindableAnalogOutputPort> BindedInputs { get; set; }
+        List<EAnalogOutput> GetListOfParams();
+        int GetParamter(EAnalogOutput analogOutput);
     }
 }

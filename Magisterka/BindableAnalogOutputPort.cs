@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    
-    public interface IBindableAnalogObject
+    public class BindableAnalogOutputPort
     {
-        void InitializeParameters();
     }
-
-    
 }

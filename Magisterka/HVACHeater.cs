@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public sealed class HVACHeater : HVACTemperatureActiveObject, IDynamicObject
+    public sealed class HVACHeater : HVACTemperatureActiveObject, IDynamicObject, IBindableAnalogInput
     {
+        public List<BindableAnalogInputPort> BindedInputs { get; set; }
+
         public HVACHeater() : base()
         {
             IsGenerativeFlow = false;
@@ -59,6 +61,33 @@ namespace HVACSimulator
             return OutputAir;
         }
 
-        
+        public void InitializeParametersList()
+        {
+            BindedInputs = new List<BindableAnalogInputPort>
+            {
+                new BindableAnalogInputPort(0, 100, EAnalogInput.heaterFlow)
+            };
+        }
+
+        public void SetParameter(int parameter, EAnalogInput analogInput)
+        {
+            var bindedParameter = BindedInputs.FirstOrDefault(item => item.AnalogInput == analogInput);
+            if (bindedParameter == null)
+            {
+                OnSimulationErrorOccured(string.Format("Próba przypisania nieprawidłowego parametru jako wysterowanie pompy nagrzewnicy: {0}", analogInput.ToString()));
+                return;
+            }
+            if (!bindedParameter.ValidateValue(parameter))
+            {
+                OnSimulationErrorOccured(string.Format("Niewłaściwa wartość parametru: {0}", parameter));
+            }
+            WaterFlowPercent = bindedParameter.ConvertToParameterRange(parameter);
+        }
+
+        public List<EAnalogInput> GetListOfParams()
+        {
+            return BindedInputs.Select(item => item.AnalogInput).ToList();
+        }
     }
 }
+

@@ -26,6 +26,7 @@ namespace HVACSimulator
             SetPlotDataNames();
            
             MixingPercent = 100;
+            InitializeParametersList();
         }
 
         public override bool IsPresent
@@ -46,9 +47,7 @@ namespace HVACSimulator
             }
         }
 
-        public List<int> AIIndices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double Min { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public double Max { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<BindableAnalogInputPort> BindedInputs { get; set; }
 
         public void CoupleMixingBox(HVACMixingBox mixingBox)
         {
@@ -76,12 +75,30 @@ namespace HVACSimulator
 
         public void SetParameter(int parameter, EAnalogInput analogInput)
         {
-            throw new NotImplementedException();
+            var bindedParameter = BindedInputs.FirstOrDefault(item => item.AnalogInput == analogInput);
+            if (bindedParameter == null)
+            {
+                OnSimulationErrorOccured(string.Format("Próba przypisania nieprawidłowego parametru jako wysterowanie komory mieszania: {0}", analogInput.ToString()));
+                return;
+            }
+            if (!bindedParameter.ValidateValue(parameter))
+            {
+                OnSimulationErrorOccured(string.Format("Niewłaściwa wartość parametru: {0}", parameter));
+            }
+            MixingPercent = bindedParameter.ConvertToParameterRange(parameter);
         }
 
-        public void InitializeParameters()
+        public void InitializeParametersList()
         {
-            throw new NotImplementedException();
+            BindedInputs = new List<BindableAnalogInputPort>
+            {
+                new BindableAnalogInputPort(0, 100, EAnalogInput.mixingBox)
+            };
+        }
+
+        public List<EAnalogInput> GetListOfParams()
+        {
+            return BindedInputs.Select(item => item.AnalogInput).ToList();
         }
     }
 }

@@ -10,10 +10,7 @@ namespace HVACSimulator
     public class Parser : INotifyErrorSimulation
     {
         private int croppedFrameBytes = 10;
-
-        private List<IBindableAnalogObject> BindedInputs = new List<IBindableAnalogObject>();
-        private List<IBindableAnalogObject> BindedOutputs = new List<IBindableAnalogObject>();
-
+        public AdapterManager AdapterManager = new AdapterManager();
         public enum ECommand : byte
         {
             WriteAll = 0x01,

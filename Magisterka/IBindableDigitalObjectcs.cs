@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Magisterka
+namespace HVACSimulator
 {
-    public interface IBindableDigitalObjectcs
+    public interface IBindableDigitalOutput
     {
         List<int> DIndices { get; set; }
     }
