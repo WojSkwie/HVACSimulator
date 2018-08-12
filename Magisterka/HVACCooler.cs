@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public sealed class HVACCooler : HVACTemperatureActiveObject, IDynamicObject
+    public sealed class HVACCooler : HVACTemperatureActiveObject, IDynamicObject, IBindableAnalogInput
     {
         
         private const double ReferenceTemperatureDifference = 32 - 6;
         public double ActualMaximalCoolingPower { get; set; } 
         public double SetMaximalCoolingPower { get; set; }
         public double CoolingTimeConstant { get; set; }
+        public List<BindableAnalogInputPort> BindedInputs { get; set; }
 
         public HVACCooler() : base()
         {
@@ -90,6 +91,34 @@ namespace HVACSimulator
 
             derivative = (SetMaximalCoolingPower - ActualMaximalCoolingPower) / CoolingTimeConstant;
             ActualMaximalCoolingPower += derivative * Constants.step;
+        }
+
+        public void InitializeParametersList()
+        {
+            BindedInputs = new List<BindableAnalogInputPort>
+            {
+                new BindableAnalogInputPort(0, 100, EAnalogInput.coolerFlow)
+            };
+        }
+
+        public void SetParameter(int parameter, EAnalogInput analogInput)
+        {
+            var bindedParameter = BindedInputs.FirstOrDefault(item => item.AnalogInput == analogInput);
+            if (bindedParameter == null)
+            {
+                OnSimulationErrorOccured(string.Format("Próba przypisania nieprawidłowego parametru jako wysterowanie pompy chłodnicy: {0}", analogInput.ToString()));
+                return;
+            }
+            if (!bindedParameter.ValidateValue(parameter))
+            {
+                OnSimulationErrorOccured(string.Format("Niewłaściwa wartość parametru: {0}", parameter));
+            }
+            WaterFlowPercent = bindedParameter.ConvertToParameterRange(parameter);
+        }
+
+        public List<EAnalogInput> GetListOfParams()
+        {
+            return BindedInputs.Select(item => item.AnalogInput).ToList();
         }
     }
 }
