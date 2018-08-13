@@ -109,6 +109,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AdapterManager.cs" />
+    <Compile Include="AdapterViewModel.cs" />
     <Compile Include="Air.cs" />
     <Compile Include="AirChannel.cs" />
     <Compile Include="BindableAnalogOutputPort.cs" />
@@ -146,9 +147,9 @@
     <Compile Include="HVACSupplyChannel.cs" />
     <Compile Include="HVACTemperatureActiveObject.cs" />
     <Compile Include="IBindableDigitalInput.cs" />
-    <Compile Include="IBindableDigitalObjectcs.cs" />
     <Compile Include="IBindableAnalogInput.cs" />
     <Compile Include="IBindableAnalogOutput.cs" />
+    <Compile Include="IBindableDigitalOutput.cs" />
     <Compile Include="IDynamicObject.cs" />
     <Compile Include="IExportsPlotData.cs" />
     <Compile Include="IModifiableCharact.cs" />

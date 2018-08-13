@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
+    public enum EDigitalOutput
+    {
+        frozenExchanger = 0,
+
+    }
     public interface IBindableDigitalOutput
     {
-        List<int> DIndices { get; set; }
+        List<EDigitalOutput> ParamsList { get; set; }
+        bool SetDigitalParameter(EDigitalOutput digitalOutput);
     }
 }

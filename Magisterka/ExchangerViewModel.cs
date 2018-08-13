@@ -11,44 +11,46 @@ namespace HVACSimulator
     {
         
         
-        public HVACSupplyChannel supplyChannel;
-        public HVACExhaustChannel exhaustChannel;
-        public List<Image> imagesSupplyChannnel;
-        public List<Image> imagesExhaustChannel;
-        public HVACExchanger Exchanger;
+        public HVACSupplyChannel SupplyChannel { get; private set; }
+        public HVACExhaustChannel ExhaustChannel { get; private set; }
+        public List<Image> ImagesSupplyChannnel { get; private set; }
+        public List<Image> ImagesExhaustChannel { get; private set; }
+        public HVACExchanger Exchanger { get; private set; }
+        public HVACEnvironment Environment { get; private set; }
+        public HVACRoom Room { get; private set; }
 
 
         public ExchangerViewModel()
         {
-            supplyChannel = new HVACSupplyChannel();
-            exhaustChannel = new HVACExhaustChannel();
-            imagesSupplyChannnel = new List<Image>();
-            imagesExhaustChannel = new List<Image>();
-            supplyChannel.ImagesList = imagesSupplyChannnel;
-            exhaustChannel.ImagesList = imagesExhaustChannel;
-            Exchanger = new HVACExchanger(supplyChannel.GetInletExchange(), exhaustChannel.GetOutletExchange());
+            SupplyChannel = new HVACSupplyChannel();
+            ExhaustChannel = new HVACExhaustChannel();
+            ImagesSupplyChannnel = new List<Image>();
+            ImagesExhaustChannel = new List<Image>();
+            SupplyChannel.ImagesList = ImagesSupplyChannnel;
+            ExhaustChannel.ImagesList = ImagesExhaustChannel;
+            Exchanger = new HVACExchanger(SupplyChannel.GetInletExchange(), ExhaustChannel.GetOutletExchange());
             CoupleMixingBoxes();
         }
         private void CoupleMixingBoxes()
         {
-            HVACMixingBox first = supplyChannel.GetMixingBox();
-            HVACMixingBox second = exhaustChannel.GetMixingBox();
+            HVACMixingBox first = SupplyChannel.GetMixingBox();
+            HVACMixingBox second = ExhaustChannel.GetMixingBox();
             first.CoupleMixingBox(second);
             second.CoupleMixingBox(first);
         }
 
         public void UpdateParams()
         {
-            supplyChannel.UpdateParams();
-            exhaustChannel.UpdateParams();
-            exhaustChannel.FlowRate = supplyChannel.FlowRate;
+            SupplyChannel.UpdateParams();
+            ExhaustChannel.UpdateParams();
+            ExhaustChannel.FlowRate = SupplyChannel.FlowRate;
             Exchanger.UpdateSetEfficiency(GetFlowRateFromSupplyChannel());
             Exchanger.UpdateParams();
         }
 
         public double GetSpeedFromSupplyChannel()
         {
-            foreach (HVACObject obj in supplyChannel.HVACObjectsList)
+            foreach (HVACObject obj in SupplyChannel.HVACObjectsList)
             {
                 if (obj is HVACFan)
                 {
@@ -60,7 +62,7 @@ namespace HVACSimulator
 
         public double GetHotWaterTempeartureFromSuppyChannel()
         {
-            foreach (HVACObject obj in supplyChannel.HVACObjectsList)
+            foreach (HVACObject obj in SupplyChannel.HVACObjectsList)
             {
                 if (obj is HVACHeater)
                 {
@@ -72,7 +74,7 @@ namespace HVACSimulator
 
         public double GetColdWaterTemperatureFromSupplyChannel()
         {
-            foreach (HVACObject obj in supplyChannel.HVACObjectsList)
+            foreach (HVACObject obj in SupplyChannel.HVACObjectsList)
             {
                 if (obj is HVACCooler)
                 {
@@ -84,12 +86,12 @@ namespace HVACSimulator
 
         public double GetFlowRateFromSupplyChannel()
         {
-            return supplyChannel.FlowRate;
+            return SupplyChannel.FlowRate;
         }
 
         public double GetPressureDropFromSupplyChannel()
         {
-            return supplyChannel.FanPressureDrop;
+            return SupplyChannel.FanPressureDrop;
         }
     }
 }

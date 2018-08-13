@@ -33,6 +33,7 @@ namespace HVACSimulator
         private SeriesViewModel SeriesViewModel;
         private GlobalParameters GlobalParameters;
         private ExportFactory ExportFactory;
+        private AdapterViewModel AdapterViewModel;
 
         public MainWindow()
         {
@@ -42,20 +43,21 @@ namespace HVACSimulator
             ExchangerViewModel = new ExchangerViewModel();
             SeriesViewModel = new SeriesViewModel();
             ExportFactory = new ExportFactory();
+            AdapterViewModel = new AdapterViewModel();
 
             InitializeComponent();
 
             mainTimer.Tick += MainTimer_Tick;
-            ExchangerViewModel.supplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
-            ExchangerViewModel.exhaustChannel.ChannelPresenceChanged += PresenceChangedInExchaustChannel;
+            ExchangerViewModel.SupplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
+            ExchangerViewModel.ExhaustChannel.ChannelPresenceChanged += PresenceChangedInExchaustChannel;
             AddImagesSupply();
             AddImagesExhaust();
-            DrawItemsForChannel(ExchangerViewModel.supplyChannel);
-            DrawItemsForChannel(ExchangerViewModel.exhaustChannel);
+            DrawItemsForChannel(ExchangerViewModel.SupplyChannel);
+            DrawItemsForChannel(ExchangerViewModel.ExhaustChannel);
 
             DataContext = ExchangerViewModel;
-            supplyDataGrid.DataContext = ExchangerViewModel.supplyChannel;
-            extractDataGrid.DataContext = ExchangerViewModel.exhaustChannel;
+            supplyDataGrid.DataContext = ExchangerViewModel.SupplyChannel;
+            extractDataGrid.DataContext = ExchangerViewModel.ExhaustChannel;
             Plot.DataContext = SeriesViewModel;
             PlotSeries.DataContext = SeriesViewModel;
         }
@@ -70,11 +72,11 @@ namespace HVACSimulator
             PressureDropSupplyNumeric.Value = ExchangerViewModel.GetPressureDropFromSupplyChannel();
             FlowRateSupplyNumeric.Value = ExchangerViewModel.GetFlowRateFromSupplyChannel();
             //ExchangerViewModel.supplyChannel.CalculateAirParameters();
-            Air exchaustExchangerAir = ExchangerViewModel.exhaustChannel.CalculateAirParametersBeforeExchanger();
-            Air supplyExchangerAir = ExchangerViewModel.supplyChannel.CalculateAirParametersBeforeExchanger();
+            Air exchaustExchangerAir = ExchangerViewModel.ExhaustChannel.CalculateAirParametersBeforeExchanger();
+            Air supplyExchangerAir = ExchangerViewModel.SupplyChannel.CalculateAirParametersBeforeExchanger();
             ExchangerViewModel.Exchanger.CalculateExchangeAndSetOutputAir(supplyExchangerAir, exchaustExchangerAir);
-            ExchangerViewModel.exhaustChannel.CalculateAirParametersWithAndAfterExchanger();
-            ExchangerViewModel.supplyChannel.CalculateAirParametersWithAndAfterExchanger();
+            ExchangerViewModel.ExhaustChannel.CalculateAirParametersWithAndAfterExchanger();
+            ExchangerViewModel.SupplyChannel.CalculateAirParametersWithAndAfterExchanger();
 
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
@@ -126,8 +128,8 @@ namespace HVACSimulator
             if (GlobalParameters.SimulationState == EState.running) return;
             if (GlobalParameters.SimulationState == EState.stopped) 
             {
-                SeriesViewModel.InitializeModelFromList(ExchangerViewModel.supplyChannel.HVACObjectsList);
-                SeriesViewModel.AddAirChannel(ExchangerViewModel.supplyChannel);
+                SeriesViewModel.InitializeModelFromList(ExchangerViewModel.SupplyChannel.HVACObjectsList);
+                SeriesViewModel.AddAirChannel(ExchangerViewModel.SupplyChannel);
                 PresentObjectsSplitButton.DataContext = SeriesViewModel;
                 Plot.DataContext = SeriesViewModel;
             }
@@ -157,31 +159,31 @@ namespace HVACSimulator
 
         private void PresenceChangedInSupplyChannel(object sender, EventArgs e)
         {
-            DrawItemsForChannel(ExchangerViewModel.supplyChannel);
+            DrawItemsForChannel(ExchangerViewModel.SupplyChannel);
         }
 
         private void PresenceChangedInExchaustChannel(object sender, EventArgs e)
         {
-            DrawItemsForChannel(ExchangerViewModel.exhaustChannel);
+            DrawItemsForChannel(ExchangerViewModel.ExhaustChannel);
         }
 
 
         private void AddImagesSupply()
         {
-            ExchangerViewModel.imagesSupplyChannnel.Add(imgin1);
-            ExchangerViewModel.imagesSupplyChannnel.Add(new Image());
-            ExchangerViewModel.imagesSupplyChannnel.Add(new Image());
-            ExchangerViewModel.imagesSupplyChannnel.Add(imgin2);
-            ExchangerViewModel.imagesSupplyChannnel.Add(imgin3);
-            ExchangerViewModel.imagesSupplyChannnel.Add(imgin4);
-            ExchangerViewModel.imagesSupplyChannnel.Add(imgin5);
+            ExchangerViewModel.ImagesSupplyChannnel.Add(imgin1);
+            ExchangerViewModel.ImagesSupplyChannnel.Add(new Image());
+            ExchangerViewModel.ImagesSupplyChannnel.Add(new Image());
+            ExchangerViewModel.ImagesSupplyChannnel.Add(imgin2);
+            ExchangerViewModel.ImagesSupplyChannnel.Add(imgin3);
+            ExchangerViewModel.ImagesSupplyChannnel.Add(imgin4);
+            ExchangerViewModel.ImagesSupplyChannnel.Add(imgin5);
         }
 
         private void AddImagesExhaust()
         {
-            ExchangerViewModel.imagesExhaustChannel.Add(imgout1);
-            ExchangerViewModel.imagesExhaustChannel.Add(new Image());
-            ExchangerViewModel.imagesExhaustChannel.Add(new Image());
+            ExchangerViewModel.ImagesExhaustChannel.Add(imgout1);
+            ExchangerViewModel.ImagesExhaustChannel.Add(new Image());
+            ExchangerViewModel.ImagesExhaustChannel.Add(new Image());
         }
 
         private void DrawItemsForChannel(AirChannel airChannel)
@@ -198,7 +200,7 @@ namespace HVACSimulator
         {
             int index = supplyDataGrid.SelectedIndex;
             if (index < 0) { return; }
-            var currentItem = ExchangerViewModel.supplyChannel.HVACObjectsList[index];
+            var currentItem = ExchangerViewModel.SupplyChannel.HVACObjectsList[index];
             if (currentItem is IModifiableCharact)
             {
                 (currentItem as IModifiableCharact).ModifyCharacteristics();
@@ -209,7 +211,7 @@ namespace HVACSimulator
         {
             if(SetSpeedSupplyNumeric.Value != null)
             {
-                ExchangerViewModel.supplyChannel.SetSpeedFan((double)SetSpeedSupplyNumeric.Value);
+                ExchangerViewModel.SupplyChannel.SetSpeedFan((double)SetSpeedSupplyNumeric.Value);
             }
         }
 
@@ -225,7 +227,7 @@ namespace HVACSimulator
 
         private void EditCharChan_Click(object sender, RoutedEventArgs e)
         {
-            ExchangerViewModel.supplyChannel.ModifyCharacteristics();
+            ExchangerViewModel.SupplyChannel.ModifyCharacteristics();
         }
 
         private void MoveButton_Click(object sender, RoutedEventArgs e)
@@ -233,9 +235,9 @@ namespace HVACSimulator
             int index = supplyDataGrid.SelectedIndex;
             int direction = Convert.ToInt32(((Button)sender).Tag);
             if (index < 0) return;
-            ExchangerViewModel.supplyChannel.MoveObject(index, direction);
+            ExchangerViewModel.SupplyChannel.MoveObject(index, direction);
             //supplyDataGrid.ItemsSource = ExchangerViewModel.supplyChannel.HVACObjectsList; //TODO jeżeli przesuwanie przestanie działać to tutaj może być przyczyna
-            DrawItemsForChannel(ExchangerViewModel.supplyChannel);
+            DrawItemsForChannel(ExchangerViewModel.SupplyChannel);
             
         }
 
@@ -243,7 +245,7 @@ namespace HVACSimulator
         {
             if (SetHotWaterTemperatureNumeric.Value != null)
             {
-                ExchangerViewModel.supplyChannel.SetHeaterWaterTemperature((double)SetHotWaterTemperatureNumeric.Value);
+                ExchangerViewModel.SupplyChannel.SetHeaterWaterTemperature((double)SetHotWaterTemperatureNumeric.Value);
             }
         }
 
@@ -261,7 +263,7 @@ namespace HVACSimulator
         {
             if (HotWaterFlowPercentNumeric.Value != null)
             {
-                ExchangerViewModel.supplyChannel.SetHotWaterFlow((double)HotWaterFlowPercentNumeric.Value);
+                ExchangerViewModel.SupplyChannel.SetHotWaterFlow((double)HotWaterFlowPercentNumeric.Value);
             }
         }
 
@@ -269,7 +271,7 @@ namespace HVACSimulator
         {
             if(SetColdWaterTemperatureNumeric.Value != null)
             {
-                ExchangerViewModel.supplyChannel.SetCoolerWaterTemperature((double)SetColdWaterTemperatureNumeric.Value);
+                ExchangerViewModel.SupplyChannel.SetCoolerWaterTemperature((double)SetColdWaterTemperatureNumeric.Value);
             }
         }
 
@@ -287,7 +289,7 @@ namespace HVACSimulator
         {
             if (ColdWaterFlowPercentNumeric.Value != null)
             {
-                ExchangerViewModel.supplyChannel.SetColdWaterFlow((double)ColdWaterFlowPercentNumeric.Value);
+                ExchangerViewModel.SupplyChannel.SetColdWaterFlow((double)ColdWaterFlowPercentNumeric.Value);
             }
         }
 

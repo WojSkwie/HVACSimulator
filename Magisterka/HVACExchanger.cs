@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace HVACSimulator
 {
-    public class HVACExchanger : INotifyErrorSimulation, IDynamicObject
+    public class HVACExchanger : INotifyErrorSimulation, IDynamicObject, IBindableDigitalInput, IBindableDigitalOutput
     {
         private HVACOutletExchange OutletExchange;
         private HVACInletExchange InletExchange;
@@ -25,6 +25,14 @@ namespace HVACSimulator
 
         public double SetEfficiencyPercent { get; set; }
         public double ActualEfficiencyPercent { get; set; }
+        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
+        {
+            EDigitalInput.bypass
+        };
+        List<EDigitalOutput> IBindableDigitalOutput.ParamsList { get; set; } = new List<EDigitalOutput>
+        {
+            EDigitalOutput.frozenExchanger
+        };
 
         public HVACExchanger(HVACInletExchange inletExchange, HVACOutletExchange outletExchange)
         {
@@ -101,6 +109,32 @@ namespace HVACSimulator
             }
             double derivative = (SetEfficiencyPercent - ActualEfficiencyPercent) / TimeConstant;
             ActualEfficiencyPercent += derivative * Constants.step;
+        }
+
+        void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
+        {
+            switch (digitalInput)
+            {
+                case EDigitalInput.bypass:
+                    BypassActivated = state;
+                    break;
+                default:
+                    OnSimulationErrorOccured(string.Format("Próba przypisania nieprawidłowego parametru do wymiennika ciepła: {0}", digitalInput));
+                    break;
+            }
+
+        }
+
+        bool IBindableDigitalOutput.SetDigitalParameter(EDigitalOutput digitalOutput)
+        {
+            switch(digitalOutput)
+            {
+                case EDigitalOutput.frozenExchanger:
+                    return IsFrozen;
+                default:
+                    OnSimulationErrorOccured(string.Format("Próba odczytu nieprawidłowego parametru z wymiennika ciepła: {0}", digitalOutput));
+                    return false;
+            }
         }
     }
 }

@@ -47,7 +47,7 @@ namespace HVACSimulator
             var bindedParameter = BindedOutputs.FirstOrDefault(item => item.AnalogOutput == analogOutput);
             if (bindedParameter == null)
             {
-                OnSimulationErrorOccured(string.Format("Próba przypisania nieprawidłowego parametru jako wysterowanie pompy nagrzewnicy: {0}", analogInput.ToString()));
+                OnSimulationErrorOccured(string.Format("Próba odczytu nieprawidłowego parametru z pomieszczenia: {0}", analogOutput.ToString()));
                 return 0;
             }
             int output = 0;
