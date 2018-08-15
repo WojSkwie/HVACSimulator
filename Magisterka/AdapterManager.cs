@@ -13,6 +13,27 @@ namespace HVACSimulator
         private List<IBindableDigitalInput> DBindedInputs;
         private List<IBindableDigitalOutput> DBindedOutputs;
 
+        private USB USB = new USB();
+
+        public void OnAnalogParameterArrived(object sender, KeyValuePair<EAnalogInput, int> e)
+        {
+            SetAnalogParameterSimulation(e.Key, e.Value);
+        }
+
+        public void OnDigitalParameterArrived(object sender, KeyValuePair<EDigitalInput, bool> e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsConnected
+        {
+            get
+            {
+                return USB.IsOpen;
+            }
+        }
+
+
 
         public AdapterManager()
         {
@@ -48,28 +69,38 @@ namespace HVACSimulator
         }
         #endregion
 
-        public void SetParameterSimulation(byte inputNumber, int inputValue)
+        public void SetAnalogParameterSimulation(EAnalogInput analogInput, int inputValue)
         {
-            if (!Enum.IsDefined(typeof(EAnalogInput), inputNumber))
-            {
-                OnSimulationErrorOccured("W symulacji nie ma takiego wejścia analogowego");
-                return;
-            }
-            EAnalogInput analogInput = (EAnalogInput)inputNumber;
             IBindableAnalogInput bindableAnalogInput = ABindedInputs.Where(item => item.GetListOfParams().Contains(analogInput)).First();
             bindableAnalogInput.SetParameter(inputValue, analogInput);
         }
 
-        public int GetParameterSimulation(byte outputNumber)
+        public int GetAnalogParameterSimulation(EAnalogOutput analogOutput)
         {
-            if(!Enum.IsDefined(typeof(EAnalogOutput), outputNumber))
-            {
-                OnSimulationErrorOccured("W symulacji nie ma takiego wyjścia analogowego");
-                return 0;
-            }
-            EAnalogOutput analogOutput = (EAnalogOutput)outputNumber;
             IBindableAnalogOutput bindableAnalogOutput = ABindedOutputs.Where(item => item.GetListOfParams().Contains(analogOutput)).First();
             return bindableAnalogOutput.GetParamter(analogOutput);
+        }
+
+        public void SetDigitalParameterSimulation(EDigitalInput digitalInput, bool inputValue)
+        {
+            IBindableDigitalInput bindableDigitalInput = DBindedInputs.Where(item => item.ParamsList.Contains(digitalInput)).First();
+            bindableDigitalInput.SetDigitalParameter(inputValue, digitalInput);
+        }
+
+        public bool GetDigitalParameterSimulation(EDigitalOutput digitalOutput)
+        {
+            IBindableDigitalOutput bindableDigitalOutput = DBindedOutputs.Where(item => item.ParamsList.Contains(digitalOutput)).First();
+            return bindableDigitalOutput.GetDigitalParameter(digitalOutput);
+        }
+
+        public void FindAdapter()
+        {
+            foreach(var name in USB.GetPortNames())
+            {
+                USB.PortName = name;
+                USB.Open();
+
+            }
         }
     }
 }

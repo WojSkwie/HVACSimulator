@@ -15,14 +15,14 @@
         <local:ExchangerViewModel/>
     </Window.DataContext>
     <Window.Resources>
-        
-            <ObjectDataProvider x:Key="dataFromEnumFileFormat" MethodName="GetValues"
+
+        <ObjectDataProvider x:Key="dataFromEnumFileFormat" MethodName="GetValues"
                                         ObjectType="{x:Type sys:Enum}">
-                <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="local:EFileFormat"/>
-                </ObjectDataProvider.MethodParameters>
-            </ObjectDataProvider>
-        
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:EFileFormat"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
     </Window.Resources>
     <Grid>
 
@@ -200,8 +200,28 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Adapter">
+            <TabItem Name="AdapterTabItem" Header="Adapter">
+                
+                <Grid>
+                    <TextBox Name="PortNameTextBox" Height="23" TextWrapping="Wrap" Text="" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,25,25,0"/>
+                    <Controls:Tile Title="State" HorizontalAlignment="Right" VerticalAlignment="Top" Height="100" Margin="0,80,25,0" >
+                        <Controls:Tile.Style>
+                            <Style TargetType="Controls:Tile" BasedOn="{StaticResource {x:Type Controls:Tile}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsConnected}" Value="true">
+                                        <Setter Property="Background" Value="Green"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsConnected}" Value="false">
+                                        <Setter Property="Background" Value="Red"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Controls:Tile.Style>
+                    </Controls:Tile>
+                </Grid>
+
             </TabItem>
+
         </TabControl>
 
 

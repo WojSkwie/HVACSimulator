@@ -65,19 +65,6 @@ namespace HVACSimulator
             }
         }
 
-        public bool FindDevice()
-        {
-            string[] availablePorts = GetPortNames();
-            foreach (string name in availablePorts)
-            {
-                /*if (name == DeviceName)
-                {
-                    return true;
-                }*/
-            }
-            return false;
-        }
-
         public void OnSimulationErrorOccured(string error)
         {
             SimulationErrorOccured?.Invoke(this, error);

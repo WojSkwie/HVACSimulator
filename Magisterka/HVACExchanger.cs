@@ -125,7 +125,7 @@ namespace HVACSimulator
 
         }
 
-        bool IBindableDigitalOutput.SetDigitalParameter(EDigitalOutput digitalOutput)
+        bool IBindableDigitalOutput.GetDigitalParameter(EDigitalOutput digitalOutput)
         {
             switch(digitalOutput)
             {

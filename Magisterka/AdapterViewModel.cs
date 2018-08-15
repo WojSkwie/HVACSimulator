@@ -6,16 +6,35 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class AdapterViewModel
+    public class AdapterViewModel 
     {
         public AdapterViewModel(ExchangerViewModel exchangerViewModelToBind)
         {
+            AdapterManager = new AdapterManager();
+            BindAllParameters(exchangerViewModelToBind);
+            Parser = new Parser();
 
+            Parser.AnalogParameterArrived += AdapterManager.OnAnalogParameterArrived;
+            Parser.DigitalParamterArrived += AdapterManager.OnDigitalParameterArrived;
+            Parser.AdapterFound += Parser_AdapterFound;
         }
-        private AdapterManager AdapterManager = new AdapterManager();
 
-        private USB USB = new USB();
-        private Parser Parser = new Parser();
+        private void Parser_AdapterFound(object sender, string name)
+        {
+            PortName = name;
+        }
+
+        public string PortName { get; set; }
+        public bool EnableChanges { get; set; }
+        public bool IsConnected
+        {
+            get
+            {
+                return AdapterManager.IsConnected;
+            }
+        }
+        private AdapterManager AdapterManager;
+        private Parser Parser;
 
         private void BindAllParameters(ExchangerViewModel exchangerViewModel)
         {

@@ -9,8 +9,13 @@ namespace HVACSimulator
 {
     public class Parser : INotifyErrorSimulation
     {
-        private int croppedFrameBytes = 10;
-        public AdapterManager AdapterManager = new AdapterManager();
+        public Parser()
+        {
+            
+        }
+        private const int croppedFrameBytes = 10;
+        private const int booleanValuesIndex = 9;
+        public AdapterManager AdapterManager;
         public enum ECommand : byte
         {
             WriteAll = 0x01,
@@ -27,19 +32,41 @@ namespace HVACSimulator
         }
 
         public event EventHandler<string> SimulationErrorOccured;
+        public event EventHandler<KeyValuePair<EAnalogInput, int>> AnalogParameterArrived;
+        public event EventHandler<KeyValuePair<EDigitalInput, bool>> DigitalParamterArrived;
+        public event EventHandler<string> AdapterFound;
 
         public void ParseCorrectCroppedFrame(object sender, byte[] frame)
         {
+            byte byteAfterComand = frame[1];
             switch(frame[0])
             {
                 case (byte)ECommand.AnswerAll:
-
+                    foreach(EAnalogInput analogInput in Enum.GetValues(typeof(EAnalogInput)))
+                    {
+                        int value = Get2BytesValueFromFrame(frame, (byte)(1 + (byte)analogInput * 2));
+                        OnAnalogInputValueChange(new KeyValuePair<EAnalogInput, int>(analogInput, value));
+                    }
+                    foreach(EDigitalInput digitalInput in Enum.GetValues(typeof(EDigitalInput)))
+                    {
+                        bool value = GetBoolValueFromByte(frame[booleanValuesIndex], (byte)digitalInput); 
+                    }
                     break;
                 case (byte)ECommand.AnswerOneAn:
-
+                    if(Enum.IsDefined(typeof(EAnalogInput), byteAfterComand))
+                    {
+                        EAnalogInput parameterNumber = (EAnalogInput)byteAfterComand;
+                        int value = Get2BytesValueFromFrame(frame, 2);
+                        OnAnalogInputValueChange(new KeyValuePair<EAnalogInput, int>(parameterNumber, value));
+                    }
                     break;
                 case (byte)ECommand.AnswerOneDi:
-
+                    if (Enum.IsDefined(typeof(EDigitalInput), byteAfterComand))
+                    {
+                        EDigitalInput parameterNumber = (EDigitalInput)byteAfterComand;
+                        bool value = Convert.ToBoolean(frame[2]);
+                        OnDigitalInputValueChange(new KeyValuePair<EDigitalInput, bool>(parameterNumber, value));
+                    }
                     break;
                 case (byte)ECommand.AnswerEcho:
 
@@ -95,6 +122,33 @@ namespace HVACSimulator
                     break;
             }
             return frame;
+        }
+
+        protected virtual void OnAnalogInputValueChange(KeyValuePair<EAnalogInput, int> inputValuePair)
+        {
+            AnalogParameterArrived?.Invoke(this, inputValuePair);
+        }
+
+        protected virtual void OnDigitalInputValueChange(KeyValuePair<EDigitalInput, bool> inputValuePair)
+        {
+            DigitalParamterArrived?.Invoke(this, inputValuePair);
+        }
+
+        private int Get2BytesValueFromFrame(byte[] frame, byte valueIndex)
+        {
+            byte[] croppedArray = new byte[4];
+            Array.Copy(frame, valueIndex, croppedArray, 2, 2);
+            //if (BitConverter.IsLittleEndian)
+            //    Array.Reverse(croppedArray);
+            int output = BitConverter.ToInt32(croppedArray, 0);
+            return output;
+        }
+
+        private bool GetBoolValueFromByte(byte allValues, byte valueIndex)
+        {
+            byte mask = (byte)(1 << valueIndex);
+            bool output = (allValues & mask) != 0;
+            return output;
         }
     }
 }

@@ -43,8 +43,8 @@ namespace HVACSimulator
             ExchangerViewModel = new ExchangerViewModel();
             SeriesViewModel = new SeriesViewModel();
             ExportFactory = new ExportFactory();
-            AdapterViewModel = new AdapterViewModel();
-
+            AdapterViewModel = new AdapterViewModel(ExchangerViewModel);
+            //AdapterTabItem.DataContext = AdapterViewModel;
             InitializeComponent();
 
             mainTimer.Tick += MainTimer_Tick;

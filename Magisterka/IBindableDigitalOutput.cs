@@ -14,6 +14,6 @@ namespace HVACSimulator
     public interface IBindableDigitalOutput
     {
         List<EDigitalOutput> ParamsList { get; set; }
-        bool SetDigitalParameter(EDigitalOutput digitalOutput);
+        bool GetDigitalParameter(EDigitalOutput digitalOutput);
     }
 }

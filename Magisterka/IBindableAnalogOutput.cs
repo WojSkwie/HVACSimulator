@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public enum EAnalogOutput
+    public enum EAnalogOutput: byte
     {
         temperature = 0,
         relativeHumidity = 1,

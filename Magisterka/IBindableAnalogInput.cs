@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public enum EAnalogInput
+    public enum EAnalogInput : byte
     {
         fanSpeed = 0,
         heaterFlow = 1,
