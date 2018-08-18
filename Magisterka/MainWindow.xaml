@@ -203,13 +203,13 @@
             <TabItem Name="AdapterTabItem" Header="Adapter">
 
                 <Grid>
-                    <TextBox Name="PortNameTextBox" Height="23" TextWrapping="Wrap" Text="{Binding PortName}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,25,25,0"/>
-                    <Controls:Tile Title="Stan połączenia" HorizontalAlignment="Right" VerticalAlignment="Top" Height="100" Margin="0,80,25,0" Width="120" >
+                    <TextBox Name="PortNameTextBox" Height="23" TextWrapping="Wrap" Text="{Binding PortName}" Width="280" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,157,25,0"/>
+                    <Controls:Tile Title="Stan połączenia" HorizontalAlignment="Right" VerticalAlignment="Top" Height="79" Margin="0,25,25,0" Width="280" IsHitTestVisible="False">
                         <Controls:Tile.Style>
                             <Style TargetType="Controls:Tile" BasedOn="{StaticResource {x:Type Controls:Tile}}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsConnected}" Value="true">
-                                        <Setter Property="Background" Value="Green"></Setter>
+                                        <Setter Property="Background" Value="Blue"></Setter>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding IsConnected}" Value="false">
                                         <Setter Property="Background" Value="Red"></Setter>
@@ -218,8 +218,8 @@
                             </Style>
                         </Controls:Tile.Style>
                     </Controls:Tile>
-                    <Button Content="Połącz" HorizontalAlignment="Left" Margin="959,25,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="ConnectToAdapterButtonClick"/>
-                    <Button Content="Szukaj" HorizontalAlignment="Left" Margin="879,25,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="SearchAdapterButtonClick"/>
+                    <Button Content="Połącz" HorizontalAlignment="Right" Margin="0,109,170,0" VerticalAlignment="Top" Width="135" Height="43" Click="ConnectToAdapterButtonClick" IsEnabled="{Binding AllowClick}"/>
+                    <Button Content="Szukaj" HorizontalAlignment="Right" Margin="0,109,25,0" VerticalAlignment="Top" Width="135" Height="43" Click="SearchAdapterButtonClick" IsEnabled="{Binding AllowClick}"/>
                 </Grid>
 
             </TabItem>

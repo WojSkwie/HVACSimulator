@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xceed.Wpf.Toolkit;
 
 namespace HVACSimulator
 {
@@ -12,7 +13,7 @@ namespace HVACSimulator
         public AdapterViewModel(ExchangerViewModel exchangerViewModelToBind)
         {
             Parser = new Parser();
-            AdapterManager = new AdapterManager(Parser.ParseCorrectCroppedFrame);
+            AdapterManager = new AdapterManager(Parser.ParseCorrectCroppedFrame, OnAdapterStateChange);
             BindAllParameters(exchangerViewModelToBind);
 
             Parser.AnalogParameterArrived += AdapterManager.OnAnalogParameterArrived;
@@ -37,13 +38,27 @@ namespace HVACSimulator
         }
 
         public bool AreChangesEnabled { get; set; }
+        private bool _IsConnected;
+
         public bool IsConnected
         {
-            get
-            {
-                return AdapterManager.IsConnected;
-            }
+            get { return _IsConnected; }
+            set { _IsConnected = value; OnPropertyChanged("IsConnected"); }
         }
+
+        private void OnAdapterStateChange(object sender, bool newState)
+        {
+            IsConnected = newState;
+        }
+
+        private bool _AllowClick = true;
+
+        public bool AllowClick
+        {
+            get { return _AllowClick; }
+            set { _AllowClick = value; OnPropertyChanged("AllowClick"); }
+        }
+
         private AdapterManager AdapterManager;
         private Parser Parser;
 
@@ -64,15 +79,15 @@ namespace HVACSimulator
             AdapterManager.InitializeAnalogOutputs(
                 (IBindableAnalogOutput)exchangerViewModel.Room
                 );
-            /*AdapterManager.InitializeDigitalInputs(
+            AdapterManager.InitializeDigitalInputs(
                 (IBindableDigitalInput)exchangerViewModel.SupplyChannel.HVACObjectsList.First(item => item is HVACFan),
                 (IBindableDigitalInput)exchangerViewModel.SupplyChannel.HVACObjectsList.First(item => item is HVACCooler),
                 (IBindableDigitalInput)exchangerViewModel.SupplyChannel.HVACObjectsList.First(item => item is HVACHeater),
                 exchangerViewModel.Exchanger
                 );
             AdapterManager.InitializeDigitalOutputs(
-                (IBindableDigitalOutput)exchangerViewModel.Exchanger
-                );*/
+                exchangerViewModel.Exchanger
+                );
         }
 
         public void SearchAdapter()
@@ -80,5 +95,26 @@ namespace HVACSimulator
             AdapterManager.SendEchoToFindAdapter();
         }
 
+        public void Connect()
+        {
+            if (string.IsNullOrEmpty(PortName)) { MessageBox.Show("Wpisz nazwe portu"); return; }
+            PortName = PortName.ToUpper();
+            AdapterManager.Connect(PortName);
+        }
+
+        public void Disconnect()
+        {
+            AdapterManager.Disconnect();
+        }
+
+        public void SendValuesToAdapter()
+        {
+
+        }
+
+        public void GetValuesFromAdapter()
+        {
+
+        }
     }
 }

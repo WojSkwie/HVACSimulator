@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public sealed class HVACCooler : HVACTemperatureActiveObject, IDynamicObject, IBindableAnalogInput
+    public sealed class HVACCooler : HVACTemperatureActiveObject, IDynamicObject, IBindableAnalogInput, IBindableDigitalInput
     {
         
         private const double ReferenceTemperatureDifference = 32 - 6;
@@ -14,6 +14,7 @@ namespace HVACSimulator
         public double SetMaximalCoolingPower { get; set; }
         public double CoolingTimeConstant { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
+        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; }
 
         public HVACCooler() : base()
         {
@@ -119,6 +120,11 @@ namespace HVACSimulator
         public List<EAnalogInput> GetListOfParams()
         {
             return BindedInputs.Select(item => item.AnalogInput).ToList();
+        }
+
+        void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
+        {
+            throw new NotImplementedException();
         }
     }
 }

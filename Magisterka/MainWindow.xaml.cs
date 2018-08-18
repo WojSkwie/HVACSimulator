@@ -66,7 +66,6 @@ namespace HVACSimulator
         private void MainTimer_Tick(object sender, EventArgs e)
         {
             UpdateAllDynamicObjects();
-
             ActualSpeedSupplyNumeric.Value = ExchangerViewModel.GetSpeedFromSupplyChannel();
             ActualHotWaterTemperatureNumeric.Value = ExchangerViewModel.GetHotWaterTempeartureFromSuppyChannel();
             ActualColdWaterTemperatureNumeric.Value = ExchangerViewModel.GetColdWaterTemperatureFromSupplyChannel();
@@ -127,16 +126,22 @@ namespace HVACSimulator
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
             if (GlobalParameters.SimulationState == EState.running) return;
-            if (GlobalParameters.SimulationState == EState.stopped) 
+            if(AdapterViewModel.IsConnected)
             {
-                SeriesViewModel.InitializeModelFromList(ExchangerViewModel.SupplyChannel.HVACObjectsList);
-                SeriesViewModel.AddAirChannel(ExchangerViewModel.SupplyChannel);
-                PresentObjectsSplitButton.DataContext = SeriesViewModel;
-                Plot.DataContext = SeriesViewModel;
+                if (GlobalParameters.SimulationState == EState.stopped)
+                {
+                    SeriesViewModel.InitializeModelFromList(ExchangerViewModel.SupplyChannel.HVACObjectsList);
+                    SeriesViewModel.AddAirChannel(ExchangerViewModel.SupplyChannel);
+                    PresentObjectsSplitButton.DataContext = SeriesViewModel;
+                    Plot.DataContext = SeriesViewModel;
+                }
+                mainTimer.Start();
+                GlobalParameters.SimulationState = EState.running;
             }
-            mainTimer.Start();
-            GlobalParameters.SimulationState = EState.running;
-
+            else
+            {
+                MessageBox.Show("Najpierw połącz się z adapterem");
+            }
         }
 
         private void pauseButton_Click(object sender, RoutedEventArgs e)
@@ -348,12 +353,23 @@ namespace HVACSimulator
 
         private void SearchAdapterButtonClick(object sender, RoutedEventArgs e)
         {
+            AdapterViewModel.AllowClick = false;
+            //await Task.Delay(100);
             AdapterViewModel.SearchAdapter();
+            AdapterViewModel.AllowClick = true;
         }
 
         private void ConnectToAdapterButtonClick(object sender, RoutedEventArgs e)
         {
-
+            if(AdapterViewModel.IsConnected)
+            {
+                AdapterViewModel.Disconnect();
+            }
+            else
+            {
+                AdapterViewModel.Connect();
+            }
         }
+
     }
 }

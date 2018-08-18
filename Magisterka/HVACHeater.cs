@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public sealed class HVACHeater : HVACTemperatureActiveObject, IDynamicObject, IBindableAnalogInput
+    public sealed class HVACHeater : HVACTemperatureActiveObject, IDynamicObject, IBindableAnalogInput, IBindableDigitalInput
     {
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
+        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; }
+
 
         public HVACHeater() : base()
         {
@@ -87,6 +89,11 @@ namespace HVACSimulator
         public List<EAnalogInput> GetListOfParams()
         {
             return BindedInputs.Select(item => item.AnalogInput).ToList();
+        }
+
+        void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
+        {
+            throw new NotImplementedException();
         }
     }
 }

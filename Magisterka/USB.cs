@@ -17,6 +17,7 @@ namespace HVACSimulator
 
         public event EventHandler<string> SimulationErrorOccured;
         public event EventHandler<byte[]> CorrectFrameRead;
+        public event EventHandler<bool> StateChanged;
 
         public USB()
         {
@@ -27,6 +28,19 @@ namespace HVACSimulator
             DataReceived += USBDataReceived;
             ReadTimeout = 100;
             WriteTimeout = 100;
+        }
+
+        public void OpenWithEvent()
+        {
+            this.Open();
+            OnStateChanged(true);
+        }
+
+        public void CloseWithEvent()
+        {
+            this.Close();
+            OnStateChanged(false);
+
         }
 
         private void USBDataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -74,6 +88,11 @@ namespace HVACSimulator
         protected void OnCorrectFrameRead(byte[] frame)
         {
             CorrectFrameRead?.Invoke(this, frame);
+        }
+
+        protected void OnStateChanged(bool newState)
+        {
+            StateChanged?.Invoke(this, newState);
         }
 
         public bool DecoreAndTryWriteFrame(byte[] frame)

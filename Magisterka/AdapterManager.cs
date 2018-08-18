@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xceed.Wpf.Toolkit;
 
 namespace HVACSimulator
 {
@@ -29,19 +31,23 @@ namespace HVACSimulator
             SetDigitalParameterSimulation(parameter.Key, parameter.Value);
         }
 
-        public bool IsConnected
+        public void Connect(string portName)
         {
-            get
-            {
-                return USB.IsOpen;
-            }
+            if (!VerifyPortName(portName)) return;
+            USB.PortName = portName;
+            USB.OpenWithEvent();
+        }
+
+        public void Disconnect()
+        {
+            USB.CloseWithEvent();
         }
 
 
-
-        public AdapterManager(EventHandler<byte[]> correctFrameHandler)
+        public AdapterManager(EventHandler<byte[]> correctFrameHandler, EventHandler<bool> stateChangedHandler)
         {
             USB.CorrectFrameRead += correctFrameHandler;
+            USB.StateChanged += stateChangedHandler;
             //USB.CorrectFrameRead += Parser.ParseCorrectCroppedFrame;
         }
 
@@ -70,7 +76,7 @@ namespace HVACSimulator
 
         public void OnSimulationErrorOccured(string error)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException(); TODO
         }
         #endregion
 
@@ -102,13 +108,44 @@ namespace HVACSimulator
         {
             foreach(var name in USB.GetPortNames())
             {
-                USB.PortName = name;
-                USB.Open();
-                LastOpenedPort = name;
-                byte[] echoFrame = Parser.CreateCroppedFrame(Parser.ECommand.Echo, new byte[0]);
-                USB.DecoreAndTryWriteFrame(echoFrame);
-                await Task.Delay(100);
-                USB.Close();
+                try
+                {
+                    USB.PortName = name;
+                    USB.Open();
+                    LastOpenedPort = name;
+                    byte[] echoFrame = Parser.CreateCroppedFrame(Parser.ECommand.Echo, new byte[0]);
+                    USB.DecoreAndTryWriteFrame(echoFrame);
+                    await Task.Delay(100);
+                    USB.Close();
+                }
+                catch (IOException)
+                {
+                    OnSimulationErrorOccured("Port znajduje się w nieprawidłowym stanie");
+                }
+                catch(ArgumentException)
+                {
+                    OnSimulationErrorOccured("Obiekt jest nullem");
+                }
+                catch(InvalidOperationException)
+                {
+                    OnSimulationErrorOccured("Port jest w nieprawidłowym stanie");
+                }
+                catch(Exception e)
+                {
+                    OnSimulationErrorOccured(string.Format("Nieprzewidziany błąd portu szeregowego: {0}", e));
+                }
+                
+            }
+        }
+
+        public bool VerifyPortName(string portName)
+        {
+            List<string> availablePorts = USB.GetPortNames().ToList();
+            if (availablePorts.Contains(portName)) return true;
+            else
+            {
+                MessageBox.Show("Niepoprawna nazwa portu");
+                return false;
             }
         }
     }
