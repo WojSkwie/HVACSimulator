@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace HVACSimulator
 {
-    public sealed class HVACFan : HVACObject, IDynamicObject, IBindableAnalogInput
+    public sealed class HVACFan : HVACObject, IDynamicObject, IBindableAnalogInput, IBindableDigitalInput
     {
         public HVACFan() : base()
         {
@@ -31,6 +31,7 @@ namespace HVACSimulator
         public double SetSpeedPercent { get; set; } 
         public double ActualSpeedPercent { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
+        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; }
 
         public List<EAnalogInput> GetListOfParams()
         {
@@ -72,6 +73,11 @@ namespace HVACSimulator
             double derivative = (SetSpeedPercent - ActualSpeedPercent) / TimeConstant;
             ActualSpeedPercent += derivative * Constants.step;
 
+        }
+
+        void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
+        {
+            throw new NotImplementedException();
         }
     }
 }

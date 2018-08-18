@@ -48,10 +48,10 @@ namespace HVACSimulator
                     byte[] croppedFrame = new byte[frameBytes - 3];
                     Array.Copy(buffer, 1, croppedFrame, 0, frameBytes - 3);
                     byte crcPC = CRC8(croppedFrame);
-                    byte crcDevice = croppedFrame.Last();
+                    byte crcDevice = buffer[frameBytes -2];
                     if (crcDevice == crcPC)
                     {
-                        OnCorrectFrameRead(buffer);
+                        OnCorrectFrameRead(croppedFrame);
                     }
                 }
             }

@@ -38,6 +38,7 @@ namespace HVACSimulator
 
         public void ParseCorrectCroppedFrame(object sender, byte[] frame)
         {
+            Console.WriteLine("Parsing correctly cropped frame {0}", Encoding.Default.GetString(frame));
             byte byteAfterComand = frame[1];
             switch(frame[0])
             {
@@ -69,7 +70,7 @@ namespace HVACSimulator
                     }
                     break;
                 case (byte)ECommand.AnswerEcho:
-
+                    AdapterFound?.Invoke(this, AdapterManager.LastOpenedPort);
                     break;
                 default:
                     OnSimulationErrorOccured("Nieobsługiwana komenda ramki");
@@ -117,6 +118,8 @@ namespace HVACSimulator
                         frame[i + 1] = dataToSend[i];
                     }
                     break;
+                case ECommand.Echo:
+                    break;
                 default:
                     OnSimulationErrorOccured("Nieobsługiwana komenda wiadomości do wysłania");
                     break;
@@ -136,8 +139,10 @@ namespace HVACSimulator
 
         private int Get2BytesValueFromFrame(byte[] frame, byte valueIndex)
         {
-            byte[] croppedArray = new byte[4];
-            Array.Copy(frame, valueIndex, croppedArray, 2, 2);
+            const int BytesInInt = 4;
+            const int BytesInUint16 = 2;
+            byte[] croppedArray = new byte[BytesInInt];
+            Array.Copy(frame, valueIndex, croppedArray, BytesInInt - BytesInUint16, BytesInUint16);
             //if (BitConverter.IsLittleEndian)
             //    Array.Reverse(croppedArray);
             int output = BitConverter.ToInt32(croppedArray, 0);

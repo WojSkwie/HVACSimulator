@@ -201,10 +201,10 @@
                 </Grid>
             </TabItem>
             <TabItem Name="AdapterTabItem" Header="Adapter">
-                
+
                 <Grid>
-                    <TextBox Name="PortNameTextBox" Height="23" TextWrapping="Wrap" Text="" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,25,25,0"/>
-                    <Controls:Tile Title="State" HorizontalAlignment="Right" VerticalAlignment="Top" Height="100" Margin="0,80,25,0" >
+                    <TextBox Name="PortNameTextBox" Height="23" TextWrapping="Wrap" Text="{Binding PortName}" Width="120" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,25,25,0"/>
+                    <Controls:Tile Title="Stan połączenia" HorizontalAlignment="Right" VerticalAlignment="Top" Height="100" Margin="0,80,25,0" Width="120" >
                         <Controls:Tile.Style>
                             <Style TargetType="Controls:Tile" BasedOn="{StaticResource {x:Type Controls:Tile}}">
                                 <Style.Triggers>
@@ -218,6 +218,8 @@
                             </Style>
                         </Controls:Tile.Style>
                     </Controls:Tile>
+                    <Button Content="Połącz" HorizontalAlignment="Left" Margin="959,25,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="ConnectToAdapterButtonClick"/>
+                    <Button Content="Szukaj" HorizontalAlignment="Left" Margin="879,25,0,0" VerticalAlignment="Top" Width="75" Height="26" Click="SearchAdapterButtonClick"/>
                 </Grid>
 
             </TabItem>

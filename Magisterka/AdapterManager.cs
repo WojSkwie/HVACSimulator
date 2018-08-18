@@ -13,16 +13,20 @@ namespace HVACSimulator
         private List<IBindableDigitalInput> DBindedInputs;
         private List<IBindableDigitalOutput> DBindedOutputs;
 
+        private Parser Parser = new Parser();
+
         private USB USB = new USB();
 
-        public void OnAnalogParameterArrived(object sender, KeyValuePair<EAnalogInput, int> e)
+        public static string LastOpenedPort = string.Empty;
+
+        public void OnAnalogParameterArrived(object sender, KeyValuePair<EAnalogInput, int> parameter)
         {
-            SetAnalogParameterSimulation(e.Key, e.Value);
+            SetAnalogParameterSimulation(parameter.Key, parameter.Value);
         }
 
-        public void OnDigitalParameterArrived(object sender, KeyValuePair<EDigitalInput, bool> e)
+        public void OnDigitalParameterArrived(object sender, KeyValuePair<EDigitalInput, bool> parameter)
         {
-            throw new NotImplementedException();
+            SetDigitalParameterSimulation(parameter.Key, parameter.Value);
         }
 
         public bool IsConnected
@@ -35,9 +39,10 @@ namespace HVACSimulator
 
 
 
-        public AdapterManager()
+        public AdapterManager(EventHandler<byte[]> correctFrameHandler)
         {
-
+            USB.CorrectFrameRead += correctFrameHandler;
+            //USB.CorrectFrameRead += Parser.ParseCorrectCroppedFrame;
         }
 
         public event EventHandler<string> SimulationErrorOccured;
@@ -93,13 +98,17 @@ namespace HVACSimulator
             return bindableDigitalOutput.GetDigitalParameter(digitalOutput);
         }
 
-        public void FindAdapter()
+        public async void SendEchoToFindAdapter()
         {
             foreach(var name in USB.GetPortNames())
             {
                 USB.PortName = name;
                 USB.Open();
-
+                LastOpenedPort = name;
+                byte[] echoFrame = Parser.CreateCroppedFrame(Parser.ECommand.Echo, new byte[0]);
+                USB.DecoreAndTryWriteFrame(echoFrame);
+                await Task.Delay(100);
+                USB.Close();
             }
         }
     }

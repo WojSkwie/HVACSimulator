@@ -44,9 +44,10 @@ namespace HVACSimulator
             SeriesViewModel = new SeriesViewModel();
             ExportFactory = new ExportFactory();
             AdapterViewModel = new AdapterViewModel(ExchangerViewModel);
-            //AdapterTabItem.DataContext = AdapterViewModel;
+            
             InitializeComponent();
 
+            AdapterTabItem.DataContext = AdapterViewModel;
             mainTimer.Tick += MainTimer_Tick;
             ExchangerViewModel.SupplyChannel.ChannelPresenceChanged += PresenceChangedInSupplyChannel;
             ExchangerViewModel.ExhaustChannel.ChannelPresenceChanged += PresenceChangedInExchaustChannel;
@@ -343,6 +344,16 @@ namespace HVACSimulator
         {
             ExchangerCharacteristicWindow exchangerCharacteristicWindow = new ExchangerCharacteristicWindow(ExchangerViewModel.Exchanger);
             exchangerCharacteristicWindow.ShowDialog();
+        }
+
+        private void SearchAdapterButtonClick(object sender, RoutedEventArgs e)
+        {
+            AdapterViewModel.SearchAdapter();
+        }
+
+        private void ConnectToAdapterButtonClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
