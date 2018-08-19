@@ -26,6 +26,8 @@ namespace HVACSimulator
             ExhaustChannel = new HVACExhaustChannel();
             ImagesSupplyChannnel = new List<Image>();
             ImagesExhaustChannel = new List<Image>();
+            Environment = new HVACEnvironment();
+            Room = new HVACRoom(Environment);
             SupplyChannel.ImagesList = ImagesSupplyChannnel;
             ExhaustChannel.ImagesList = ImagesExhaustChannel;
             Exchanger = new HVACExchanger(SupplyChannel.GetInletExchange(), ExhaustChannel.GetOutletExchange());

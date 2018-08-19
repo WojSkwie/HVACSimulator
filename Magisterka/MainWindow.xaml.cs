@@ -65,6 +65,7 @@ namespace HVACSimulator
 
         private void MainTimer_Tick(object sender, EventArgs e)
         {
+            AdapterViewModel.SendValuesToAdapter();
             UpdateAllDynamicObjects();
             ActualSpeedSupplyNumeric.Value = ExchangerViewModel.GetSpeedFromSupplyChannel();
             ActualHotWaterTemperatureNumeric.Value = ExchangerViewModel.GetHotWaterTempeartureFromSuppyChannel();
@@ -81,6 +82,7 @@ namespace HVACSimulator
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
             Plot.InvalidatePlot(true);
+            AdapterViewModel.SendDataRequestToAdapter();
         }
 
         private void UpdateAllDynamicObjects()

@@ -20,6 +20,8 @@ namespace HVACSimulator
         public HVACRoom(HVACEnvironment environment)
         {
             HVACEnvironment = environment;
+            InitializeParametersList();
+            AirInRoom = new Air(10, 40, EAirHum.relative);
         }
 
         public void CalculateAirParametersInRoom(Air inputAir, double airFlow)

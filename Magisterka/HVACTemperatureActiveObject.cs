@@ -20,5 +20,7 @@ namespace HVACSimulator
 
         public double HeatTransferCoeff { get; set; }
         public double HeatExchangeSurface { get; set; }
+
+        protected bool ActivatePump;
     }
 }

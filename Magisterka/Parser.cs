@@ -45,7 +45,7 @@ namespace HVACSimulator
                 case (byte)ECommand.AnswerAll:
                     foreach(EAnalogInput analogInput in Enum.GetValues(typeof(EAnalogInput)))
                     {
-                        int value = Get2BytesValueFromFrame(frame, (byte)(1 + (byte)analogInput * 2));
+                        int value = TwoBytesOfFrameToInt(frame, (byte)(1 + (byte)analogInput * 2));
                         OnAnalogInputValueChange(new KeyValuePair<EAnalogInput, int>(analogInput, value));
                     }
                     foreach(EDigitalInput digitalInput in Enum.GetValues(typeof(EDigitalInput)))
@@ -57,7 +57,7 @@ namespace HVACSimulator
                     if(Enum.IsDefined(typeof(EAnalogInput), byteAfterComand))
                     {
                         EAnalogInput parameterNumber = (EAnalogInput)byteAfterComand;
-                        int value = Get2BytesValueFromFrame(frame, 2);
+                        int value = TwoBytesOfFrameToInt(frame, 2);
                         OnAnalogInputValueChange(new KeyValuePair<EAnalogInput, int>(parameterNumber, value));
                     }
                     break;
@@ -83,7 +83,7 @@ namespace HVACSimulator
             //throw new NotImplementedException();
         }
 
-        public byte[] CreateCroppedFrame(ECommand command, params byte[] dataToSend)
+        public byte[] CreateCroppedFrame(ECommand command, byte[] dataToSend)
         {
             byte[] frame = new byte[croppedFrameBytes];
             frame[0] = (byte)command;
@@ -98,12 +98,19 @@ namespace HVACSimulator
                     }
                     frame[1] = dataToSend[0];
                     break;
-                case ECommand.WriteAll:
-                    if (dataToSend.Length != 8)
+                case ECommand.ReadOneDi:
+                    if (dataToSend.Length != 1)
                     {
                         throw new ArgumentException("Niewłaściwa liczba danych wejściowych");
                     }
-                    for (int i = 0; i < 8; i++)
+                    frame[1] = dataToSend[0];
+                    break;
+                case ECommand.WriteAll:
+                    if (dataToSend.Length != 9)
+                    {
+                        throw new ArgumentException("Niewłaściwa liczba danych wejściowych");
+                    }
+                    for (int i = 0; i < 9; i++)
                     {
                         frame[i + 1] = dataToSend[i];
                     }
@@ -114,6 +121,16 @@ namespace HVACSimulator
                         throw new ArgumentException("Niewłaściwa liczba danych wejściowych");
                     }
                     for (int i = 0; i < 3; i++)
+                    {
+                        frame[i + 1] = dataToSend[i];
+                    }
+                    break;
+                case ECommand.WriteOneDi:
+                    if(dataToSend.Length != 2)
+                    {
+                        throw new ArgumentException("Niewłaściwa liczba danych wejściowych");
+                    }
+                    for (int i = 0; i < 2; i++)
                     {
                         frame[i + 1] = dataToSend[i];
                     }
@@ -137,14 +154,14 @@ namespace HVACSimulator
             DigitalParamterArrived?.Invoke(this, inputValuePair);
         }
 
-        private int Get2BytesValueFromFrame(byte[] frame, byte valueIndex)
+        private int TwoBytesOfFrameToInt(byte[] frame, byte valueIndex)
         {
             const int BytesInInt = 4;
             const int BytesInUint16 = 2;
             byte[] croppedArray = new byte[BytesInInt];
             Array.Copy(frame, valueIndex, croppedArray, BytesInInt - BytesInUint16, BytesInUint16);
             //if (BitConverter.IsLittleEndian)
-            //    Array.Reverse(croppedArray);
+            Array.Reverse(croppedArray);
             int output = BitConverter.ToInt32(croppedArray, 0);
             return output;
         }
@@ -154,6 +171,20 @@ namespace HVACSimulator
             byte mask = (byte)(1 << valueIndex);
             bool output = (allValues & mask) != 0;
             return output;
+        }
+
+        public static byte[] GetBytesFromInt(int parameter)
+        {
+            byte[] output = new byte[2];
+            output[0] = (byte)(parameter >> 8);
+            output[1] = (byte)(parameter);
+            return output;
+        }
+
+        public static byte SetBitValueInByte(bool state, int index, byte inputValue)
+        {
+            inputValue = (byte)(inputValue | ((Convert.ToByte(state) << index)));
+            return inputValue;
         }
     }
 }

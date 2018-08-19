@@ -109,12 +109,12 @@ namespace HVACSimulator
 
         public void SendValuesToAdapter()
         {
-
+            AdapterManager.CreateAndSendDataToAdapter();
         }
 
-        public void GetValuesFromAdapter()
+        public void SendDataRequestToAdapter()
         {
-
+            AdapterManager.SendRequestForData();
         }
     }
 }

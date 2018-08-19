@@ -14,7 +14,10 @@ namespace HVACSimulator
         public double SetMaximalCoolingPower { get; set; }
         public double CoolingTimeConstant { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
-        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; }
+        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
+        {
+            EDigitalInput.coolerStart
+        };
 
         public HVACCooler() : base()
         {
@@ -41,6 +44,7 @@ namespace HVACSimulator
             ImageSource = @"images\cooler.png";
 
             SetPlotDataNames();
+            InitializeParametersList();
         }
 
         public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
@@ -124,7 +128,15 @@ namespace HVACSimulator
 
         void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
         {
-            throw new NotImplementedException();
+            switch(digitalInput)
+            {
+                case EDigitalInput.heaterStart:
+                    ActivatePump = state;
+                    break;
+                default:
+                    OnSimulationErrorOccured(string.Format("Próba ustawienia stanu nieistniejącego parametru w chłodnicy: {0}", digitalInput));
+                    break;
+            }
         }
     }
 }

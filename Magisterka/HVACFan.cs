@@ -27,11 +27,16 @@ namespace HVACSimulator
 
             ImageSource = @"images\fan.png";
             SetPlotDataNames();
+            InitializeParametersList();
         } 
         public double SetSpeedPercent { get; set; } 
         public double ActualSpeedPercent { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
-        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; }
+        private bool ActivateFan;
+        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
+        {
+            EDigitalInput.fanStart
+        };
 
         public List<EAnalogInput> GetListOfParams()
         {
@@ -77,7 +82,15 @@ namespace HVACSimulator
 
         void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
         {
-            throw new NotImplementedException();
+            switch (digitalInput)
+            {
+                case EDigitalInput.fanStart:
+                    ActivateFan = state;
+                    break;
+                default:
+                    OnSimulationErrorOccured(string.Format("Próba ustawienia stanu nieistniejącego parametru w wentylatorze: {0}", digitalInput));
+                    break;
+            }
         }
     }
 }

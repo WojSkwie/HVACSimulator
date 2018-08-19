@@ -34,6 +34,7 @@ namespace HVACSimulator
             ImageSource = @"images\heater.png";
 
             SetPlotDataNames();
+            InitializeParametersList();
         }
  
 
@@ -93,7 +94,15 @@ namespace HVACSimulator
 
         void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
         {
-            throw new NotImplementedException();
+            switch (digitalInput)
+            {
+                case EDigitalInput.coolerStart:
+                    ActivatePump = state;
+                    break;
+                default:
+                    OnSimulationErrorOccured(string.Format("Próba ustawienia stanu nieistniejącego parametru w nagrzewnicy: {0}", digitalInput));
+                    break;
+            }
         }
     }
 }

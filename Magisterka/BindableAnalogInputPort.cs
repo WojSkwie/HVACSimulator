@@ -17,7 +17,7 @@ namespace HVACSimulator
 
         public double ConvertToParameterRange(int inputParamter)
         {
-            double percent = inputParamter / max12BitsNumber;
+            double percent = (double)inputParamter / (double)max12BitsNumber;
             double convertedValue = MinValue + (MaxValue - MinValue) * percent;
             return convertedValue;
         }

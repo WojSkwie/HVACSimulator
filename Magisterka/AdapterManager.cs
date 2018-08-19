@@ -148,5 +148,29 @@ namespace HVACSimulator
                 return false;
             }
         }
+
+        public void SendRequestForData()
+        {
+            byte[] innerFrame = Parser.CreateCroppedFrame(Parser.ECommand.ReadAll, new byte[0]);
+            USB.DecoreAndTryWriteFrame(innerFrame);
+        }
+
+        public void CreateAndSendDataToAdapter()
+        {
+            byte[] WholeData = new byte[9];
+            foreach(EAnalogOutput analogOutputType in Enum.GetValues(typeof(EAnalogOutput)))
+            {
+                int value = GetAnalogParameterSimulation(analogOutputType);
+                Array.Copy(Parser.GetBytesFromInt(value), 0, WholeData, 1 + (int)analogOutputType * 2, 0);
+            }
+            
+            foreach(EDigitalOutput digitalOutput in Enum.GetValues(typeof(EDigitalOutput)))
+            {
+                bool value = GetDigitalParameterSimulation(digitalOutput);
+                WholeData[8] = Parser.SetBitValueInByte(value, (int)digitalOutput, WholeData[8]);
+            }
+            byte[] innerFrame = Parser.CreateCroppedFrame(Parser.ECommand.WriteAll, WholeData);
+            USB.DecoreAndTryWriteFrame(innerFrame);
+        }
     }
 }
