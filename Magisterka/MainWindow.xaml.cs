@@ -312,7 +312,7 @@ namespace HVACSimulator
             exporter.ExportPlotDataRange(plotDataList);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ExchangerCharacteristicsButton_Click(object sender, RoutedEventArgs e)
         {
             ExchangerCharacteristicWindow exchangerCharacteristicWindow = new ExchangerCharacteristicWindow(ExchangerViewModel.Exchanger);
             exchangerCharacteristicWindow.ShowDialog();

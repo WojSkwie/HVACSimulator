@@ -53,8 +53,8 @@
                     <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="pauseButton_Click"/>
                     <Label Name="stepspersecLabel" Content="1 na sek" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top"/>
                     <Slider Name="stepspersecSlider" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="26" Width="274" Maximum="5" Minimum="1" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" ValueChanged="StepspersecSlider_ValueChanged" Value="1"/>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsEnabled="{Binding AllowChanges}">
-                        <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="Auto" 
+                    <StackPanel Orientation="Horizontal" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsEnabled="{Binding AllowChanges}">
+                        <DataGrid Name="supplyDataGrid" HorizontalAlignment="Right" Height="Auto" 
                               Margin="0,0,0,0" VerticalAlignment="Top" Width="336" 
                               Background="White" AutoGenerateColumns="False" CanUserAddRows="False" 
                               CanUserReorderColumns="False" CanUserSortColumns="False" 
@@ -96,9 +96,9 @@
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                         </DataGrid>
-                        <Button Content="Button" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="72" Height="58" Click="Button_Click"/>
-                        <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" 
-                              Height="230" Margin="-0,0,0,0" VerticalAlignment="Top" 
+                        <Button Content="Char.&#x0a;wymiennika" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="82" Height="58" Click="ExchangerCharacteristicsButton_Click"/>
+                        <DataGrid Name="extractDataGrid" HorizontalAlignment="Right" 
+                              Height="230" Margin="0,0,0,0" VerticalAlignment="Top" 
                               Width="336" Background="White" AutoGenerateColumns="False" 
                               CanUserAddRows="False" CanUserReorderColumns="False" 
                               CanUserSortColumns="False" SelectionMode="Single" SelectionUnit="FullRow"
