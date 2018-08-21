@@ -54,7 +54,7 @@ namespace HVACSimulator
         public void ExportPlotDataRange(List<PlotData> plotDataList)
         {
             int maxCount = plotDataList.Max(item => item.PointsList.Count);
-            int maxIndex = plotDataList.Select(item => item.PointsList.Count).MaxIndex();
+            int maxIndex = plotDataList.Select(item => item.PointsList.Count).ToList().MaxIndex();
             csv.WriteField("Eksport zbiorczy danych");
             csv.NextRecord();
             csv.WriteField("Lista obiektów ->");

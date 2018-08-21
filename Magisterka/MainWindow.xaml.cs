@@ -215,13 +215,13 @@ namespace HVACSimulator
             }
         }
 
-        private void SetSpeedSupplyNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        /*private void SetSpeedSupplyNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
             if(SetSpeedSupplyNumeric.Value != null)
             {
                 ExchangerViewModel.SupplyChannel.SetSpeedFan((double)SetSpeedSupplyNumeric.Value);
             }
-        }
+        }*/
 
         private void EditCharChan_Click(object sender, RoutedEventArgs e)
         {
