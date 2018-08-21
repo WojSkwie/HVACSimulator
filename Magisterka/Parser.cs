@@ -11,7 +11,7 @@ namespace HVACSimulator
     {
         public Parser()
         {
-            
+            GetSubscription();
         }
         private const int croppedFrameBytes = 10;
         private const int booleanValuesIndex = 9;
@@ -80,6 +80,7 @@ namespace HVACSimulator
 
         public void OnSimulationErrorOccured(string error)
         {
+            SimulationErrorOccured?.Invoke(this, error);
             //throw new NotImplementedException();
         }
 
@@ -185,6 +186,11 @@ namespace HVACSimulator
         {
             inputValue = (byte)(inputValue | ((Convert.ToByte(state) << index)));
             return inputValue;
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace HVACSimulator
             HVACEnvironment = environment;
             InitializeParametersList();
             AirInRoom = new Air(10, 40, EAirHum.relative);
+            GetSubscription();
         }
 
         public void CalculateAirParametersInRoom(Air inputAir, double airFlow)
@@ -67,7 +68,12 @@ namespace HVACSimulator
 
         public void OnSimulationErrorOccured(string error)
         {
-            throw new NotImplementedException();
+            SimulationErrorOccured?.Invoke(this, error);
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

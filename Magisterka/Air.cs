@@ -62,16 +62,18 @@ namespace HVACSimulator
                     RelativeHumidity = humidity;
                     break;
             }
+            GetSubscription();
         }
 
         private Air()
         {
-
+            GetSubscription();
         }
 
         public void OnSimulationErrorOccured(string error)
         {
-            throw new NotImplementedException();
+            SimulationErrorOccured?.Invoke(this, error);
+            //throw new NotImplementedException();
         }
 
         public object Clone()
@@ -84,6 +86,11 @@ namespace HVACSimulator
             };
             return clone;
             
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

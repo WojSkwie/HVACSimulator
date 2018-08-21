@@ -43,6 +43,7 @@ namespace HVACSimulator
             IsMutable = true;
             _IsPresent = true;
             InitializePlotDataList();
+            GetSubscription();
         }
 
 
@@ -110,6 +111,11 @@ namespace HVACSimulator
             {
                 plotData.PlotTitle = Name;
             }
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

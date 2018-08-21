@@ -8,6 +8,6 @@ namespace HVACSimulator
 {
     public interface IResetSimulationParameters
     {
-        void ResetParameters();
+        void SetInitialValuesParameters();
     }
 }

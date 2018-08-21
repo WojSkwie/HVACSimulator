@@ -11,6 +11,8 @@ namespace HVACSimulator
         event EventHandler<string> SimulationErrorOccured;
 
         void OnSimulationErrorOccured(string error);
+
+        void GetSubscription();
         
     }
 }

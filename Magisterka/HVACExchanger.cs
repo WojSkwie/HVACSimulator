@@ -38,6 +38,7 @@ namespace HVACSimulator
         {
             InletExchange = inletExchange;
             OutletExchange = outletExchange;
+            GetSubscription();
         }
         /// <summary>
         /// Oblicza parametry powietrza na wylotach kanałów. Zakłada równy przepływ przez nawiew i wywiew
@@ -83,6 +84,7 @@ namespace HVACSimulator
 
         public void OnSimulationErrorOccured(string error)
         {
+            SimulationErrorOccured?.Invoke(this, error);
             MessageBox.Show(error);
         }
 
@@ -135,6 +137,11 @@ namespace HVACSimulator
                     OnSimulationErrorOccured(string.Format("Próba odczytu nieprawidłowego parametru z wymiennika ciepła: {0}", digitalOutput));
                     return false;
             }
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

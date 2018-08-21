@@ -48,6 +48,7 @@ namespace HVACSimulator
         {
             USB.CorrectFrameRead += correctFrameHandler;
             USB.StateChanged += stateChangedHandler;
+            GetSubscription();
             //USB.CorrectFrameRead += Parser.ParseCorrectCroppedFrame;
         }
 
@@ -76,6 +77,7 @@ namespace HVACSimulator
 
         public void OnSimulationErrorOccured(string error)
         {
+            SimulationErrorOccured?.Invoke(this, error);
             //throw new NotImplementedException(); TODO
         }
         #endregion
@@ -171,6 +173,11 @@ namespace HVACSimulator
             }
             byte[] innerFrame = Parser.CreateCroppedFrame(Parser.ECommand.WriteAll, WholeData);
             USB.DecoreAndTryWriteFrame(innerFrame);
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

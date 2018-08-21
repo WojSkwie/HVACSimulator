@@ -43,5 +43,10 @@ namespace HVACSimulator
             SimulationTime = 0;
         }
 
+        public void OnErrorSimulationOccured(object sender, string error)
+        {
+
+        }
+
     }
 }

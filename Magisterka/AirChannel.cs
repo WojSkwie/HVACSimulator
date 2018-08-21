@@ -17,6 +17,7 @@ namespace HVACSimulator
         protected AirChannel() : base()
         {
             GlobalParameters = GlobalParameters.Instance;
+            GetSubscription();
         }
 
         protected List<IResetSimulationParameters> ResetableObjects = new List<IResetSimulationParameters>();
@@ -166,6 +167,7 @@ namespace HVACSimulator
 
         public void OnSimulationErrorOccured(string error)
         {
+            SimulationErrorOccured?.Invoke(this, error);
             //throw new NotImplementedException();
         }
 
@@ -254,12 +256,17 @@ namespace HVACSimulator
             plotData.AddPointWithEvent(newPoint);
         }
 
-        public virtual void ResetParameters()
+        public virtual void SetInitialValuesParameters()
         {
             foreach (var resetableElement in ResetableObjects)
             {
-                resetableElement.ResetParameters();
+                resetableElement.SetInitialValuesParameters();
             }
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

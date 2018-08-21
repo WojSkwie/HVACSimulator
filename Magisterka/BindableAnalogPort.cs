@@ -18,11 +18,13 @@ namespace HVACSimulator
         {
             MaxValue = max;
             MinValue = min;
+            GetSubscription();
         }
 
         public void OnSimulationErrorOccured(string error)
         {
-            throw new NotImplementedException();
+            SimulationErrorOccured?.Invoke(this, error);
+            //throw new NotImplementedException();
         }
 
         public bool ValidateValue(int parameter)
@@ -33,6 +35,11 @@ namespace HVACSimulator
                 return false;
             }
             return true;
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

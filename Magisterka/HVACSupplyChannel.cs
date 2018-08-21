@@ -125,9 +125,9 @@ namespace HVACSimulator
             PlotDataList.Add(humidPlotData);
         }
 
-        public override void ResetParameters()
+        public override void SetInitialValuesParameters()
         {
-            base.ResetParameters();
+            base.SetInitialValuesParameters();
         }
     }
 }

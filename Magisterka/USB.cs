@@ -28,6 +28,7 @@ namespace HVACSimulator
             DataReceived += USBDataReceived;
             ReadTimeout = 100;
             WriteTimeout = 100;
+            GetSubscription();
         }
 
         public void OpenWithEvent()
@@ -142,6 +143,11 @@ namespace HVACSimulator
                 }
             }
             return crc;
+        }
+
+        public void GetSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }
