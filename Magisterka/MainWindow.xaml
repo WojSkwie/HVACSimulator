@@ -53,70 +53,74 @@
                     <Button Name="pauseButton" Content="Pauza" HorizontalAlignment="Left" Margin="266,14,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="pauseButton_Click"/>
                     <Label Name="stepspersecLabel" Content="1 na sek" HorizontalAlignment="Left" Margin="306,88,0,0" VerticalAlignment="Top"/>
                     <Slider Name="stepspersecSlider" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Height="26" Width="274" Maximum="5" Minimum="1" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" ValueChanged="StepspersecSlider_ValueChanged" Value="1"/>
-                    <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="Auto" 
-                              Margin="420,383,0,0" VerticalAlignment="Top" Width="336" 
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" IsEnabled="{Binding AllowChanges}">
+                        <DataGrid Name="supplyDataGrid" HorizontalAlignment="Left" Height="Auto" 
+                              Margin="0,0,0,0" VerticalAlignment="Top" Width="336" 
                               Background="White" AutoGenerateColumns="False" CanUserAddRows="False" 
                               CanUserReorderColumns="False" CanUserSortColumns="False" 
                               SelectionMode="Single" SelectionUnit="FullRow"
                               ItemsSource="{Binding HVACObjectsList, NotifyOnSourceUpdated=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <DataGrid.DataContext>
-                            <local:HVACSupplyChannel></local:HVACSupplyChannel>
-                        </DataGrid.DataContext>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
-                            <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
-                                <DataGridCheckBoxColumn.CellStyle>
-                                    <Style TargetType="DataGridCell" >
-                                        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center" />
-                                        <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
-                                        <Setter Property="IsEnabled" Value="{Binding IsMutable}" />
-                                    </Style>
-                                </DataGridCheckBoxColumn.CellStyle>
-                            </DataGridCheckBoxColumn>
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Name="UpButton" Click="MoveButton_Click" Tag="-1" Content="W górę" IsEnabled="{Binding IsMovable}" ></Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn>
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button Name="DownButton" Click="MoveButton_Click" Tag="1" Content="W dół" IsEnabled="{Binding IsMovable}"></Button>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                        <DataGrid.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Name="EditCharItem" Header="Edytuj charakterystykę" Click="EditCharItem_Click"></MenuItem>
-                                <MenuItem Name="EditCharChan" Header="Zmień spadek ciśnienia na pustym kanale" Click="EditCharChan_Click"></MenuItem>
-                            </ContextMenu>
-                        </DataGrid.ContextMenu>
-                    </DataGrid>
-                    <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" 
-                              Height="230" Margin="838,383,0,0" VerticalAlignment="Top" 
+                            <DataGrid.DataContext>
+                                <local:HVACSupplyChannel></local:HVACSupplyChannel>
+                            </DataGrid.DataContext>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
+                                <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                                    <DataGridCheckBoxColumn.CellStyle>
+                                        <Style TargetType="DataGridCell" >
+                                            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center" />
+                                            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
+                                            <Setter Property="IsEnabled" Value="{Binding IsMutable}" />
+                                        </Style>
+                                    </DataGridCheckBoxColumn.CellStyle>
+                                </DataGridCheckBoxColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Name="UpButton" Click="MoveButton_Click" Tag="-1" Content="W górę" IsEnabled="{Binding IsMovable}" ></Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Name="DownButton" Click="MoveButton_Click" Tag="1" Content="W dół" IsEnabled="{Binding IsMovable}"></Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Name="EditCharItem" Header="Edytuj charakterystykę" Click="EditCharItem_Click"></MenuItem>
+                                    <MenuItem Name="EditCharChan" Header="Zmień spadek ciśnienia na pustym kanale" Click="EditCharChan_Click"></MenuItem>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
+                        </DataGrid>
+                        <Button Content="Button" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="72" Height="58" Click="Button_Click"/>
+                        <DataGrid Name="extractDataGrid" HorizontalAlignment="Left" 
+                              Height="230" Margin="-0,0,0,0" VerticalAlignment="Top" 
                               Width="336" Background="White" AutoGenerateColumns="False" 
                               CanUserAddRows="False" CanUserReorderColumns="False" 
                               CanUserSortColumns="False" SelectionMode="Single" SelectionUnit="FullRow"
                               ItemsSource="{Binding HVACObjectsList, NotifyOnSourceUpdated=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <DataGrid.DataContext>
-                            <local:HVACExhaustChannel></local:HVACExhaustChannel>
-                        </DataGrid.DataContext>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
-                            <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
-                                <DataGridCheckBoxColumn.CellStyle>
-                                    <Style TargetType="DataGridCell" >
-                                        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center" />
-                                        <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
-                                        <Setter Property="IsEnabled" Value="{Binding IsMutable}" />
-                                    </Style>
-                                </DataGridCheckBoxColumn.CellStyle>
-                            </DataGridCheckBoxColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            <DataGrid.DataContext>
+                                <local:HVACExhaustChannel></local:HVACExhaustChannel>
+                            </DataGrid.DataContext>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
+                                <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                                    <DataGridCheckBoxColumn.CellStyle>
+                                        <Style TargetType="DataGridCell" >
+                                            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Center" />
+                                            <Setter Property="FrameworkElement.VerticalAlignment" Value="Center" />
+                                            <Setter Property="IsEnabled" Value="{Binding IsMutable}" />
+                                        </Style>
+                                    </DataGridCheckBoxColumn.CellStyle>
+                                </DataGridCheckBoxColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                    
                     <Label Name="steplengthLabel" Content="1 sek." HorizontalAlignment="Left" Margin="306,129,0,0" VerticalAlignment="Top"/>
                     <Slider Name="steplengthSlider" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" Minimum="1" Maximum="6" ValueChanged="steplengthSlider_ValueChanged" />
                     <Controls:NumericUpDown Name="SetSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="330,189,0,0" IsReadOnly="True" VerticalAlignment="Top" Height="23" Width="80" Value="{Binding SetSpeedPercent, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" StringFormat=" {0:0.##}"  HideUpDownButtons="True" TextAlignment="Left"/>
@@ -149,7 +153,6 @@
                     <Controls:NumericUpDown Name="MixingPercentNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,498,0,0"  VerticalAlignment="Top" Height="23" Width="80" Value="{Binding MixingPercent, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
                     <Label Content="Wysterowanie komory mieszania [%]" HorizontalAlignment="Left" Margin="10,498,0,0" VerticalAlignment="Top"/>
 
-                    <Button Content="Button" HorizontalAlignment="Left" Margin="761,436,0,0" VerticalAlignment="Top" Width="72" Height="58" Click="Button_Click"/>
 
                 </Grid>
             </TabItem>

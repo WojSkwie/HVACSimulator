@@ -137,6 +137,7 @@ namespace HVACSimulator
                     PresentObjectsSplitButton.DataContext = SeriesViewModel;
                     Plot.DataContext = SeriesViewModel;
                 }
+                ExchangerViewModel.AllowChanges = false;
                 mainTimer.Start();
                 GlobalParameters.SimulationState = EState.running;
             }
@@ -155,7 +156,9 @@ namespace HVACSimulator
         private void ResetSimulation()
         {
             if (GlobalParameters.SimulationState == EState.stopped) return;
-            throw new NotImplementedException();
+            GlobalParameters.SimulationState = EState.stopped;
+            ExchangerViewModel.AllowChanges = true;
+            //throw new NotImplementedException();
         }
 
         private void steplengthSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -214,14 +217,6 @@ namespace HVACSimulator
                 (currentItem as IModifiableCharact).ModifyCharacteristics();
             }
         }
-
-        /*private void SetSpeedSupplyNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
-        {
-            if(SetSpeedSupplyNumeric.Value != null)
-            {
-                ExchangerViewModel.SupplyChannel.SetSpeedFan((double)SetSpeedSupplyNumeric.Value);
-            }
-        }*/
 
         private void EditCharChan_Click(object sender, RoutedEventArgs e)
         {

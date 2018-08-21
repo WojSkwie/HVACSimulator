@@ -124,5 +124,10 @@ namespace HVACSimulator
             PlotData humidPlotData = new PlotData(EDataType.pressureDrop, "Czas [s]", "Spadek ciśnienia [Pa]", Name);
             PlotDataList.Add(humidPlotData);
         }
+
+        public override void ResetParameters()
+        {
+            base.ResetParameters();
+        }
     }
 }

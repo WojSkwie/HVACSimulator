@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public abstract class AirChannel : PlottableObject, INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact
+    public abstract class AirChannel : PlottableObject, INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact, IResetSimulationParameters
     {
         public ObservableCollection<HVACObject> HVACObjectsList { get; set; } = new ObservableCollection<HVACObject>();
 
@@ -18,6 +18,8 @@ namespace HVACSimulator
         {
             GlobalParameters = GlobalParameters.Instance;
         }
+
+        protected List<IResetSimulationParameters> ResetableObjects = new List<IResetSimulationParameters>();
 
         protected GlobalParameters GlobalParameters;
         protected double _FlowRate;
@@ -216,16 +218,17 @@ namespace HVACSimulator
             return air;
         }
 
-        public void CalculateAirParametersWithAndAfterExchanger()
+        public Air CalculateAirParametersWithAndAfterExchanger()
         {
-            if (FlowRate == 0) return ; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
+            if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = new Air(0, 0, EAirHum.relative); //powietrze słup. korzystam przez źle napisaną metode obliczającą
-            bool shouldStart = false;
+            bool foundExchanger = false;
             foreach(HVACObject obj in HVACObjectsList)
             {
-                if (obj is HVACInletExchange || obj is HVACOutletExchange) { shouldStart = true; }
-                if (shouldStart) air = obj.CalculateOutputAirParameters(air, FlowRate);
+                if (obj is HVACInletExchange || obj is HVACOutletExchange) { foundExchanger = true; }
+                if (foundExchanger) air = obj.CalculateOutputAirParameters(air, FlowRate);
             }
+            return air;
         }
 
         public HVACMixingBox GetMixingBox()
@@ -249,6 +252,14 @@ namespace HVACSimulator
             PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.pressureDrop);
             DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, FanPressureDrop);
             plotData.AddPointWithEvent(newPoint);
+        }
+
+        public virtual void ResetParameters()
+        {
+            foreach (var resetableElement in ResetableObjects)
+            {
+                resetableElement.ResetParameters();
+            }
         }
     }
 }

@@ -43,5 +43,10 @@ namespace HVACSimulator
         {
             
         }
+
+        public override void ResetParameters()
+        {
+            base.ResetParameters();
+        }
     }
 }

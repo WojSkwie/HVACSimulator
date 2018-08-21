@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public class ExchangerViewModel :IDynamicObject
+    public class ExchangerViewModel :IDynamicObject, INotifyPropertyChanged
     {
         
         
@@ -20,6 +21,17 @@ namespace HVACSimulator
         public HVACEnvironment Environment { get; private set; }
         public HVACRoom Room { get; private set; }
 
+        private bool _AllowChanges = true;
+
+        public bool AllowChanges
+        {
+            get { return _AllowChanges; }
+            set
+            {
+                _AllowChanges = value;
+                OnPropertyChanged("AllowChanges");
+            }
+        }
 
         public ExchangerViewModel()
         {
@@ -34,6 +46,14 @@ namespace HVACSimulator
             Exchanger = new HVACExchanger(SupplyChannel.GetInletExchange(), ExhaustChannel.GetOutletExchange());
             CoupleMixingBoxes();
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         private void CoupleMixingBoxes()
         {
             HVACMixingBox first = SupplyChannel.GetMixingBox();
