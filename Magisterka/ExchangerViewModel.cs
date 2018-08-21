@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,16 @@ namespace HVACSimulator
             ExhaustChannel.FlowRate = SupplyChannel.FlowRate;
             Exchanger.UpdateSetEfficiency(GetFlowRateFromSupplyChannel());
             Exchanger.UpdateParams();
+        }
+
+        public void InitializeDataContextsForControlNumerics(
+            NumericUpDown fanNumeric,
+            NumericUpDown coolerNumeric,
+            NumericUpDown heaterNumeric,
+            NumericUpDown mixingNumeric)
+        {
+            SupplyChannel.InitializeControlDataContexts(fanNumeric, coolerNumeric, heaterNumeric, mixingNumeric);
+            
         }
 
         public double GetSpeedFromSupplyChannel()

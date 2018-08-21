@@ -104,18 +104,6 @@ namespace HVACSimulator
             //OnNewPointCreated(newPoint);
         }
 
-        /*public override PlotData GetPlotData(EDataType dataType)
-        {
-            if (!PlotDataList.Any(item => item.DataType == dataType)) return null;
-            PlotData plotData = PlotDataList.First(item => item.DataType == dataType);
-            return plotData;
-        }
-
-        public override List<PlotData> GetAllPlotData()
-        {
-            return PlotDataList;
-        }*/
-
         protected void SetPlotDataNames()
         {
             foreach(PlotData plotData in PlotDataList)

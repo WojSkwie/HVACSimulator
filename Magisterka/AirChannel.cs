@@ -77,7 +77,17 @@ namespace HVACSimulator
 
         public void PresenceChanged(object sender, PropertyChangedEventArgs e)
         {
-            OnChannelPresenceChanged();
+            switch (e.PropertyName)
+            {
+                case "IsPresent":
+                    OnChannelPresenceChanged();
+                    break;
+                default:
+
+                    break;
+            }
+
+            
         }
 
         protected void GatherParametersFromObjects(out double A, out double B, out double C, 

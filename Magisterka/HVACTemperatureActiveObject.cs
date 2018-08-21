@@ -12,7 +12,18 @@ namespace HVACSimulator
         {
 
         }
-        public double WaterFlowPercent { get; set; }
+        private double _WaterFlowPercent;
+
+        public double WaterFlowPercent
+        {
+            get { return _WaterFlowPercent; }
+            set
+            {
+                _WaterFlowPercent = value;
+                OnPropertyChanged("WaterFlowPercent");
+            }
+        }
+
         public double MaximalWaterFlow { get; set; }
 
         public double ActualWaterTemperature { get; set; }

@@ -14,7 +14,20 @@ namespace HVACSimulator
         /// <summary>
         /// Procent powietrza użytego ponownie
         /// </summary>
-        public double MixingPercent { get; set; }
+
+        private double _MixingPercent;
+
+        public double MixingPercent
+        {
+            get { return _MixingPercent; }
+            set
+            {
+                _MixingPercent = value;
+                OnPropertyChanged("MixingPercent");
+            }
+        }
+
+        //public double MixingPercent { get; set; }
         public HVACMixingBox(bool inSupply)
         {
             IsGenerativeFlow = false;

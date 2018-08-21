@@ -71,7 +71,7 @@ namespace HVACSimulator
             }
             catch (TimeoutException)
             {
-                OnSimulationErrorOccured("Timeout odbioru USB");
+                //OnSimulationErrorOccured("Timeout odbioru USB");
             }
             catch (InvalidOperationException)
             {

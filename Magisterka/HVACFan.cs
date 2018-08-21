@@ -28,8 +28,22 @@ namespace HVACSimulator
             ImageSource = @"images\fan.png";
             SetPlotDataNames();
             InitializeParametersList();
-        } 
-        public double SetSpeedPercent { get; set; } 
+        }
+
+        private double _SetSpeedPercent;
+
+        public double SetSpeedPercent
+        {
+            get { return _SetSpeedPercent; }
+            set
+            {
+                _SetSpeedPercent = value;
+                OnPropertyChanged("SetSpeedPercent");
+            }
+        }
+        
+
+        //public double SetSpeedPercent { get; set; } 
         public double ActualSpeedPercent { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
         private bool ActivateFan;

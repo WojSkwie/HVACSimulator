@@ -61,6 +61,7 @@ namespace HVACSimulator
             extractDataGrid.DataContext = ExchangerViewModel.ExhaustChannel;
             Plot.DataContext = SeriesViewModel;
             PlotSeries.DataContext = SeriesViewModel;
+            ExchangerViewModel.InitializeDataContextsForControlNumerics(SetSpeedSupplyNumeric, ColdWaterFlowPercentNumeric, HotWaterFlowPercentNumeric, MixingPercentNumeric);
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -223,16 +224,6 @@ namespace HVACSimulator
             }
         }
 
-        private void ActualSpeedSupplyNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
-        {
-            double value = (double)ActualSpeedSupplyNumeric.Value;
-            if (value.ToString().Length > 5)
-            {
-                string truncated = value.ToString("0.000");
-                ActualSpeedSupplyNumeric.Value = double.Parse(truncated);
-            }
-        }
-
         private void EditCharChan_Click(object sender, RoutedEventArgs e)
         {
             ExchangerViewModel.SupplyChannel.ModifyCharacteristics();
@@ -257,16 +248,6 @@ namespace HVACSimulator
             }
         }
 
-        private void ActualHotWaterTemperatureNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
-        {
-            double value = (double)ActualHotWaterTemperatureNumeric.Value;
-            if (value.ToString().Length > 5)
-            {
-                string truncated = value.ToString("0.000");
-                ActualHotWaterTemperatureNumeric.Value = double.Parse(truncated);
-            }
-        }
-
         private void HotWaterFlowPercentNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
             if (HotWaterFlowPercentNumeric.Value != null)
@@ -280,16 +261,6 @@ namespace HVACSimulator
             if(SetColdWaterTemperatureNumeric.Value != null)
             {
                 ExchangerViewModel.SupplyChannel.SetCoolerWaterTemperature((double)SetColdWaterTemperatureNumeric.Value);
-            }
-        }
-
-        private void ActualColdWaterTemperatureNumeric_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
-        {
-            double value = (double)ActualColdWaterTemperatureNumeric.Value;
-            if (value.ToString().Length > 5)
-            {
-                string truncated = value.ToString("0.000");
-                ActualColdWaterTemperatureNumeric.Value = double.Parse(truncated);
             }
         }
 
@@ -372,6 +343,5 @@ namespace HVACSimulator
                 AdapterViewModel.Connect();
             }
         }
-
     }
 }

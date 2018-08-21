@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using MahApps.Metro.Controls;
+using OxyPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -104,6 +105,18 @@ namespace HVACSimulator
             }
         }
 
+        public void InitializeControlDataContexts(
+            NumericUpDown fanNumeric,
+            NumericUpDown coolerNumeric,
+            NumericUpDown heaterNumeric,
+            NumericUpDown mixingNumeric)
+        {
+            fanNumeric.DataContext = HVACObjectsList.First(item => item is HVACFan);
+            coolerNumeric.DataContext = HVACObjectsList.First(item => item is HVACCooler);
+            heaterNumeric.DataContext = HVACObjectsList.First(item => item is HVACHeater);
+            mixingNumeric.DataContext = HVACObjectsList.First(item => item is HVACMixingBox);
+
+        }
         protected override void InitializePlotDataList()
         {
             PlotData tempPlotData = new PlotData(EDataType.flowRate, "Czas [s]", "Natężenie przepływu [m3/s]", Name); //TODO stopnie
