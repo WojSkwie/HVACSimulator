@@ -17,22 +17,10 @@ namespace HVACSimulator
             IsGenerativeFlow = false;
             Name = "Nagrzewnica";
             IsMovable = true;
-
             HasSingleTimeConstant = true;
-
-            ACoeff = 1;
-            BCoeff = 1;
-            CCoeff = 0;
-            TimeConstant = 5;
-            SetWaterTemperature = 80;
-            ActualWaterTemperature = 80;
-            WaterFlowPercent = 100;
-            HeatExchangeSurface = 1;
-            HeatTransferCoeff = 200;
-            MaximalWaterFlow = 1;
-
             ImageSource = @"images\heater.png";
 
+            SetInitialValuesParameters();
             SetPlotDataNames();
             InitializeParametersList();
         }
@@ -103,6 +91,22 @@ namespace HVACSimulator
                     OnSimulationErrorOccured(string.Format("Próba ustawienia stanu nieistniejącego parametru w nagrzewnicy: {0}", digitalInput));
                     break;
             }
+        }
+
+        public override void SetInitialValuesParameters()
+        {
+            base.SetInitialValuesParameters();
+
+            ACoeff = 1;
+            BCoeff = 1;
+            CCoeff = 0;
+            TimeConstant = 5;
+            SetWaterTemperature = 80;
+            ActualWaterTemperature = 80;
+            WaterFlowPercent = 100;
+            HeatExchangeSurface = 1;
+            HeatTransferCoeff = 200;
+            MaximalWaterFlow = 1;
         }
     }
 }

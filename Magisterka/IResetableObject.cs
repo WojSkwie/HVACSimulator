@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public interface IResetSimulationParameters
+    public interface IResetableObject
     {
         void SetInitialValuesParameters();
     }

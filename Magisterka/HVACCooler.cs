@@ -25,26 +25,11 @@ namespace HVACSimulator
             Name = "Chłodnica";
             IsMovable = true;
 
-            ACoeff = 1;
-            BCoeff = 1;
-            CCoeff = 0;
-
-            TimeConstant = 1;
-
-            SetWaterTemperature = 6;
-            ActualWaterTemperature = 6;
-            WaterFlowPercent = 100;
-            //HeatExchangeSurface = 1;
-            //HeatTransferCoeff = 200;
-            ActualMaximalCoolingPower = 100;
-            SetMaximalCoolingPower = 100;
-            CoolingTimeConstant = 10;
-            MaximalWaterFlow = 1;
-
             ImageSource = @"images\cooler.png";
 
             SetPlotDataNames();
             InitializeParametersList();
+            SetInitialValuesParameters();
         }
 
         public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
@@ -137,6 +122,24 @@ namespace HVACSimulator
                     OnSimulationErrorOccured(string.Format("Próba ustawienia stanu nieistniejącego parametru w chłodnicy: {0}", digitalInput));
                     break;
             }
+        }
+
+        public override void SetInitialValuesParameters()
+        {
+            base.SetInitialValuesParameters();
+            ACoeff = 1;
+            BCoeff = 1;
+            CCoeff = 0;
+
+            TimeConstant = 1;
+
+            SetWaterTemperature = 6;
+            ActualWaterTemperature = 6;
+            WaterFlowPercent = 100;
+            ActualMaximalCoolingPower = 100;
+            SetMaximalCoolingPower = 100;
+            CoolingTimeConstant = 10;
+            MaximalWaterFlow = 1;
         }
     }
 }

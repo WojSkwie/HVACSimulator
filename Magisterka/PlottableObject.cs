@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public abstract class PlottableObject
+    public abstract class PlottableObject : IResetableObject
     {
         public List<PlotData> PlotDataList { get; set; }
 
@@ -29,7 +29,13 @@ namespace HVACSimulator
 
         protected abstract void InitializePlotDataList();
 
-
-
+        public virtual void SetInitialValuesParameters()
+        {
+            foreach(var plotData in PlotDataList)
+            {
+                plotData.PointsList.Clear();
+            }
+            //throw new NotImplementedException();
+        }
     }
 }

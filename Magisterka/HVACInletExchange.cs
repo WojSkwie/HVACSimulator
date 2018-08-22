@@ -18,12 +18,10 @@ namespace HVACSimulator
             IsMutable = false;
 
             //TODO dopytać
-            ACoeff = 0;
-            BCoeff = 0;
-            CCoeff = 0;
 
             ImageSource = @"refactor";
             SetPlotDataNames();
+            SetInitialValuesParameters();
         }
 
         public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
@@ -33,6 +31,15 @@ namespace HVACSimulator
             return OutputAir;
         }
 
-        
+        public override void SetInitialValuesParameters()
+        {
+            base.SetInitialValuesParameters();
+
+            ACoeff = 0;
+            BCoeff = 0;
+            CCoeff = 0;
+        }
+
+
     }
 }

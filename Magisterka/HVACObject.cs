@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public abstract class HVACObject : PlottableObject, INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation//, IReturnsPlotData
+    public abstract class HVACObject : PlottableObject, INotifyPropertyChanged, IModifiableCharact, INotifyErrorSimulation, IResetableObject
     {
         public bool IsMutable { get; protected set; } 
         public bool IsGenerativeFlow { get; set; }
@@ -39,9 +39,6 @@ namespace HVACSimulator
         public HVACObject() : base()
         {
             GlobalParameters = GlobalParameters.Instance;
-            //PlotDataList = new List<PlotData>();
-            IsMutable = true;
-            _IsPresent = true;
             InitializePlotDataList();
             GetSubscription();
         }
@@ -101,8 +98,6 @@ namespace HVACSimulator
                     return;
             }
             plotData.AddPointWithEvent(newPoint);
-            //plotData.PointsList.Add(newPoint);
-            //OnNewPointCreated(newPoint);
         }
 
         protected void SetPlotDataNames()
@@ -116,6 +111,13 @@ namespace HVACSimulator
         public void GetSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
+        }
+
+        public override void SetInitialValuesParameters()
+        {
+            base.SetInitialValuesParameters();
+            IsMutable = true;
+            _IsPresent = true;
         }
     }
 }

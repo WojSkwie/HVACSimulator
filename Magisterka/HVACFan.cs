@@ -16,18 +16,12 @@ namespace HVACSimulator
             IsMovable = true;
             IsMutable = false;
 
-            ActualSpeedPercent = 0.01;
-            SetSpeedPercent = 0.01;
-            TimeConstant = 5;
             HasSingleTimeConstant = true;
-
-            ACoeff = -1;
-            BCoeff = 1;
-            CCoeff = 120;
 
             ImageSource = @"images\fan.png";
             SetPlotDataNames();
             InitializeParametersList();
+            SetInitialValuesParameters();
         }
 
         private double _SetSpeedPercent;
@@ -105,6 +99,18 @@ namespace HVACSimulator
                     OnSimulationErrorOccured(string.Format("Próba ustawienia stanu nieistniejącego parametru w wentylatorze: {0}", digitalInput));
                     break;
             }
+        }
+
+        public override void SetInitialValuesParameters()
+        {
+            base.SetInitialValuesParameters();
+
+            ACoeff = -1;
+            BCoeff = 1;
+            CCoeff = 120;
+            ActualSpeedPercent = 0.01;
+            SetSpeedPercent = 0.01;
+            TimeConstant = 5;
         }
     }
 }

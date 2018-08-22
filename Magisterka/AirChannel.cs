@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public abstract class AirChannel : PlottableObject, INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact, IResetSimulationParameters
+    public abstract class AirChannel : PlottableObject, INotifyErrorSimulation, INotifyPropertyChanged, IModifiableCharact, IResetableObject
     {
         public ObservableCollection<HVACObject> HVACObjectsList { get; set; } = new ObservableCollection<HVACObject>();
 
@@ -20,7 +20,7 @@ namespace HVACSimulator
             GetSubscription();
         }
 
-        protected List<IResetSimulationParameters> ResetableObjects = new List<IResetSimulationParameters>();
+        protected List<IResetableObject> ResetableObjects = new List<IResetableObject>();
 
         protected GlobalParameters GlobalParameters;
         protected double _FlowRate;
@@ -129,9 +129,9 @@ namespace HVACSimulator
 
         protected void CalculateDropAndFlow()
         {
-            double A, B, C;
-            double Ap, Bp, Cp;
-            GatherParametersFromObjects(out A, out B, out C, out Ap, out Bp, out Cp);
+            GatherParametersFromObjects(
+                out double A, out double B, out double C,
+                out double Ap, out double Bp, out double Cp);
 
             double delta = MathUtil.CalculateDelta(A, B, C);
             if(delta < 0 ) { OnSimulationErrorOccured("Charakterystyki nie mają punktu wspólnego"); }
@@ -256,8 +256,9 @@ namespace HVACSimulator
             plotData.AddPointWithEvent(newPoint);
         }
 
-        public virtual void SetInitialValuesParameters()
+        public override void SetInitialValuesParameters()
         {
+            base.SetInitialValuesParameters();
             foreach (var resetableElement in ResetableObjects)
             {
                 resetableElement.SetInitialValuesParameters();

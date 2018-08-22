@@ -13,7 +13,7 @@ namespace HVACSimulator
         stopped,
     }
 
-    public sealed class GlobalParameters
+    public sealed class GlobalParameters : IResetableObject
     {
         private static GlobalParameters _Instance;
         private GlobalParameters()
@@ -48,5 +48,9 @@ namespace HVACSimulator
 
         }
 
+        public void SetInitialValuesParameters()
+        {
+            ResetTime();
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public sealed class HVACExhaustChannel : AirChannel, IDynamicObject
+    public sealed class HVACExhaustChannel : AirChannel, IDynamicObject, IResetableObject
     {
         public HVACExhaustChannel() :base()
         {
@@ -17,6 +17,9 @@ namespace HVACSimulator
             SubscribeToAllItems();
             Name = "Kanał wywiewny";
             InitializePlotDataList();
+
+            SetInitialValuesParameters();
+            ResetableObjects.AddRange(HVACObjectsList);
         }
 
         public void UpdateParams()

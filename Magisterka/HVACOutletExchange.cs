@@ -8,8 +8,7 @@ namespace HVACSimulator
 {
     public sealed class HVACOutletExchange : HVACObject
     {
-        //public Air ExchangedAir { get; set; }
-        public HVACOutletExchange() :base()
+        public HVACOutletExchange() : base()
         {
             
             IsGenerativeFlow = false;
@@ -17,11 +16,7 @@ namespace HVACSimulator
             IsMovable = false;
             IsMutable = false;
 
-            //TODO dopytać
-            ACoeff = 0;
-            BCoeff = 0;
-            CCoeff = 0;
-
+            SetInitialValuesParameters();
             ImageSource = @"refactor";
         }
 
@@ -32,9 +27,13 @@ namespace HVACSimulator
             return OutputAir;
         }
 
-        /*public void UpdateParams()
+        public override void SetInitialValuesParameters()
         {
-            //throw new NotImplementedException(); //TODO
-        }*/
+            base.SetInitialValuesParameters();
+
+            ACoeff = 0;
+            BCoeff = 0;
+            CCoeff = 0;
+        }
     }
 }

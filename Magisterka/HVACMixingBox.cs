@@ -37,8 +37,8 @@ namespace HVACSimulator
             InSupply = inSupply;
             ImageSource = @"images\fan.png";
             SetPlotDataNames();
-           
-            MixingPercent = 100;
+            SetInitialValuesParameters();
+            
             InitializeParametersList();
         }
 
@@ -112,6 +112,13 @@ namespace HVACSimulator
         public List<EAnalogInput> GetListOfParams()
         {
             return BindedInputs.Select(item => item.AnalogInput).ToList();
+        }
+
+        public override void SetInitialValuesParameters()
+        {
+            base.SetInitialValuesParameters();
+
+            MixingPercent = 0;
         }
     }
 }

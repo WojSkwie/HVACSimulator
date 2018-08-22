@@ -27,6 +27,8 @@ namespace HVACSimulator
             Name = "Kanał nawiewny";
             InitializePlotDataList();
 
+            SetInitialValuesParameters();
+            ResetableObjects.AddRange(HVACObjectsList);
         } 
 
         public HVACInletExchange GetInletExchange()
