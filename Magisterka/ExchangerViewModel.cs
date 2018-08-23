@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace HVACSimulator
 {
-    public class ExchangerViewModel :IDynamicObject, INotifyPropertyChanged
+    public class ExchangerViewModel :IDynamicObject, INotifyPropertyChanged, IResetableObject
     {
         
         
@@ -20,6 +20,7 @@ namespace HVACSimulator
         public HVACExchanger Exchanger { get; private set; }
         public HVACEnvironment Environment { get; private set; }
         public HVACRoom Room { get; private set; }
+        private List<IResetableObject> ResetableObjects = new List<IResetableObject>();
 
         private bool _AllowChanges = true;
 
@@ -45,6 +46,13 @@ namespace HVACSimulator
             ExhaustChannel.ImagesList = ImagesExhaustChannel;
             Exchanger = new HVACExchanger(SupplyChannel.GetInletExchange(), ExhaustChannel.GetOutletExchange());
             CoupleMixingBoxes();
+
+            ResetableObjects.Add(SupplyChannel);
+            ResetableObjects.Add(ExhaustChannel);
+            ResetableObjects.Add(Environment);
+            ResetableObjects.Add(Room);
+            ResetableObjects.Add(Exchanger);
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -125,6 +133,11 @@ namespace HVACSimulator
         public double GetPressureDropFromSupplyChannel()
         {
             return SupplyChannel.FanPressureDrop;
+        }
+
+        public void SetInitialValuesParameters()
+        {
+            throw new NotImplementedException();
         }
     }
 }

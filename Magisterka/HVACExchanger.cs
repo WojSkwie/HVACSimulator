@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace HVACSimulator
 {
-    public class HVACExchanger : INotifyErrorSimulation, IDynamicObject, IBindableDigitalInput, IBindableDigitalOutput
+    public class HVACExchanger : INotifyErrorSimulation, IDynamicObject, IBindableDigitalInput, IBindableDigitalOutput, IResetableObject
     {
         private HVACOutletExchange OutletExchange;
         private HVACInletExchange InletExchange;
@@ -16,7 +16,7 @@ namespace HVACSimulator
         public double EfficiencyDropoutCoefficient { get; set; } = 0.1;
         private const double ReferenceTemperatureDifference = 32 - 6; //TODO uwzględnić
 
-        public double TimeConstant = 2;
+        public double TimeConstant;
 
         public event EventHandler<string> SimulationErrorOccured;
 
@@ -39,6 +39,7 @@ namespace HVACSimulator
             InletExchange = inletExchange;
             OutletExchange = outletExchange;
             GetSubscription();
+            SetInitialValuesParameters();
         }
         /// <summary>
         /// Oblicza parametry powietrza na wylotach kanałów. Zakłada równy przepływ przez nawiew i wywiew
@@ -97,8 +98,8 @@ namespace HVACSimulator
 
         public double UpdateSetEfficiency(double airFlow, double MaximalEff, double dropoutCoeff)
         {
-            SetEfficiencyPercent = MaximalEff * (1 - 2 / Math.PI
-                * Math.Atan(airFlow * dropoutCoeff));
+            SetEfficiencyPercent = MaximalEff * (1 - 2 / Math.PI * 
+                Math.Atan(airFlow * dropoutCoeff));
             return SetEfficiencyPercent;
         }
 
@@ -142,6 +143,11 @@ namespace HVACSimulator
         public void GetSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
+        }
+
+        public void SetInitialValuesParameters()
+        {
+            TimeConstant = 2;
         }
     }
 }

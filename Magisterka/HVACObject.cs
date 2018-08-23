@@ -41,6 +41,7 @@ namespace HVACSimulator
             GlobalParameters = GlobalParameters.Instance;
             InitializePlotDataList();
             GetSubscription();
+            IsMutable = true;
         }
 
 
@@ -116,7 +117,6 @@ namespace HVACSimulator
         public override void SetInitialValuesParameters()
         {
             base.SetInitialValuesParameters();
-            IsMutable = true;
             _IsPresent = true;
         }
     }

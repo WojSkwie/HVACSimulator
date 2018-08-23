@@ -155,7 +155,6 @@
     <Compile Include="IModifiableCharact.cs" />
     <Compile Include="INotifyErrorSimulation.cs" />
     <Compile Include="IResetableObject.cs" />
-    <Compile Include="IReturnsPlotData.cs" />
     <Compile Include="LINQExtension.cs" />
     <Compile Include="MolierCalculations.cs" />
     <Compile Include="MathUtil.cs" />

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACRoom : IBindableAnalogOutput, INotifyErrorSimulation
+    public class HVACRoom : PlottableObject, IBindableAnalogOutput, INotifyErrorSimulation, IResetableObject
     {
         public double Volume { get; set; }
+        public string Name { get; set; } = "Pomieszczenie";
         public Air AirInRoom { get; set; }
         public List<BindableAnalogOutputPort> BindedOutputs { get ; set; }
 
@@ -21,8 +22,9 @@ namespace HVACSimulator
         {
             HVACEnvironment = environment;
             InitializeParametersList();
-            AirInRoom = new Air(10, 40, EAirHum.relative);
             GetSubscription();
+            SetInitialValuesParameters();
+            InitializePlotDataList();
         }
 
         public void CalculateAirParametersInRoom(Air inputAir, double airFlow)
@@ -74,6 +76,22 @@ namespace HVACSimulator
         public void GetSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
+        }
+
+        public override void SetInitialValuesParameters()
+        {
+            AirInRoom = new Air(10, 40, EAirHum.relative);
+            Volume = 25;
+            WallTemperature = AirInRoom.Temperature;
+            //throw new NotImplementedException();
+        }
+
+        protected override void InitializePlotDataList()
+        {
+            PlotData tempPlotData = new PlotData(EDataType.temperature, "Czas [s]", "Temperatura *C", "Pomieszczenie"); //TODO stopnie
+            PlotDataList.Add(tempPlotData);
+            PlotData humidPlotData = new PlotData(EDataType.humidity, "Czas [s]", "Wilgotność [%RH]", "Pomieszczenie");
+            PlotDataList.Add(humidPlotData);
         }
     }
 }

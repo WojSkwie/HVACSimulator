@@ -25,7 +25,7 @@ namespace HVACSimulator
         pressureDrop,
     }
 
-    public class PlotData
+    public class PlotData : IResetableObject
     {
         public ObservableCollection<DataPoint> PointsList { get; set; }
         public EDataType DataType { get; set; }
@@ -56,5 +56,9 @@ namespace HVACSimulator
             NewPointCreated?.Invoke(this, dataPoint);
         }
 
+        public void SetInitialValuesParameters()
+        {
+            PointsList.Clear();
+        }
     }
 }

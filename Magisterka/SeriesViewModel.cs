@@ -35,9 +35,9 @@ namespace HVACSimulator
             PresentObjects.AddRange(inList.Where(item => item.IsPresent));
         }
 
-        public void AddAirChannel(AirChannel airChannel)
+        public void AddPlottableObject(PlottableObject plottableObject)
         {
-            PresentObjects.Add(airChannel);
+            PresentObjects.Add(plottableObject);
         }
 
         public void ResetModel()

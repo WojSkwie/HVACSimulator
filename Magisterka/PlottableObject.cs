@@ -33,9 +33,8 @@ namespace HVACSimulator
         {
             foreach(var plotData in PlotDataList)
             {
-                plotData.PointsList.Clear();
+                plotData.SetInitialValuesParameters();
             }
-            //throw new NotImplementedException();
         }
     }
 }
