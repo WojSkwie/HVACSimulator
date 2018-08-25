@@ -141,12 +141,14 @@
                     <Controls:NumericUpDown Name="MixingPercentNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,498,0,0"  VerticalAlignment="Top" Height="23" Width="80" Value="{Binding MixingPercent, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
                     <Label Content="Wysterowanie komory mieszania [%]" HorizontalAlignment="Left" Margin="10,498,0,0" VerticalAlignment="Top"/>
 
-                    <Slider Name="AirTempeartureSlider" Value="{Binding Temperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,550,0,0" VerticalAlignment="Top" Width="274" Height="25" AutoToolTipPrecision="2" Style="{DynamicResource FlatSlider}" Minimum="-10" Maximum="40"/>
-                    <Slider Name="AirHumiditySlider" Value="{Binding RelativeHumidity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,580,0,0" VerticalAlignment="Top" Width="274" Height="26"  AutoToolTipPrecision="1" Style="{DynamicResource FlatSlider}" Minimum="0" Maximum="100"/>
-                    <Controls:NumericUpDown Name="AirTemperatureNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,550,0,0"  VerticalAlignment="Top" Height="20" Width="80" Value="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
-                    <Controls:NumericUpDown Name="AirHumidityNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,580,0,0"  VerticalAlignment="Top" Height="23" Width="80" Value="{Binding RelativeHumidity, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
-                    <Label IsHitTestVisible="False" Content="Rh [%]" HorizontalAlignment="Left" Margin="10,550,0,0" VerticalAlignment="Top"/>
-                    <Label IsHitTestVisible="False" Content="T [C]" HorizontalAlignment="Left" Margin="10,580,0,0" VerticalAlignment="Top"/>
+
+                    <Label IsHitTestVisible="False" Content="Paramtetry powietrza na zewnątrz budynku" HorizontalAlignment="Left" Margin="10,530,0,0" VerticalAlignment="Top"/>
+                    <Slider Name="AirTempeartureSlider" Value="{Binding Temperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,560,0,0" VerticalAlignment="Top" Width="274" Height="25" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPrecision="1" Style="{DynamicResource FlatSlider}" Minimum="-10" Maximum="40"/>
+                    <Slider Name="AirHumiditySlider" Value="{Binding RelativeHumidity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,590,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" TickFrequency="0.1" AutoToolTipPrecision="1" Style="{DynamicResource FlatSlider}" Minimum="0" Maximum="100"/>
+                    <Controls:NumericUpDown Name="AirTemperatureNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,560,0,0"  VerticalAlignment="Top" Height="20" Width="80" Value="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="AirHumidityNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,590,0,0"  VerticalAlignment="Top" Height="23" Width="80" Value="{Binding RelativeHumidity, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
+                    <Label IsHitTestVisible="False" Content="Rh [%]" HorizontalAlignment="Left" Margin="10,560,0,0" VerticalAlignment="Top"/>
+                    <Label IsHitTestVisible="False" Content="T [C]" HorizontalAlignment="Left" Margin="10,590,0,0" VerticalAlignment="Top"/>
 
 
                 </Grid>
