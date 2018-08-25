@@ -14,6 +14,7 @@ namespace HVACSimulator
         public HVACEnvironment()
         {
             InitializePlotDataList();
+            Air = new Air(-5, 40, EAirHum.relative);
         }
 
         protected override void InitializePlotDataList()

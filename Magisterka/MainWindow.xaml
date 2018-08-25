@@ -27,18 +27,6 @@
     <Grid>
 
         <TabControl HorizontalAlignment="Stretch" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="Auto" Background="#121212">
-            <TabItem Header="Okno główne">
-                <Grid Background="Transparent">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Image HorizontalAlignment="Center" Height="Auto" Margin="258,25,4,0" VerticalAlignment="Top" Width="Auto"/>
-                    <Label Content="Dane Wejściowe" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Grid.Column="0"/>
-                    <Label Content="Dane Wyjściowe" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <Button Name="ControllerParametersButton" Content="Parametry&#x0a;Sterownika" HorizontalAlignment="Right" Margin="0,0,25,25" VerticalAlignment="Bottom" Width="100" Grid.Column="1" Click="ControllerParametersButton_Click"/>
-                </Grid>
-            </TabItem>
             <TabItem Header="Model centrali">
                 <Grid Background="Transparent" >
                     <Image Name="imgexchanger" HorizontalAlignment="Center" Margin="418,14,10,239" VerticalAlignment="Center" Height="Auto" Width="756" DataContext="HVACSupplyChannel" Source="images\wymiennikblank.png" />
@@ -120,7 +108,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
-                    
+
                     <Label Name="steplengthLabel" Content="1 sek." HorizontalAlignment="Left" Margin="306,129,0,0" VerticalAlignment="Top"/>
                     <Slider Name="steplengthSlider" HorizontalAlignment="Left" Margin="10,129,0,0" VerticalAlignment="Top" Width="274" Height="26" IsSnapToTickEnabled="True" Style="{DynamicResource FlatSlider}" Minimum="1" Maximum="6" ValueChanged="steplengthSlider_ValueChanged" />
                     <Controls:NumericUpDown Name="SetSpeedSupplyNumeric" HorizontalAlignment="Left" Margin="330,189,0,0" IsReadOnly="True" VerticalAlignment="Top" Height="23" Width="80" Value="{Binding SetSpeedPercent, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" StringFormat=" {0:0.##}"  HideUpDownButtons="True" TextAlignment="Left"/>
@@ -152,6 +140,13 @@
 
                     <Controls:NumericUpDown Name="MixingPercentNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,498,0,0"  VerticalAlignment="Top" Height="23" Width="80" Value="{Binding MixingPercent, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
                     <Label Content="Wysterowanie komory mieszania [%]" HorizontalAlignment="Left" Margin="10,498,0,0" VerticalAlignment="Top"/>
+
+                    <Slider Name="AirTempeartureSlider" Value="{Binding Temperature, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,550,0,0" VerticalAlignment="Top" Width="274" Height="25" AutoToolTipPrecision="2" Style="{DynamicResource FlatSlider}" Minimum="-10" Maximum="40"/>
+                    <Slider Name="AirHumiditySlider" Value="{Binding RelativeHumidity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="10,580,0,0" VerticalAlignment="Top" Width="274" Height="26"  AutoToolTipPrecision="1" Style="{DynamicResource FlatSlider}" Minimum="0" Maximum="100"/>
+                    <Controls:NumericUpDown Name="AirTemperatureNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,550,0,0"  VerticalAlignment="Top" Height="20" Width="80" Value="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
+                    <Controls:NumericUpDown Name="AirHumidityNumeric" StringFormat=" {0:0.##}" HorizontalAlignment="Left" IsReadOnly="True" Margin="330,580,0,0"  VerticalAlignment="Top" Height="23" Width="80" Value="{Binding RelativeHumidity, UpdateSourceTrigger=PropertyChanged}" HideUpDownButtons="True" TextAlignment="Left"/>
+                    <Label IsHitTestVisible="False" Content="Rh [%]" HorizontalAlignment="Left" Margin="10,550,0,0" VerticalAlignment="Top"/>
+                    <Label IsHitTestVisible="False" Content="T [C]" HorizontalAlignment="Left" Margin="10,580,0,0" VerticalAlignment="Top"/>
 
 
                 </Grid>

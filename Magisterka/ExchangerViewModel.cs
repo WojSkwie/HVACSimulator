@@ -137,7 +137,12 @@ namespace HVACSimulator
 
         public void SetInitialValuesParameters()
         {
-            throw new NotImplementedException();
+            foreach(IResetableObject resetableObject in ResetableObjects)
+            {
+                resetableObject.SetInitialValuesParameters();
+            }
+
+            AllowChanges = true;
         }
     }
 }

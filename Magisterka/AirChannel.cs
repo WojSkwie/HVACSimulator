@@ -57,7 +57,7 @@ namespace HVACSimulator
             }
         }
         public double EmptyChannelPressureDrop { get; set; }
-        public Air InputAir { get; set; }
+        //public Air InputAir { get; set; }
         public List<Image> ImagesList;
         public string Name { get; set; }
 
@@ -196,7 +196,7 @@ namespace HVACSimulator
             }
         }
 
-        public void CalculateAirParameters()
+        /*public void CalculateAirParameters()
         {
             if (FlowRate == 0) return;
             Air air = InputAir;
@@ -206,9 +206,9 @@ namespace HVACSimulator
                 if (!obj.IsPresent) continue;
                 air = obj.CalculateOutputAirParameters(air, FlowRate);
             }
-        }
+        }*/
 
-        public Air CalculateAirParametersBeforeExchanger()
+        public Air CalculateAirParametersBeforeExchanger(Air InputAir)
         {
             if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = InputAir;
@@ -220,7 +220,7 @@ namespace HVACSimulator
             return air;
         }
 
-        public Air CalculateAirParametersWithAndAfterExchanger()
+        public Air CalculateAirParametersWithAndAfterExchanger(Air InputAir)
         {
             if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = new Air(0, 0, EAirHum.relative); //powietrze słup. korzystam przez źle napisaną metode obliczającą

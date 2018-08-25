@@ -15,7 +15,7 @@ namespace HVACSimulator
     {
         public HVACSupplyChannel() : base()
         {
-            InputAir = new Air(5, 40, EAirHum.relative);
+            //InputAir = new Air(5, 40, EAirHum.relative);
             HVACObjectsList.Add(new HVACFilter());
             HVACObjectsList.Add(new HVACInletExchange());
             HVACObjectsList.Add(new HVACMixingBox(true));

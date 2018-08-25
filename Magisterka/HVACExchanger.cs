@@ -44,12 +44,15 @@ namespace HVACSimulator
         /// <summary>
         /// Oblicza parametry powietrza na wylotach kanałów. Zakłada równy przepływ przez nawiew i wywiew
         /// </summary>
-        public void CalculateExchangeAndSetOutputAir(Air supplyAir, Air exhaustAir)
+        public void CalculateExchangeAndSetOutputAir(Air supplyAir, Air exhaustAir, out Air supplyAirAfter, out Air exhaustAirAfter)
         {
-            if(BypassActivated)
+            //TODO przepisać pod odzysk chłodu
+            if(BypassActivated) 
             {
                 OutletExchange.OutputAir = (Air)exhaustAir.Clone(); // TODO zmienić
                 InletExchange.OutputAir = (Air)supplyAir.Clone();
+                supplyAirAfter = InletExchange.OutputAir;
+                exhaustAirAfter = OutletExchange.OutputAir;
             }
             else
             {
@@ -80,6 +83,8 @@ namespace HVACSimulator
                 cooledAir = new Air(cooledTemp, cooledHumid, EAirHum.specific);
                 OutletExchange.OutputAir = cooledAir;
                 InletExchange.OutputAir = heatedAir;
+                supplyAirAfter = heatedAir;
+                exhaustAirAfter = cooledAir;
             }
         }
 

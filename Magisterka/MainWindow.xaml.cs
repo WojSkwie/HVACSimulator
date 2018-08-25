@@ -62,6 +62,13 @@ namespace HVACSimulator
             Plot.DataContext = SeriesViewModel;
             PlotSeries.DataContext = SeriesViewModel;
             ExchangerViewModel.InitializeDataContextsForControlNumerics(SetSpeedSupplyNumeric, ColdWaterFlowPercentNumeric, HotWaterFlowPercentNumeric, MixingPercentNumeric);
+            PresentObjectsSplitButton.DataContext = SeriesViewModel;
+            AirTempeartureSlider.DataContext = ExchangerViewModel.Room.AirInRoom;
+            AirHumiditySlider.DataContext = ExchangerViewModel.Room.AirInRoom;
+
+            AirTemperatureNumeric.DataContext = ExchangerViewModel.Room.AirInRoom;
+            AirHumidityNumeric.DataContext = ExchangerViewModel.Room.AirInRoom;
+
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -73,11 +80,13 @@ namespace HVACSimulator
             ActualColdWaterTemperatureNumeric.Value = ExchangerViewModel.GetColdWaterTemperatureFromSupplyChannel();
             PressureDropSupplyNumeric.Value = ExchangerViewModel.GetPressureDropFromSupplyChannel();
             FlowRateSupplyNumeric.Value = ExchangerViewModel.GetFlowRateFromSupplyChannel();
-            Air exchaustExchangerAir = ExchangerViewModel.ExhaustChannel.CalculateAirParametersBeforeExchanger();
-            Air supplyExchangerAir = ExchangerViewModel.SupplyChannel.CalculateAirParametersBeforeExchanger();
-            ExchangerViewModel.Exchanger.CalculateExchangeAndSetOutputAir(supplyExchangerAir, exchaustExchangerAir);
-            ExchangerViewModel.ExhaustChannel.CalculateAirParametersWithAndAfterExchanger();
-            ExchangerViewModel.SupplyChannel.CalculateAirParametersWithAndAfterExchanger();
+            Air outsideAir = ExchangerViewModel.Environment.Air;
+            Air roomAir = ExchangerViewModel.Room.AirInRoom;
+            Air exhaustExchangerAir = ExchangerViewModel.ExhaustChannel.CalculateAirParametersBeforeExchanger(roomAir);
+            Air supplyExchangerAir = ExchangerViewModel.SupplyChannel.CalculateAirParametersBeforeExchanger(outsideAir);
+            ExchangerViewModel.Exchanger.CalculateExchangeAndSetOutputAir(supplyExchangerAir, exhaustExchangerAir, out Air supplyAirAfter, out Air exhaustAirAfter);
+            ExchangerViewModel.ExhaustChannel.CalculateAirParametersWithAndAfterExchanger(exhaustAirAfter);
+            ExchangerViewModel.SupplyChannel.CalculateAirParametersWithAndAfterExchanger(supplyAirAfter);
 
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
@@ -136,7 +145,6 @@ namespace HVACSimulator
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.SupplyChannel);
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.Environment);
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.Room);
-                    PresentObjectsSplitButton.DataContext = SeriesViewModel;
                     Plot.DataContext = SeriesViewModel;
                 }
                 ExchangerViewModel.AllowChanges = false;
@@ -159,8 +167,8 @@ namespace HVACSimulator
         {
             if (GlobalParameters.SimulationState == EState.stopped) return;
             GlobalParameters.SimulationState = EState.stopped;
-            ExchangerViewModel.AllowChanges = true;
-            //throw new NotImplementedException();
+            ExchangerViewModel.SetInitialValuesParameters();
+            SeriesViewModel.SetInitialValuesParameters();
         }
 
         private void steplengthSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

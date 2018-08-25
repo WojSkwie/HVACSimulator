@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace HVACSimulator
         relative,
         specific
     }
-    public class Air : INotifyErrorSimulation, ICloneable
+    public class Air : INotifyErrorSimulation, ICloneable, INotifyPropertyChanged
     {
         private double _Temperature;
         public double Temperature
@@ -21,6 +22,7 @@ namespace HVACSimulator
             {
                 _Temperature = value;
                 Enthalpy = MolierCalculations.CalculateEnthalpy(this);
+                OnPropertyChanged("Temperature");
             }
         }
         private double _SpecificHumidity;
@@ -32,6 +34,7 @@ namespace HVACSimulator
                 _SpecificHumidity = value;
                 _RelativeHumidity = MolierCalculations.HumiditySpecificToRelative(this);
                 Enthalpy = MolierCalculations.CalculateEnthalpy(this);
+                OnPropertyChanged("SpecificHumidity");
             }
         }
         private double _RelativeHumidity;
@@ -43,12 +46,13 @@ namespace HVACSimulator
                 _RelativeHumidity = value;
                 _SpecificHumidity = MolierCalculations.HumidityRelativeToSpecific(this);
                 Enthalpy = MolierCalculations.CalculateEnthalpy(this);
+                OnPropertyChanged("RelativeHumidity");
             }
         }
         public double Enthalpy { get; private set; }
 
         public event EventHandler<string> SimulationErrorOccured;
-
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Air(double temperature, double humidity, EAirHum airHum)
         {
@@ -73,7 +77,6 @@ namespace HVACSimulator
         public void OnSimulationErrorOccured(string error)
         {
             SimulationErrorOccured?.Invoke(this, error);
-            //throw new NotImplementedException();
         }
 
         public object Clone()
@@ -91,6 +94,11 @@ namespace HVACSimulator
         public void GetSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
+        }
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

@@ -8,14 +8,14 @@ using OxyPlot;
 
 namespace HVACSimulator
 {
-    public class SeriesViewModel
+    public class SeriesViewModel :IResetableObject
     {
         public ObservableCollection<DataPoint> ActualPoints { get; private set; }
         public string PlotTitle { get; set; }
         public string SeriesTitle { get; set; }
         public string XAxisTitle { get; set; }
         public string YAxisTitle { get; set; }
-        public List<PlottableObject> PresentObjects { get; set; } 
+        public ObservableCollection<PlottableObject> PresentObjects { get; set; } 
         public List<string> ParametersList { get; set; }
         private PlotData ActualDataPointer { get; set; }
 
@@ -26,13 +26,14 @@ namespace HVACSimulator
             this.XAxisTitle = "Oś X";
             this.YAxisTitle = "Oś Y";
             this.ActualPoints = new ObservableCollection<DataPoint>();
-            this.PresentObjects = new List<PlottableObject>(); 
+            this.PresentObjects = new ObservableCollection<PlottableObject>(); 
         }
 
         public void InitializeModelFromList(ObservableCollection<HVACObject> inList)
         {
             if (!inList.Any(item => item.IsPresent)) return;
-            PresentObjects.AddRange(inList.Where(item => item.IsPresent));
+            foreach (var obj in inList) PresentObjects.Add(obj);
+            //PresentObjects.AddRange(inList.Where(item => item.IsPresent));
         }
 
         public void AddPlottableObject(PlottableObject plottableObject)
@@ -63,6 +64,12 @@ namespace HVACSimulator
         private void OnNewPointCreated(object sender, DataPoint e)
         {
             ActualPoints.Add(e); 
+        }
+
+        public void SetInitialValuesParameters()
+        {
+            ActualPoints.Clear();
+            PresentObjects.Clear();
         }
     }
 }
