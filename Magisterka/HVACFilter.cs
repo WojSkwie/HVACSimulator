@@ -9,14 +9,20 @@ namespace HVACSimulator
 {
     public sealed class HVACFilter : HVACObject
     {
-        public HVACFilter() : base()
+        public HVACFilter(bool inverted) : base()
         {
             IsGenerativeFlow = false;
             Name = "Filtr";
             IsMovable = false;
 
-
-            ImageSource = @"images\filter.png";
+            if(inverted)
+            {
+                ImageSource = @"images\filter2.png";
+            }
+            else
+            {
+                ImageSource = @"images\filter1.png";
+            }
 
             SetInitialValuesParameters();
             SetPlotDataNames();

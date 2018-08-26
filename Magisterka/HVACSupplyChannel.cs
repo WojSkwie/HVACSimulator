@@ -15,13 +15,13 @@ namespace HVACSimulator
     {
         public HVACSupplyChannel() : base()
         {
-            HVACObjectsList.Add(new HVACFilter());
+            HVACObjectsList.Add(new HVACFilter(inverted: false));
             HVACObjectsList.Add(new HVACInletExchange());
             HVACObjectsList.Add(new HVACMixingBox(true));
             HVACObjectsList.Add(new HVACHeater());
             HVACObjectsList.Add(new HVACCooler());
-            HVACObjectsList.Add(new HVACFan());
-            HVACObjectsList.Add(new HVACFilter());
+            HVACObjectsList.Add(new HVACFan(inverted: false));
+            HVACObjectsList.Add(new HVACFilter(inverted: false));
             SubscribeToAllItems();
             Name = "Kanał nawiewny";
             InitializePlotDataList();

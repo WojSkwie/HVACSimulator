@@ -32,6 +32,7 @@ namespace HVACSimulator
 
         public double SimulationTime { get; private set; }
         public EState SimulationState { get; set; }
+        public EventHandler<string> SimulationErrorOccured;
 
         public void IncrementTime()
         {
@@ -45,7 +46,7 @@ namespace HVACSimulator
 
         public void OnErrorSimulationOccured(object sender, string error)
         {
-
+            SimulationErrorOccured?.Invoke(this, error);
         }
 
         public void SetInitialValuesParameters()

@@ -9,7 +9,7 @@ namespace HVACSimulator
 {
     public sealed class HVACFan : HVACObject, IDynamicObject, IBindableAnalogInput, IBindableDigitalInput
     {
-        public HVACFan() : base()
+        public HVACFan(bool inverted) : base()
         {
             IsGenerativeFlow = true;
             Name = "Wentylator";
@@ -17,8 +17,14 @@ namespace HVACSimulator
             IsMutable = false;
 
             HasSingleTimeConstant = true;
-
-            ImageSource = @"images\fan.png";
+            if(inverted)
+            {
+                ImageSource = @"images\fan1.png";
+            }
+            else
+            {
+                ImageSource = @"images\fan2.png";
+            }
             SetPlotDataNames();
             InitializeParametersList();
             SetInitialValuesParameters();

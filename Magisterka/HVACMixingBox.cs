@@ -22,8 +22,12 @@ namespace HVACSimulator
             get { return _MixingPercent; }
             set
             {
-                _MixingPercent = value;
-                OnPropertyChanged("MixingPercent");
+                if(_MixingPercent != value)
+                {
+                    _MixingPercent = value;
+                    CoupledMixingBox.MixingPercent = value;
+                    OnPropertyChanged("MixingPercent");
+                }
             }
         }
 
@@ -35,7 +39,7 @@ namespace HVACSimulator
             IsMovable = false;
             IsMutable = true;
             InSupply = inSupply;
-            ImageSource = @"images\fan.png";
+            ImageSource = @"images\mixingbox.png";
             SetPlotDataNames();
             SetInitialValuesParameters();
             
@@ -47,11 +51,10 @@ namespace HVACSimulator
             get => base.IsPresent;
             set
             {
-                this._IsPresent = value;
-                OnPropertyChanged("IsPresent");
                 if (value != IsPresent)
                 {
-                    IsPresent = value;
+                    _IsPresent = value;
+                    OnPropertyChanged("IsPresent");
                     if (CoupledMixingBox != null) 
                     {
                         CoupledMixingBox.IsPresent = value;

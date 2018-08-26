@@ -68,6 +68,8 @@ namespace HVACSimulator
             AirTemperatureNumeric.DataContext = ExchangerViewModel.Environment.Air;
             AirHumidityNumeric.DataContext = ExchangerViewModel.Environment.Air;
 
+            GlobalParameters.SimulationErrorOccured += OnErrorInSimulationOccured;
+
         }
 
         private void MainTimer_Tick(object sender, EventArgs e)
@@ -196,7 +198,7 @@ namespace HVACSimulator
         {
             ExchangerViewModel.ImagesSupplyChannnel.Add(imgin1);
             ExchangerViewModel.ImagesSupplyChannnel.Add(new Image());
-            ExchangerViewModel.ImagesSupplyChannnel.Add(new Image());
+            ExchangerViewModel.ImagesSupplyChannnel.Add(imgin6);
             ExchangerViewModel.ImagesSupplyChannnel.Add(imgin2);
             ExchangerViewModel.ImagesSupplyChannnel.Add(imgin3);
             ExchangerViewModel.ImagesSupplyChannnel.Add(imgin4);
@@ -349,6 +351,13 @@ namespace HVACSimulator
             {
                 AdapterViewModel.Connect();
             }
+        }
+
+        private void OnErrorInSimulationOccured(object sender, string error)
+        {
+            mainTimer.Stop();
+            ExchangerViewModel.AllowChanges = true;
+            GlobalParameters.SimulationState = EState.paused;
         }
     }
 }
