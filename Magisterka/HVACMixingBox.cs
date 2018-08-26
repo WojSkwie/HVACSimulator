@@ -67,7 +67,7 @@ namespace HVACSimulator
             CoupledMixingBox = mixingBox;
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
         {
             if(InSupply)
             {
@@ -82,7 +82,7 @@ namespace HVACSimulator
             }
             else
             {
-                return base.CalculateOutputAirParameters(inputAir, airFlow);
+                return base.CalculateOutputAirParameters(inputAir, airFlow, massFlow);
             }
         }
 

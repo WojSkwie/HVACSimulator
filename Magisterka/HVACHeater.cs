@@ -37,11 +37,10 @@ namespace HVACSimulator
             ActualWaterTemperature += derivative * Constants.step;
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
         {
-            double massAirFlow = MolierCalculations.FindAirDensity(inputAir.Temperature) * airFlow;
             double W1 = WaterFlowPercent * MaximalWaterFlow / 100 * Constants.heaterFluidHeatCapacity;
-            double W2 = massAirFlow * Constants.airHeatCapacity;
+            double W2 = massFlow * Constants.airHeatCapacity;
             double Nominator = 1 - Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Denominator = 1 - W1 / W2 * Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Phi = Nominator / Denominator;

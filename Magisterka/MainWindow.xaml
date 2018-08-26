@@ -155,15 +155,15 @@
             </TabItem>
             <TabItem Header="Wykresy">
                 <Grid Background="Transparent" >
-                    <oxy:Plot x:Name="Plot" Title="{Binding PlotTitle}" Margin="20,80,20,20">
+                    <oxy:Plot x:Name="Plot" Title="{Binding PlotTitle}" Margin="20,80,20,20" Foreground="Black" >
                         <oxy:Plot.DataContext>
                             <local:SeriesViewModel/>
                         </oxy:Plot.DataContext>
-                        <oxy:LineSeries x:Name="PlotSeries" Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding ActualPoints, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, PresentationTraceSources.TraceLevel=High}" >
+                        <oxy:LineSeries x:Name="PlotSeries" Margin="20,25" Title="{Binding SeriesTitle}" TrackerFormatString=" {0}&#x0a;{1}: {2:0.0}&#x0a;{3}: {4:0.0}" ItemsSource="{Binding ActualPoints, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}" >
                         </oxy:LineSeries>
                         <oxy:Plot.Axes>
-                            <oxy:LinearAxis Position="Bottom" Title="{Binding XAxisTitle}" />
-                            <oxy:LinearAxis Position="Left"  Title="{Binding YAxisTitle}"/>
+                            <oxy:LinearAxis Position="Bottom" Title="{Binding XAxisTitle}"/>
+                            <oxy:LinearAxis Position="Left"  Title="{Binding YAxisTitle}" />
                         </oxy:Plot.Axes>
                     </oxy:Plot>
                     <StackPanel HorizontalAlignment="Left" Height="Auto" Margin="20,10,0,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">

@@ -20,7 +20,7 @@ namespace HVACSimulator
             ImageSource = @"refactor";
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
         {
             AddDataPointFromAir(OutputAir, EDataType.humidity);
             AddDataPointFromAir(OutputAir, EDataType.temperature);

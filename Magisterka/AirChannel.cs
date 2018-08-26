@@ -57,7 +57,6 @@ namespace HVACSimulator
             }
         }
         public double EmptyChannelPressureDrop { get; set; }
-        //public Air InputAir { get; set; }
         public List<Image> ImagesList;
         public string Name { get; set; }
 
@@ -93,13 +92,11 @@ namespace HVACSimulator
             
         }
 
-        protected void GatherParametersFromObjects(out double A, out double B, out double C, 
-            out double Ap, out double Bp, out double Cp)
+        public void GatherParametersFromObjects(ref double A, ref double B, ref double C, 
+            ref double Ap, ref double Bp, ref double Cp)
         {
-            A = 0; B = 0; C = 0; Ap = 0; Bp = 0; Cp = 0;
-
             C += EmptyChannelPressureDrop;
-            Cp += EmptyChannelPressureDrop;
+            //Cp += EmptyChannelPressureDrop;
 
             foreach (HVACObject obj in HVACObjectsList)
             {
@@ -127,7 +124,7 @@ namespace HVACSimulator
             }
         }
 
-        protected void CalculateDropAndFlow()
+        /*protected void CalculateDropAndFlow()
         {
             GatherParametersFromObjects(
                 out double A, out double B, out double C,
@@ -163,12 +160,11 @@ namespace HVACSimulator
             AddFlowDataFromAirParams();
             AddPressureDataFromAirParams();
 
-        }
+        }*/
 
         public void OnSimulationErrorOccured(string error)
         {
             SimulationErrorOccured?.Invoke(this, error);
-            //throw new NotImplementedException();
         }
 
         private void OnPropertyChanged(string propertyName)
@@ -196,31 +192,19 @@ namespace HVACSimulator
             }
         }
 
-        /*public void CalculateAirParameters()
-        {
-            if (FlowRate == 0) return;
-            Air air = InputAir;
-            
-            foreach(HVACObject obj in HVACObjectsList)
-            {
-                if (!obj.IsPresent) continue;
-                air = obj.CalculateOutputAirParameters(air, FlowRate);
-            }
-        }*/
-
-        public Air CalculateAirParametersBeforeExchanger(Air InputAir)
+        public Air CalculateAirParametersBeforeExchanger(Air InputAir, double airFlow, double massFlow)
         {
             if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = InputAir;
             foreach(HVACObject obj in HVACObjectsList)
             {
                 if (obj is HVACInletExchange || obj is HVACOutletExchange) return air;
-                air = obj.CalculateOutputAirParameters(air, FlowRate);
+                air = obj.CalculateOutputAirParameters(air, FlowRate, massFlow);
             }
             return air;
         }
 
-        public Air CalculateAirParametersWithAndAfterExchanger(Air InputAir)
+        public Air CalculateAirParametersWithAndAfterExchanger(Air InputAir, double airFlow, double massFlow)
         {
             if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = new Air(0, 0, EAirHum.relative); //powietrze słup. korzystam przez źle napisaną metode obliczającą
@@ -228,7 +212,7 @@ namespace HVACSimulator
             foreach(HVACObject obj in HVACObjectsList)
             {
                 if (obj is HVACInletExchange || obj is HVACOutletExchange) { foundExchanger = true; }
-                if (foundExchanger) air = obj.CalculateOutputAirParameters(air, FlowRate);
+                if (foundExchanger) air = obj.CalculateOutputAirParameters(air, FlowRate, massFlow);
             }
             return air;
         }
@@ -240,20 +224,6 @@ namespace HVACSimulator
                 if (obj is HVACMixingBox) return (HVACMixingBox)obj;
             }
             throw new Exception("Brak komory mieszania w kanale");
-        }
-
-        protected void AddFlowDataFromAirParams()
-        {
-            PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.flowRate);
-            DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, FlowRate);
-            plotData.AddPointWithEvent(newPoint);
-        }
-
-        protected void AddPressureDataFromAirParams()
-        {
-            PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.pressureDrop);
-            DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, FanPressureDrop);
-            plotData.AddPointWithEvent(newPoint);
         }
 
         public override void SetInitialValuesParameters()

@@ -32,9 +32,8 @@ namespace HVACSimulator
             SetInitialValuesParameters();
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
         {
-            double massAirFlow = MolierCalculations.FindAirDensity(inputAir.Temperature) * airFlow;
             double inputAirDewPoint = MolierCalculations.CalculateDewPoint(inputAir);
             double enthalpyDiff = 0;
             double energyDiff = 0;
@@ -48,7 +47,7 @@ namespace HVACSimulator
                 MaximallyCooledAir = new Air(ActualWaterTemperature, inputAir.SpecificHumidity, EAirHum.specific);
             }
             enthalpyDiff = inputAir.Enthalpy - MaximallyCooledAir.Enthalpy;
-            energyDiff = enthalpyDiff * massAirFlow;
+            energyDiff = enthalpyDiff * massFlow;
             double coolingPower = ActualMaximalCoolingPower * (inputAir.Temperature - ActualWaterTemperature) / ReferenceTemperatureDifference;
             coolingPower *= WaterFlowPercent / 100;
             if (coolingPower > energyDiff)

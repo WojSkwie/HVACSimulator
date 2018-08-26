@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,13 @@ namespace HVACSimulator
 {
     public class HVACRoom : PlottableObject, IBindableAnalogOutput, INotifyErrorSimulation, IResetableObject
     {
+        private GlobalParameters GlobalParameters = GlobalParameters.Instance;
         public double Volume { get; set; }
         public string Name { get; set; } = "Pomieszczenie";
         public Air AirInRoom { get; set; }
+        public double WallHeatCapacity { get; set; }
+        public double WallAlpha { get; set; }
+        public double ConstantWaterVaporSupply { get; set; }
         public List<BindableAnalogOutputPort> BindedOutputs { get ; set; }
 
         private double WallTemperature;
@@ -27,9 +32,25 @@ namespace HVACSimulator
             InitializePlotDataList();
         }
 
-        public void CalculateAirParametersInRoom(Air inputAir, double airFlow)
+        public void CalculateAirParametersInRoom(Air inputAir, double airFlow, double massFlow)
         {
+            double densityOfRoomAir = MolierCalculations.FindAirDensity(AirInRoom);
+            double firstDenominator = (Volume * densityOfRoomAir * Constants.airHeatCapacity);
+            double RoomTempDelta = (massFlow * Constants.airHeatCapacity * (inputAir.Temperature - AirInRoom.Temperature) * Constants.step) / firstDenominator
+                - (WallAlpha * (AirInRoom.Temperature - WallTemperature) * Constants.step) / firstDenominator;
 
+            double WallTempDelta = WallAlpha * (AirInRoom.Temperature - WallTemperature) * Constants.step / WallHeatCapacity 
+                - WallAlpha * (WallTemperature - HVACEnvironment.Air.Temperature) * Constants.step / WallHeatCapacity;
+
+            double thirdDenominator = Volume * densityOfRoomAir;
+            double humidityDelta = massFlow * (inputAir.SpecificHumidity - AirInRoom.SpecificHumidity) * Constants.step / thirdDenominator
+                + ConstantWaterVaporSupply * ConstantWaterVaporSupply / thirdDenominator;
+
+            AirInRoom.Temperature += RoomTempDelta;
+            WallTemperature += RoomTempDelta;
+            AirInRoom.SpecificHumidity += humidityDelta;
+
+            AddDataPointsFromAir();
         }
 
         public void InitializeParametersList()
@@ -40,6 +61,17 @@ namespace HVACSimulator
                 new BindableAnalogOutputPort(100, 0, EAnalogOutput.relativeHumidity)
             };
 
+        }
+
+        public void AddDataPointsFromAir()
+        {
+            PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.temperature);
+            DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, AirInRoom.Temperature);
+            plotData.AddPointWithEvent(newPoint);
+
+            plotData = PlotDataList.Single(item => item.DataType == EDataType.humidity);
+            newPoint = new DataPoint(GlobalParameters.SimulationTime, AirInRoom.RelativeHumidity);
+            plotData.AddPointWithEvent(newPoint);
         }
 
         public List<EAnalogOutput> GetListOfParams()
@@ -81,9 +113,10 @@ namespace HVACSimulator
         public override void SetInitialValuesParameters()
         {
             AirInRoom = new Air(10, 40, EAirHum.relative);
-            Volume = 25;
+            Volume = 50;
             WallTemperature = AirInRoom.Temperature;
-            //throw new NotImplementedException();
+            WallAlpha = 50 * 2.65;
+            WallHeatCapacity = 6336000; //J/kg/C
         }
 
         protected override void InitializePlotDataList()

@@ -65,7 +65,7 @@ namespace HVACSimulator
             MessageBox.Show(error);
         }
 
-        public virtual Air CalculateOutputAirParameters(Air inputAir, double airFlow)
+        public virtual Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
         {
             OutputAir = (Air)inputAir.Clone();
             AddDataPointFromAir(OutputAir, EDataType.humidity);

@@ -15,7 +15,6 @@ namespace HVACSimulator
     {
         public HVACSupplyChannel() : base()
         {
-            //InputAir = new Air(5, 40, EAirHum.relative);
             HVACObjectsList.Add(new HVACFilter());
             HVACObjectsList.Add(new HVACInletExchange());
             HVACObjectsList.Add(new HVACMixingBox(true));
@@ -49,7 +48,6 @@ namespace HVACSimulator
                     ((IDynamicObject)obj).UpdateParams();
                 }
             }
-            CalculateDropAndFlow();
         }
 
         public void SetSpeedFan(double speed)
@@ -130,6 +128,20 @@ namespace HVACSimulator
         public override void SetInitialValuesParameters()
         {
             base.SetInitialValuesParameters();
+        }
+
+        public void AddPointToSeries(double airFlow, double pressure)
+        {
+            FlowRate = airFlow;
+            FanPressureDrop = pressure;
+
+            PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.flowRate);
+            DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, FlowRate);
+            plotData.AddPointWithEvent(newPoint);
+
+            PlotData pressPlotData = PlotDataList.Single(item => item.DataType == EDataType.pressureDrop);
+            DataPoint PresNewPoint = new DataPoint(GlobalParameters.SimulationTime, FanPressureDrop);
+            pressPlotData.AddPointWithEvent(PresNewPoint);
         }
     }
 }
