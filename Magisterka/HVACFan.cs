@@ -19,11 +19,11 @@ namespace HVACSimulator
             HasSingleTimeConstant = true;
             if(inverted)
             {
-                ImageSource = @"images\fan1.png";
+                ImageSource = @"images\fan2.png";
             }
             else
             {
-                ImageSource = @"images\fan2.png";
+                ImageSource = @"images\fan1.png";
             }
             SetPlotDataNames();
             InitializeParametersList();

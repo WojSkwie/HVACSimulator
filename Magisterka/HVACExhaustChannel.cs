@@ -12,6 +12,7 @@ namespace HVACSimulator
         {
             //InputAir = new Air(20, 40, EAirHum.relative);
             HVACObjectsList.Add(new HVACFilter(true));
+            HVACObjectsList.Add(new HVACFan(true));
             HVACObjectsList.Add(new HVACMixingBox(false));
             HVACObjectsList.Add(new HVACOutletExchange());
             SubscribeToAllItems();

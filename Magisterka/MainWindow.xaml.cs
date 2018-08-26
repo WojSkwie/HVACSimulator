@@ -208,6 +208,7 @@ namespace HVACSimulator
         private void AddImagesExhaust()
         {
             ExchangerViewModel.ImagesExhaustChannel.Add(imgout1);
+            ExchangerViewModel.ImagesExhaustChannel.Add(imgout2);
             ExchangerViewModel.ImagesExhaustChannel.Add(new Image());
             ExchangerViewModel.ImagesExhaustChannel.Add(new Image());
         }
