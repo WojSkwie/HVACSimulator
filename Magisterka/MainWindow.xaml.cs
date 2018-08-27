@@ -377,7 +377,8 @@ namespace HVACSimulator
 
         private void RoomCharacteristicsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            RoomCharactWindow roomCharactWindow = new RoomCharactWindow(ExchangerViewModel.Room);
+            roomCharactWindow.ShowDialog();
         }
     }
 }

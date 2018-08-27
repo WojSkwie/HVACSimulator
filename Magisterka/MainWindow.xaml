@@ -86,7 +86,7 @@
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                         </DataGrid>
-                        <StackPanel>
+                        <StackPanel VerticalAlignment="Center">
                             <Button Content="Char.&#x0a;wymiennika" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="82" Height="58" Click="ExchangerCharacteristicsButton_Click"/>
                             <Button Content="Char.&#x0a;pokoju" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="82" Height="58" Click="RoomCharacteristicsButton_Click"/>
                         </StackPanel>
