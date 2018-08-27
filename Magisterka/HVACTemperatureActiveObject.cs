@@ -29,9 +29,6 @@ namespace HVACSimulator
         public double ActualWaterTemperature { get; set; }
         public double SetWaterTemperature { get; set; }
 
-        public double HeatTransferCoeff { get; set; }
-        public double HeatExchangeSurface { get; set; }
-
         protected bool ActivatePump;
     }
 }

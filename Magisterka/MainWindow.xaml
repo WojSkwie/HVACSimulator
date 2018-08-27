@@ -86,8 +86,11 @@
                                 </ContextMenu>
                             </DataGrid.ContextMenu>
                         </DataGrid>
-                        <Button Content="Char.&#x0a;wymiennika" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="82" Height="58" Click="ExchangerCharacteristicsButton_Click"/>
-                        <DataGrid Name="extractDataGrid" HorizontalAlignment="Right" 
+                        <StackPanel>
+                            <Button Content="Char.&#x0a;wymiennika" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="82" Height="58" Click="ExchangerCharacteristicsButton_Click"/>
+                            <Button Content="Char.&#x0a;pokoju" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="82" Height="58" Click="RoomCharacteristicsButton_Click"/>
+                        </StackPanel>
+                            <DataGrid Name="extractDataGrid" HorizontalAlignment="Right" 
                               Height="230" Margin="0,0,0,0" VerticalAlignment="Top" 
                               Width="336" Background="White" AutoGenerateColumns="False" 
                               CanUserAddRows="False" CanUserReorderColumns="False" 
@@ -96,6 +99,12 @@
                             <DataGrid.DataContext>
                                 <local:HVACExhaustChannel></local:HVACExhaustChannel>
                             </DataGrid.DataContext>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Name="EditCharExItem" Header="Edytuj charakterystykę" Click="EditCharExItem_Click"></MenuItem>
+                                    <MenuItem Name="EditCharExChan" Header="Zmień spadek ciśnienia na pustym kanale" Click="EditCharExChan_Click"></MenuItem>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Obiekt" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
                                 <DataGridCheckBoxColumn Header="Obecny" Width="70" Binding="{Binding IsPresent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >

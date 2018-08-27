@@ -36,6 +36,9 @@ namespace HVACSimulator
             AproxBNumeric.Value = Exchanger.AproxB;
             AproxCNumeric.Value = Exchanger.AproxC;
             AproxDNumeric.Value = Exchanger.AproxD;
+            FreezingTimeNumeric.Value = Exchanger.SecondsToFreeze;
+            MeltingTimeNumeric.Value = Exchanger.SecondsToMelt;
+
         }
 
         private void CommitCoeffs()
@@ -45,12 +48,16 @@ namespace HVACSimulator
             Exchanger.AproxB = (double)AproxBNumeric.Value;
             Exchanger.AproxC = (double)AproxCNumeric.Value;
             Exchanger.AproxD = (double)AproxDNumeric.Value;
-            
+            Exchanger.SecondsToFreeze = (double)FreezingTimeNumeric.Value;
+            Exchanger.SecondsToMelt = (double)MeltingTimeNumeric.Value;
+
         }
 
         private bool CheckInput()
         {
-            if (AproxANumeric.Value == null || AproxBNumeric.Value == null || AproxCNumeric.Value == null || AproxDNumeric.Value == null)
+            if (AproxANumeric.Value == null || AproxBNumeric.Value == null 
+                || AproxCNumeric.Value == null || AproxDNumeric.Value == null
+                || FreezingTimeNumeric.Value == null || MeltingTimeNumeric.Value == null)
             {
                 this.ShowMessageAsync("", "Wpisz współczynniki");
                 return false;
@@ -67,7 +74,6 @@ namespace HVACSimulator
                 double y = MathUtil.QubicEquaVal((double)AproxANumeric.Value, (double)AproxBNumeric.Value,
                     (double)AproxCNumeric.Value, (double)AproxDNumeric.Value, i / 50.0);
 
-                //Exchanger.UpdateSetEfficiency(i, (double)MaximumEfficiencyNumeric.Value, (double)DropoutCoeffNumeric.Value);
                 ExchangerParamsViewModel.AddPoint(i / 50.0, y);
             }
             Plot.Model = ExchangerParamsViewModel.PlotModel;

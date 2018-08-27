@@ -10,7 +10,8 @@ namespace HVACSimulator
     {
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
         List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; }
-
+        public double HeatTransferCoeff { get; set; }
+        public double HeatExchangeSurface { get; set; }
 
         public HVACHeater() : base()
         {

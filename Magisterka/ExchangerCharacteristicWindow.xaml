@@ -16,18 +16,24 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Równanie sześcienne:&#x0a;Ax&#x00B3;+Bx&#x00B2;+Cx+D" Margin="5,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Label Content="Współczynik A:" Margin="5,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Controls:NumericUpDown Name="AproxANumeric" HorizontalAlignment="Left" Margin="10,80,0,0"  VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
-        <Label Content="Współczynik B:" Margin="5,110,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Controls:NumericUpDown Name="AproxBNumeric" HorizontalAlignment="Left" Margin="10,140,0,0"  VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+        <Label Content="Równanie sześcienne:&#x0a;Ax&#x00B3;+Bx&#x00B2;+Cx+D" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Content="Współczynik A:" Margin="0,45,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="AproxANumeric" HorizontalAlignment="Left" Margin="10,70,0,0"  VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+        <Label Content="Współczynik B:" Margin="0,95,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="AproxBNumeric" HorizontalAlignment="Left" Margin="10,120,0,0"  VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
 
 
-        <Label Content="Współczynik C:" Margin="100,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Controls:NumericUpDown Name="AproxCNumeric" HorizontalAlignment="Left" Margin="105,80,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
-        <Label Content="Współczynik D:" Margin="100,110,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Controls:NumericUpDown Name="AproxDNumeric" HorizontalAlignment="Left" Margin="105,140,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+        <Label Content="Współczynik C:" Margin="95,45,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="AproxCNumeric" HorizontalAlignment="Left" Margin="105,70,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+        <Label Content="Współczynik D:" Margin="95,95,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="AproxDNumeric" HorizontalAlignment="Left" Margin="105,120,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
 
+        <Label Content="Czas zamarzania:" Margin="0,145,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="FreezingTimeNumeric" HorizontalAlignment="Left" Margin="10,170,0,0"  VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+
+        <Label Content="Czas odmrażania:" Margin="95,145,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="MeltingTimeNumeric" HorizontalAlignment="Left" Margin="105,170,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+        
         <oxy:PlotView x:Name="Plot" Model="{Binding PlotModel}" Margin="10" Grid.Column="1" Foreground="Black">
 
         </oxy:PlotView>

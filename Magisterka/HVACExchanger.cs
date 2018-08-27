@@ -17,8 +17,8 @@ namespace HVACSimulator
         public double AproxC { get; set; }
         public double AproxD { get; set; }
 
-        public double SetEfficiency { get; set; }
-        public double ActualEfficiency { get; set; }
+        public double SetEfficiency { get; private set; }
+        private double ActualEfficiency { get; set; }
         private const double ReferenceTemperatureDifference = 32 - 6; 
 
         public double TimeConstant;
@@ -27,6 +27,9 @@ namespace HVACSimulator
 
         public bool BypassActivated { get; private set; }
         public bool IsFrozen { get; private set; }
+
+        public double SecondsToFreeze { get; set; }
+        public double SecondsToMelt { get; set; }
 
         
         List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
@@ -156,6 +159,9 @@ namespace HVACSimulator
             AproxB = 53.21;
             AproxC = -68.65;
             AproxD = 97.93;
+
+            SecondsToFreeze = 30;
+            SecondsToMelt = 30;
         }
     }
 }

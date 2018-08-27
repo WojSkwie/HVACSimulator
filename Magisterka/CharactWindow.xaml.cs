@@ -52,10 +52,17 @@ namespace HVACSimulator
             {
                 MaxWaterFlowStackpanel.Visibility = Visibility.Visible;
             }
-            /*if(currentObject is HVACCooler)
+            if(currentObject is HVACCooler)
             {
-                CoolerTemperatureStackpanel.Visibility = Visibility.Visible;
-            }*/
+                MaxCoolingPowerStackpanel.Visibility = Visibility.Visible;
+                PowerTimeConstantStackpanel.Visibility = Visibility.Visible;
+            }
+            if(currentObject is HVACHeater)
+            {
+                HeatExchangeSurfaceStackpanel.Visibility = Visibility.Visible;
+                HeatTransferCoefStackpanel.Visibility = Visibility.Visible;
+            }
+
         }
 
         private void CopyCoeffs()
@@ -71,10 +78,16 @@ namespace HVACSimulator
             {
                 MaxWaterFlowTextBox.Text = ((HVACTemperatureActiveObject)currentObject).MaximalWaterFlow.ToString();
             }
-            /*if(currentObject is HVACCooler)
+            if (currentObject is HVACCooler)
             {
-                CoolerTemperatureTextBox.Text = ((HVACCooler)currentObject).SurfaceTemperature.ToString();
-            }*/
+                MaxCoolingPowerTextBox.Text = ((HVACCooler)currentObject).SetMaximalCoolingPower.ToString();
+                PowerTimeConstantTextBox.Text = ((HVACCooler)currentObject).CoolingTimeConstant.ToString();
+            }
+            if (currentObject is HVACHeater)
+            {
+                HeatExchangeSurfaceTextBox.Text = ((HVACHeater)currentObject).HeatExchangeSurface.ToString();
+                HeatTransferCoefTextBox.Text = ((HVACHeater)currentObject).HeatTransferCoeff.ToString();
+            }
         }
 
         private bool CommitCoeffs()
@@ -91,6 +104,16 @@ namespace HVACSimulator
                 if(currentObject is HVACTemperatureActiveObject)
                 {
                     ((HVACTemperatureActiveObject)currentObject).MaximalWaterFlow = Convert.ToDouble(MaxWaterFlowTextBox.Text);
+                }
+                if (currentObject is HVACCooler)
+                {
+                    ((HVACCooler)currentObject).SetMaximalCoolingPower = Convert.ToDouble(MaxCoolingPowerTextBox.Text);
+                    ((HVACCooler)currentObject).CoolingTimeConstant = Convert.ToDouble(PowerTimeConstantTextBox.Text);
+                }
+                if (currentObject is HVACHeater)
+                {
+                    ((HVACHeater)currentObject).HeatExchangeSurface = Convert.ToDouble(HeatExchangeSurfaceTextBox.Text);
+                    ((HVACHeater)currentObject).HeatTransferCoeff = Convert.ToDouble(HeatTransferCoefTextBox.Text);
                 }
                 return true;
             }

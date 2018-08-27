@@ -25,7 +25,7 @@
         <Button Name="OKbutton" Content="OK" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="75" Click="OKbutton_Click"/>
         <Button Name="CancelButton" Content="Anuluj" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="CancelButton_Click"/>
 
-        <oxy:PlotView x:Name="Plot" Model="{Binding PlotModel}" Margin="10" Grid.Column="1">
+        <oxy:PlotView x:Name="Plot" Model="{Binding PlotModel}" Margin="10" Grid.Column="1" Foreground="Black">
         
         </oxy:PlotView>
         
@@ -51,9 +51,21 @@
                 <TextBox x:Name="MaxWaterFlowTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
                 <Label x:Name="MaxWaterFlowLabel" Content="Maksymalny przepływ wody" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
-            <StackPanel x:Name="CoolerTemperatureStackpanel" Visibility="Collapsed" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
-                <TextBox x:Name="CoolerTemperatureTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
-                <Label x:Name="CoolerTemperatureLabel" Content="Temperatura chłodnicy" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <StackPanel x:Name="MaxCoolingPowerStackpanel" Visibility="Collapsed" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+                <TextBox x:Name="MaxCoolingPowerTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
+                <Label x:Name="MaxCoolingPowerLabel" Content="Maksymalna moc chłodnicy" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+            <StackPanel x:Name="PowerTimeConstantStackpanel" Visibility="Collapsed" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+                <TextBox x:Name="PowerTimeConstantTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
+                <Label x:Name="PowerTimeConstantLabel" Content="Stała czasowa przyrostu mocy" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+            <StackPanel x:Name="HeatTransferCoefStackpanel" Visibility="Collapsed" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+                <TextBox x:Name="HeatTransferCoefTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
+                <Label x:Name="HeatTransferCoefLabel" Content="Współczynnik przewodzenia" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
+            <StackPanel x:Name="HeatExchangeSurfaceStackpanel" Visibility="Collapsed" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+                <TextBox x:Name="HeatExchangeSurfaceTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
+                <Label x:Name="HeatExchangeSurfaceLabel" Content="Powierzchnia wymiany ciepła" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -225,9 +225,18 @@ namespace HVACSimulator
 
         private void EditCharItem_Click(object sender, RoutedEventArgs e)
         {
-            int index = supplyDataGrid.SelectedIndex;
-            if (index < 0) { return; }
-            var currentItem = ExchangerViewModel.SupplyChannel.HVACObjectsList[index];
+            var currentItem = supplyDataGrid.SelectedItem;
+            if (currentItem == null) return;
+            if (currentItem is IModifiableCharact)
+            {
+                (currentItem as IModifiableCharact).ModifyCharacteristics();
+            }
+        }
+
+        private void EditCharExItem_Click(object sender, RoutedEventArgs e)
+        {
+            var currentItem = extractDataGrid.SelectedItem;
+            if (currentItem == null) return;
             if (currentItem is IModifiableCharact)
             {
                 (currentItem as IModifiableCharact).ModifyCharacteristics();
@@ -237,6 +246,11 @@ namespace HVACSimulator
         private void EditCharChan_Click(object sender, RoutedEventArgs e)
         {
             ExchangerViewModel.SupplyChannel.ModifyCharacteristics();
+        }
+
+        private void EditCharExChan_Click(object sender, RoutedEventArgs e)
+        {
+            ExchangerViewModel.ExhaustChannel.ModifyCharacteristics();
         }
 
         private void MoveButton_Click(object sender, RoutedEventArgs e)
@@ -334,10 +348,10 @@ namespace HVACSimulator
             exchangerCharacteristicWindow.ShowDialog();
         }
 
-        private void SearchAdapterButtonClick(object sender, RoutedEventArgs e)
+        private async void SearchAdapterButtonClick(object sender, RoutedEventArgs e)
         {
             AdapterViewModel.AllowClick = false;
-            //await Task.Delay(100);
+            await Task.Delay(800);
             AdapterViewModel.SearchAdapter();
             AdapterViewModel.AllowClick = true;
         }
@@ -359,6 +373,11 @@ namespace HVACSimulator
             mainTimer.Stop();
             ExchangerViewModel.AllowChanges = true;
             GlobalParameters.SimulationState = EState.paused;
+        }
+
+        private void RoomCharacteristicsButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
