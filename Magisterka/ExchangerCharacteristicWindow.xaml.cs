@@ -32,20 +32,25 @@ namespace HVACSimulator
 
         private void CopyCoeffs()
         {
-            MaximumEfficiencyNumeric.Value = Exchanger.MaximalEfficiencyPercent;
-            DropoutCoeffNumeric.Value = Exchanger.EfficiencyDropoutCoefficient;
+            AproxANumeric.Value = Exchanger.AproxA;
+            AproxBNumeric.Value = Exchanger.AproxB;
+            AproxCNumeric.Value = Exchanger.AproxC;
+            AproxDNumeric.Value = Exchanger.AproxD;
         }
 
         private void CommitCoeffs()
         {
             if (!CheckInput()) return;
-            Exchanger.MaximalEfficiencyPercent = (double)MaximumEfficiencyNumeric.Value;
-            Exchanger.EfficiencyDropoutCoefficient = (double)DropoutCoeffNumeric.Value;
+            Exchanger.AproxA = (double)AproxANumeric.Value;
+            Exchanger.AproxB = (double)AproxBNumeric.Value;
+            Exchanger.AproxC = (double)AproxCNumeric.Value;
+            Exchanger.AproxD = (double)AproxDNumeric.Value;
+            
         }
 
         private bool CheckInput()
         {
-            if (MaximumEfficiencyNumeric.Value == null || DropoutCoeffNumeric.Value == null)
+            if (AproxANumeric.Value == null || AproxBNumeric.Value == null || AproxCNumeric.Value == null || AproxDNumeric.Value == null)
             {
                 this.ShowMessageAsync("", "Wpisz współczynniki");
                 return false;
@@ -57,10 +62,13 @@ namespace HVACSimulator
         {
             if (!CheckInput()) return;
             ExchangerParamsViewModel.ClearPlot();
-            for(int i = 0; i < 100; i++)
+            for(int i = 0; i < 60; i++)
             {
-                double y = Exchanger.UpdateSetEfficiency(i, (double)MaximumEfficiencyNumeric.Value, (double)DropoutCoeffNumeric.Value);
-                ExchangerParamsViewModel.AddPoint(i, y);
+                double y = MathUtil.QubicEquaVal((double)AproxANumeric.Value, (double)AproxBNumeric.Value,
+                    (double)AproxCNumeric.Value, (double)AproxDNumeric.Value, i / 50.0);
+
+                //Exchanger.UpdateSetEfficiency(i, (double)MaximumEfficiencyNumeric.Value, (double)DropoutCoeffNumeric.Value);
+                ExchangerParamsViewModel.AddPoint(i / 50.0, y);
             }
             Plot.Model = ExchangerParamsViewModel.PlotModel;
         }

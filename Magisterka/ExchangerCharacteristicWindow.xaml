@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:HVACSimulator"
                       xmlns:oxy="http://oxyplot.org/wpf"
                       mc:Ignorable="d"
-        Title="ExchangerCharacteristicWindow" Height="300" Width="600" Background="#121212">
+        Title="Charakterystyka wymiennika" Height="300" Width="600" Background="#121212">
     <Window.DataContext>
         <local:ExchangerParamsViewModel/>
     </Window.DataContext>
@@ -16,24 +16,21 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Maksymalna sprawność [%]" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Controls:NumericUpDown Name="MaximumEfficiencyNumeric" HorizontalAlignment="Left" Margin="10,40,0,0"  VerticalAlignment="Top" Height="23" Width="100" Interval="1" Maximum="100" Minimum="0" UpDownButtonsWidth="17" TextAlignment="Left"/>
-        <Label Content="Współczynik zanikania" Margin="10,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Controls:NumericUpDown Name="DropoutCoeffNumeric" HorizontalAlignment="Left" Margin="10,100,0,0"  VerticalAlignment="Top" Height="23" Width="100" Interval="0.001" Maximum="1" Minimum="0.001" UpDownButtonsWidth="17" TextAlignment="Left"/>
+        <Label Content="Równanie sześcienne:&#x0a;Ax&#x00B3;+Bx&#x00B2;+Cx+D" Margin="5,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Content="Współczynik A:" Margin="5,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="AproxANumeric" HorizontalAlignment="Left" Margin="10,80,0,0"  VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+        <Label Content="Współczynik B:" Margin="5,110,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="AproxBNumeric" HorizontalAlignment="Left" Margin="10,140,0,0"  VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
 
 
-        <oxy:PlotView x:Name="Plot" Model="{Binding PlotModel}" Margin="10" Grid.Column="1">
+        <Label Content="Współczynik C:" Margin="100,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="AproxCNumeric" HorizontalAlignment="Left" Margin="105,80,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+        <Label Content="Współczynik D:" Margin="100,110,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="AproxDNumeric" HorizontalAlignment="Left" Margin="105,140,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+
+        <oxy:PlotView x:Name="Plot" Model="{Binding PlotModel}" Margin="10" Grid.Column="1" Foreground="Black">
 
         </oxy:PlotView>
-        <!--<oxy:Plot x:Name="Plot" Model="{Binding PlotModel}" Title="Charakterystyka wymiennika" Margin="0,10,0,10" Grid.Column="1">
-
-            <oxy:LineSeries x:Name="PlotSeries" Margin="20,25" Title="{Binding SeriesTitle}" ItemsSource="{Binding ActualPoints, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, PresentationTraceSources.TraceLevel=High}" >
-            </oxy:LineSeries>
-            <oxy:Plot.Axes>
-                <oxy:LinearAxis Position="Bottom" Title="Natężenie przepływu [m3/]s" />
-                <oxy:LinearAxis Position="Left"  Title="Sprawność [%]"/>
-            </oxy:Plot.Axes>
-        </oxy:Plot>-->
         <Button x:Name="DrawButton" Content="Rysuj" HorizontalAlignment="Left" Margin="10,200,0,45" VerticalAlignment="Bottom" Width="177" Click="DrawButton_Click"/>
         <Button x:Name="OKButton" Content="OK" HorizontalAlignment="Left" Margin="10,235,0,10" VerticalAlignment="Bottom" Width="75" Click="OKButton_Click"/>
         <Button x:Name="CancelButton" Content="Anuluj" HorizontalAlignment="Left" Margin="112,235,0,10" VerticalAlignment="Bottom" Width="75" Click="CancelButton_Click"/>

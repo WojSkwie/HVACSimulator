@@ -12,9 +12,14 @@ namespace HVACSimulator
         private HVACOutletExchange OutletExchange;
         private HVACInletExchange InletExchange;
 
-        public double MaximalEfficiencyPercent { get; set; } = 80;
-        public double EfficiencyDropoutCoefficient { get; set; } = 0.1;
-        private const double ReferenceTemperatureDifference = 32 - 6; //TODO uwzględnić
+        public double AproxA { get; set; }
+        public double AproxB { get; set; }
+        public double AproxC { get; set; }
+        public double AproxD { get; set; }
+
+        public double SetEfficiency { get; set; }
+        public double ActualEfficiency { get; set; }
+        private const double ReferenceTemperatureDifference = 32 - 6; 
 
         public double TimeConstant;
 
@@ -23,8 +28,7 @@ namespace HVACSimulator
         public bool BypassActivated { get; private set; }
         public bool IsFrozen { get; private set; }
 
-        public double SetEfficiencyPercent { get; set; }
-        public double ActualEfficiencyPercent { get; set; }
+        
         List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
         {
             EDigitalInput.bypass
@@ -49,7 +53,7 @@ namespace HVACSimulator
             //TODO przepisać pod odzysk chłodu
             if(BypassActivated) 
             {
-                OutletExchange.OutputAir = (Air)exhaustAir.Clone(); // TODO zmienić
+                OutletExchange.OutputAir = (Air)exhaustAir.Clone(); 
                 InletExchange.OutputAir = (Air)supplyAir.Clone();
                 supplyAirAfter = InletExchange.OutputAir;
                 exhaustAirAfter = OutletExchange.OutputAir;
@@ -61,7 +65,7 @@ namespace HVACSimulator
                 Air maximallyCooledAir;
                 double dewPoint = MolierCalculations.CalculateDewPoint(exhaustAir);
                 double tempDiff = exhaustAir.Temperature - supplyAir.Temperature;
-                double heatedTemp = supplyAir.Temperature + tempDiff * ActualEfficiencyPercent / 100;
+                double heatedTemp = supplyAir.Temperature + tempDiff * ActualEfficiency / 100;
                 heatedAir = new Air(heatedTemp, supplyAir.SpecificHumidity, EAirHum.specific);
                 double energyAdded = heatedAir.Enthalpy - supplyAir.Enthalpy;
                 
@@ -96,16 +100,11 @@ namespace HVACSimulator
 
         public double UpdateSetEfficiency(double airFlow)
         {
-            SetEfficiencyPercent = MaximalEfficiencyPercent * (1 - 2 / Math.PI 
-                * Math.Atan(airFlow * EfficiencyDropoutCoefficient));
-            return SetEfficiencyPercent;
-        }
-
-        public double UpdateSetEfficiency(double airFlow, double MaximalEff, double dropoutCoeff)
-        {
-            SetEfficiencyPercent = MaximalEff * (1 - 2 / Math.PI * 
-                Math.Atan(airFlow * dropoutCoeff));
-            return SetEfficiencyPercent;
+            double efficiency = MathUtil.QubicEquaVal(AproxA, AproxB, AproxC, AproxD, airFlow);
+            if (efficiency > 95) efficiency = 95;
+            if (efficiency < 0) efficiency = 0;
+            SetEfficiency = efficiency;
+            return efficiency;
         }
 
         public void UpdateParams()
@@ -115,8 +114,8 @@ namespace HVACSimulator
                 OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
                 return;
             }
-            double derivative = (SetEfficiencyPercent - ActualEfficiencyPercent) / TimeConstant;
-            ActualEfficiencyPercent += derivative * Constants.step;
+            double derivative = (SetEfficiency - ActualEfficiency) / TimeConstant;
+            ActualEfficiency += derivative * Constants.step;
         }
 
         void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
@@ -153,6 +152,10 @@ namespace HVACSimulator
         public void SetInitialValuesParameters()
         {
             TimeConstant = 2;
+            AproxA = -11.37;
+            AproxB = 53.21;
+            AproxC = -68.65;
+            AproxD = 97.93;
         }
     }
 }

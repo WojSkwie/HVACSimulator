@@ -18,6 +18,12 @@ namespace HVACSimulator
             return Y;
         }
 
+        public static double QubicEquaVal(double A, double B, double C, double D, double X)
+        {
+            double Y = (A * X * X * X) + (B * X * X) + (C * X) + (D);
+            return Y;
+        }
+
         public static double CalculateDelta(double A, double B, double C)
         {
             double delta = B * B - 4 * A * C;
