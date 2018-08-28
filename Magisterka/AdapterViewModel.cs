@@ -95,16 +95,16 @@ namespace HVACSimulator
             await AdapterManager.SendEchoToFindAdapter();
         }
 
-        public void Connect()
+        public bool Connect()
         {
-            if (string.IsNullOrEmpty(PortName)) { MessageBox.Show("Wpisz nazwe portu"); return; }
+            if (string.IsNullOrEmpty(PortName)) { MessageBox.Show("Wpisz nazwe portu"); return false; }
             PortName = PortName.ToUpper();
-            AdapterManager.Connect(PortName);
+            return AdapterManager.Connect(PortName);
         }
 
-        public void Disconnect()
+        public bool Disconnect()
         {
-            AdapterManager.Disconnect();
+             return AdapterManager.Disconnect();
         }
 
         public void SendValuesToAdapter()

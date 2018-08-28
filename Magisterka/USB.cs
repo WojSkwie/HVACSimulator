@@ -31,17 +31,18 @@ namespace HVACSimulator
             GetSubscription();
         }
 
-        public void OpenWithEvent()
+        public bool OpenWithEvent()
         {
             this.Open();
             OnStateChanged(true);
+            return IsOpen;
         }
 
-        public void CloseWithEvent()
+        public bool CloseWithEvent()
         {
             this.Close();
             OnStateChanged(false);
-
+            return !IsOpen;
         }
 
         private void USBDataReceived(object sender, SerialDataReceivedEventArgs e)

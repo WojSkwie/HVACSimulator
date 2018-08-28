@@ -232,7 +232,7 @@
                             </Style>
                         </Controls:Tile.Style>
                     </Controls:Tile>
-                    <Button Content="Połącz" HorizontalAlignment="Right" Margin="0,109,170,0" VerticalAlignment="Top" Width="135" Height="43" Click="ConnectToAdapterButtonClick" IsEnabled="{Binding AllowClick}"/>
+                    <Button Name="connectButton" Content="Połącz" HorizontalAlignment="Right" Margin="0,109,170,0" VerticalAlignment="Top" Width="135" Height="43" Click="ConnectToAdapterButtonClick" IsEnabled="{Binding AllowClick}"/>
                     <Button Content="Szukaj" HorizontalAlignment="Right" Margin="0,109,25,0" VerticalAlignment="Top" Width="135" Height="43" Click="SearchAdapterButtonClick" IsEnabled="{Binding AllowClick}"/>
                 </Grid>
 

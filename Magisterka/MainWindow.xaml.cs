@@ -361,11 +361,13 @@ namespace HVACSimulator
         {
             if(AdapterViewModel.IsConnected)
             {
-                AdapterViewModel.Disconnect();
+                if (!AdapterViewModel.Disconnect()) return;
+                connectButton.Content = "Połącz";
             }
             else
             {
-                AdapterViewModel.Connect();
+                if(!AdapterViewModel.Connect()) return;
+                connectButton.Content = "Rozłącz";
             }
         }
 

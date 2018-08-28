@@ -31,16 +31,16 @@ namespace HVACSimulator
             SetDigitalParameterSimulation(parameter.Key, parameter.Value);
         }
 
-        public void Connect(string portName)
+        public bool Connect(string portName)
         {
-            if (!VerifyPortName(portName)) return;
+            if (!VerifyPortName(portName)) return false;
             USB.PortName = portName;
-            USB.OpenWithEvent();
+             return USB.OpenWithEvent();
         }
 
-        public void Disconnect()
+        public bool Disconnect()
         {
-            USB.CloseWithEvent();
+            return USB.CloseWithEvent();
         }
 
 
