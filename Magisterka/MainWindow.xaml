@@ -201,7 +201,7 @@
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Right" Height="Auto" Margin="0,10,10,0" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
                         <Label Content="Nazwa pliku:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox Height="23" TextWrapping="Wrap" MaxLength="20" Text="" Width="120" Margin="0,0,10,0"/>
+                        <TextBox Name="ExportNameTextBox" Height="23" TextWrapping="Wrap" MaxLength="20" Text="" Width="120" Margin="0,0,10,0"/>
                         <Label Content="Rozszerzenie:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <Controls:SplitButton x:Name="FileFormatSplitButton"   Margin="0,0,10,0" Width="50" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource dataFromEnumFileFormat}}">
 

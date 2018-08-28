@@ -311,6 +311,11 @@ namespace HVACSimulator
             SeriesViewModel.ResetModel();
             if (PlotDataSplitButton.SelectedItem == null) return;
             SeriesViewModel.SetObjectToDrawPlot((PlottableObject)PresentObjectsSplitButton.SelectedItem, ((PlotData)PlotDataSplitButton.SelectedItem).DataType);
+            //Plot.BringIntoView();
+            Plot.Axes[0].IsZoomEnabled = false;
+            Plot.Axes[0].Minimum = Plot.Axes[0].Maximum = double.NaN;
+            Plot.ResetAllAxes();
+            Plot.Axes[0].IsZoomEnabled = true;
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
@@ -322,7 +327,15 @@ namespace HVACSimulator
 
             EFileFormat fileFormat = (EFileFormat)FileFormatSplitButton.SelectedItem;
 
-            IExportsPlotData exporter = ExportFactory.GetExportObject(fileFormat);
+            IExportsPlotData exporter;
+            if (string.IsNullOrWhiteSpace(ExportNameTextBox.Text))
+            {
+                exporter = ExportFactory.GetExportObject(fileFormat);
+            }
+            else
+            {
+                exporter = ExportFactory.GetExportObject(fileFormat, ExportNameTextBox.Text);
+            }
             exporter.ExportPlotData(dataToExport);
         }
 
@@ -331,7 +344,15 @@ namespace HVACSimulator
             if (FileFormatSplitButton.SelectedItem == null) { this.ShowMessageAsync("Błąd", "Wybierz z listy rozszerzenie pliku"); return; }
             EFileFormat fileFormat = (EFileFormat)FileFormatSplitButton.SelectedItem;
 
-            IExportsPlotData exporter = ExportFactory.GetExportObject(fileFormat);
+            IExportsPlotData exporter;
+            if (string.IsNullOrWhiteSpace(ExportNameTextBox.Text))
+            {
+                exporter = ExportFactory.GetExportObject(fileFormat);
+            }
+            else
+            {
+                exporter = ExportFactory.GetExportObject(fileFormat, ExportNameTextBox.Text);
+            }
 
             List<PlotData> plotDataList = new List<PlotData>();
 
