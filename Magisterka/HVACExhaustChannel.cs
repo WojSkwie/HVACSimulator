@@ -10,9 +10,9 @@ namespace HVACSimulator
     {
         public HVACExhaustChannel() :base()
         {
-            //InputAir = new Air(20, 40, EAirHum.relative);
-            HVACObjectsList.Add(new HVACFilter(true));
-            HVACObjectsList.Add(new HVACFan(true));
+            HVACObjectsList.Add(new HVACFilter(inverted: true));
+            FanInChannel = new HVACFan(inverted: true);
+            HVACObjectsList.Add(FanInChannel);
             HVACObjectsList.Add(new HVACMixingBox(false));
             HVACObjectsList.Add(new HVACOutletExchange());
             SubscribeToAllItems();

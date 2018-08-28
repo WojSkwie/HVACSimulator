@@ -106,7 +106,7 @@ namespace HVACSimulator
             return bindableDigitalOutput.GetDigitalParameter(digitalOutput);
         }
 
-        public async void SendEchoToFindAdapter()
+        public async Task SendEchoToFindAdapter()
         {
             foreach(var name in USB.GetPortNames())
             {

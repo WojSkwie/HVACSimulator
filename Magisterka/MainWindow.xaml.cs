@@ -352,8 +352,8 @@ namespace HVACSimulator
         private async void SearchAdapterButtonClick(object sender, RoutedEventArgs e)
         {
             AdapterViewModel.AllowClick = false;
-            await Task.Delay(800);
-            AdapterViewModel.SearchAdapter();
+            //await Task.Delay(800);
+            await AdapterViewModel.SearchAdapter();
             AdapterViewModel.AllowClick = true;
         }
 

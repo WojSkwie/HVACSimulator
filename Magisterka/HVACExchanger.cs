@@ -31,6 +31,9 @@ namespace HVACSimulator
         public double SecondsToFreeze { get; set; }
         public double SecondsToMelt { get; set; }
 
+        private double NegativeTempTime;
+        private double PositiveTempTime;
+
         
         List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
         {
@@ -53,62 +56,15 @@ namespace HVACSimulator
         /// </summary>
         public void CalculateExchangeAndSetOutputAir(Air supplyAir, Air exhaustAir, out Air supplyAirAfter, out Air exhaustAirAfter)
         {
-            //TODO przepisać pod odzysk chłodu
             if(BypassActivated) 
             {
-                OutletExchange.OutputAir = (Air)exhaustAir.Clone(); 
-                InletExchange.OutputAir = (Air)supplyAir.Clone();
-                supplyAirAfter = InletExchange.OutputAir;
-                exhaustAirAfter = OutletExchange.OutputAir;
+                CalculateAirParamsWhenBypassOn(supplyAir, exhaustAir, out supplyAirAfter, out exhaustAirAfter);
             }
             else
             {
-                //Założenie -> równy przepływ powietrza z obu kanałach.
-                Air heatingAir; Air coolingAir;
-                if(supplyAir.Temperature > exhaustAir.Temperature)
-                {
-                    heatingAir = supplyAir; coolingAir = exhaustAir;
-                }
-                else
-                {
-                    heatingAir = exhaustAir; coolingAir = supplyAir;
-                }
-                double dewPoint = MolierCalculations.CalculateDewPoint(heatingAir);
-                double tempDiff = heatingAir.Temperature - coolingAir.Temperature;
-                double heatedtemp = coolingAir.Temperature + tempDiff * (ActualEfficiencyPercent / 100);
-                Air heatedAir;
-                Air cooledAir;
-                heatedAir = new Air(heatedtemp, coolingAir.SpecificHumidity, EAirHum.specific);
-                double enthalpyAdded = heatedAir.Enthalpy - coolingAir.Enthalpy;
-                Air maximallyCooledAir;
-                if(dewPoint > heatingAir.Temperature) //wykroplenie
-                {
-                    maximallyCooledAir = new Air(coolingAir.Temperature, 100, EAirHum.relative);
-                }
-                else //bez wykroplenia
-                {
-                    maximallyCooledAir = new Air(coolingAir.Temperature, heatingAir.SpecificHumidity, EAirHum.specific);
-                }
-                double maximumEnthalpyRemoved = heatingAir.Enthalpy - maximallyCooledAir.Enthalpy;
-                double proportion = enthalpyAdded / maximumEnthalpyRemoved;
-                if (proportion > 1 || proportion < 0) OnSimulationErrorOccured("Niewłaściwy stosunek energi w wymienniku");
-
-                double tempCoolDiff = heatingAir.Temperature - maximallyCooledAir.Temperature;
-                double humidCoolDiff = heatingAir.SpecificHumidity - maximallyCooledAir.SpecificHumidity;
-                double cooledTemp = heatingAir.Temperature - tempCoolDiff * proportion;
-                double cooledHumid = heatingAir.SpecificHumidity - humidCoolDiff * proportion;
-                cooledAir = new Air(cooledTemp, cooledHumid, EAirHum.specific);
-                if (supplyAir.Temperature > exhaustAir.Temperature)
-                {
-                    supplyAirAfter = cooledAir; exhaustAirAfter = heatedAir;
-                }
-                else
-                {
-                    supplyAirAfter = heatedAir; exhaustAirAfter = cooledAir;
-                }
-                OutletExchange.OutputAir = exhaustAirAfter;
-                InletExchange.OutputAir = supplyAirAfter;
+                CalculateAirParamsWhenBypassOff(supplyAir, exhaustAir, out supplyAirAfter, out exhaustAirAfter);
             }
+            CheckAndSetFreezingStatus(exhaustAir);
         }
 
         public void OnSimulationErrorOccured(string error)
@@ -167,6 +123,8 @@ namespace HVACSimulator
 
             SecondsToFreeze = 30;
             SecondsToMelt = 30;
+            NegativeTempTime = 0;
+            PositiveTempTime = 0;
         }
 
         public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
@@ -193,6 +151,103 @@ namespace HVACSimulator
             double midValue = ActualEfficiencyPercent + (startDerivative * Constants.step / 2.0);
             double midDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, midValue);
             ActualEfficiencyPercent += midDerivative * Constants.step;
+        }
+
+        private void CalculateAirParamsWhenBypassOn(Air supplyAir, Air exhaustAir, out Air supplyAirAfter, out Air exhaustAirAfter)
+        {
+            OutletExchange.OutputAir = (Air)exhaustAir.Clone();
+            InletExchange.OutputAir = (Air)supplyAir.Clone();
+            supplyAirAfter = InletExchange.OutputAir;
+            exhaustAirAfter = OutletExchange.OutputAir;
+        }
+
+        private void CalculateAirParamsWhenBypassOff(Air supplyAir, Air exhaustAir, out Air supplyAirAfter, out Air exhaustAirAfter)
+        {
+            //Założenie -> równy przepływ powietrza z obu kanałach.
+            Air heatingAir; Air coolingAir;
+            if (supplyAir.Temperature > exhaustAir.Temperature)
+            {
+                heatingAir = supplyAir; coolingAir = exhaustAir;
+            }
+            else
+            {
+                heatingAir = exhaustAir; coolingAir = supplyAir;
+            }
+            double dewPoint = MolierCalculations.CalculateDewPoint(heatingAir);
+            double tempDiff = heatingAir.Temperature - coolingAir.Temperature;
+            double heatedtemp = coolingAir.Temperature + tempDiff * (ActualEfficiencyPercent / 100);
+            Air heatedAir;
+            Air cooledAir;
+            heatedAir = new Air(heatedtemp, coolingAir.SpecificHumidity, EAirHum.specific);
+            double enthalpyAdded = heatedAir.Enthalpy - coolingAir.Enthalpy;
+            Air maximallyCooledAir;
+            if (dewPoint > heatingAir.Temperature) //wykroplenie
+            {
+                maximallyCooledAir = new Air(coolingAir.Temperature, 100, EAirHum.relative);
+            }
+            else //bez wykroplenia
+            {
+                maximallyCooledAir = new Air(coolingAir.Temperature, heatingAir.SpecificHumidity, EAirHum.specific);
+            }
+            double maximumEnthalpyRemoved = heatingAir.Enthalpy - maximallyCooledAir.Enthalpy;
+            double proportion = enthalpyAdded / maximumEnthalpyRemoved;
+            if (proportion > 1 || proportion < 0) OnSimulationErrorOccured("Niewłaściwy stosunek energi w wymienniku");
+
+            double tempCoolDiff = heatingAir.Temperature - maximallyCooledAir.Temperature;
+            double humidCoolDiff = heatingAir.SpecificHumidity - maximallyCooledAir.SpecificHumidity;
+            double cooledTemp = heatingAir.Temperature - tempCoolDiff * proportion;
+            double cooledHumid = heatingAir.SpecificHumidity - humidCoolDiff * proportion;
+            cooledAir = new Air(cooledTemp, cooledHumid, EAirHum.specific);
+            if (supplyAir.Temperature > exhaustAir.Temperature)
+            {
+                supplyAirAfter = cooledAir; exhaustAirAfter = heatedAir;
+            }
+            else
+            {
+                supplyAirAfter = heatedAir; exhaustAirAfter = cooledAir;
+            }
+            OutletExchange.OutputAir = exhaustAirAfter;
+            InletExchange.OutputAir = supplyAirAfter;
+        }
+
+        private void CheckAndSetFreezingStatus(Air exhaustAir)
+        {
+            if (IsFrozen)
+            {
+                if (exhaustAir.Temperature < 0)
+                {
+                    PositiveTempTime -= Constants.step;
+                    NegativeTempTime = 0;
+                }
+                else
+                {
+                    PositiveTempTime += Constants.step;
+                    NegativeTempTime = 0;
+                    if (PositiveTempTime >= SecondsToMelt)
+                    {
+                        IsFrozen = false;
+                        PositiveTempTime = 0;
+                    }
+                }
+            }
+            else
+            {
+                if (exhaustAir.Temperature < 0)
+                {
+                    NegativeTempTime += Constants.step;
+                    PositiveTempTime = 0;
+                    if (NegativeTempTime >= SecondsToFreeze)
+                    {
+                        IsFrozen = true;
+                        NegativeTempTime = 0;
+                    }
+                }
+                else
+                {
+                    PositiveTempTime = 0;
+                    NegativeTempTime = 0;
+                }
+            }
         }
     }
 }

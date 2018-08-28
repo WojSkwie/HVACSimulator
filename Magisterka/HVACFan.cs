@@ -37,11 +37,15 @@ namespace HVACSimulator
             get { return _SetSpeedPercent; }
             set
             {
-                _SetSpeedPercent = value;
-                OnPropertyChanged("SetSpeedPercent");
+                if(_SetSpeedPercent != value)
+                {
+                    _SetSpeedPercent = value;
+                    if (CoupledFan != null) CoupledFan.SetSpeedPercent = value;
+                    OnPropertyChanged("SetSpeedPercent");
+                }
             }
         }
-        
+        private HVACFan CoupledFan;
         public double ActualSpeedPercent { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
         private bool ActivateFan;
@@ -130,6 +134,11 @@ namespace HVACSimulator
             double midDerivative = CalculateDerivative(EVariableName.fanSpeed, midValue);
             ActualSpeedPercent += midDerivative * Constants.step;
 
+        }
+
+        public void CoupleFan(HVACFan fan)
+        {
+            CoupledFan = fan;
         }
     }
 }

@@ -90,9 +90,9 @@ namespace HVACSimulator
                 );
         }
 
-        public void SearchAdapter()
+        public async Task SearchAdapter()
         {
-            AdapterManager.SendEchoToFindAdapter();
+            await AdapterManager.SendEchoToFindAdapter();
         }
 
         public void Connect()

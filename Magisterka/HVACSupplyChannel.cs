@@ -20,7 +20,8 @@ namespace HVACSimulator
             HVACObjectsList.Add(new HVACMixingBox(true));
             HVACObjectsList.Add(new HVACHeater());
             HVACObjectsList.Add(new HVACCooler());
-            HVACObjectsList.Add(new HVACFan(inverted: false));
+            FanInChannel = new HVACFan(inverted: false);
+            HVACObjectsList.Add(FanInChannel);
             HVACObjectsList.Add(new HVACFilter(inverted: false));
             SubscribeToAllItems();
             Name = "Kanał nawiewny";

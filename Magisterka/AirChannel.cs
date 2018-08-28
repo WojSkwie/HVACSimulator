@@ -25,6 +25,7 @@ namespace HVACSimulator
         protected GlobalParameters GlobalParameters;
         protected double _FlowRate;
         protected double _FanPressureDrop;
+        public HVACFan FanInChannel { get; protected set; }
 
         public double FlowRate
         {

@@ -46,6 +46,7 @@ namespace HVACSimulator
             ExhaustChannel.ImagesList = ImagesExhaustChannel;
             Exchanger = new HVACExchanger(SupplyChannel.GetInletExchange(), ExhaustChannel.GetOutletExchange());
             CoupleMixingBoxes();
+            CoupleFans();
 
             ResetableObjects.Add(SupplyChannel);
             ResetableObjects.Add(ExhaustChannel);
@@ -70,6 +71,14 @@ namespace HVACSimulator
             HVACMixingBox second = ExhaustChannel.GetMixingBox();
             first.CoupleMixingBox(second);
             second.CoupleMixingBox(first);
+        }
+
+        private void CoupleFans()
+        {
+            HVACFan first = SupplyChannel.FanInChannel;
+            HVACFan second = ExhaustChannel.FanInChannel;
+            first.CoupleFan(second);
+            second.CoupleFan(first);
         }
 
         public void UpdateParams()
