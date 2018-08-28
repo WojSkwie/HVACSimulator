@@ -38,7 +38,7 @@ namespace HVACSimulator
             AproxDNumeric.Value = Exchanger.AproxD;
             FreezingTimeNumeric.Value = Exchanger.SecondsToFreeze;
             MeltingTimeNumeric.Value = Exchanger.SecondsToMelt;
-
+            TimeConstantNumeric.Value = Exchanger.TimeConstant;
         }
 
         private void CommitCoeffs()
@@ -50,14 +50,15 @@ namespace HVACSimulator
             Exchanger.AproxD = (double)AproxDNumeric.Value;
             Exchanger.SecondsToFreeze = (double)FreezingTimeNumeric.Value;
             Exchanger.SecondsToMelt = (double)MeltingTimeNumeric.Value;
-
+            Exchanger.TimeConstant = (double)TimeConstantNumeric.Value;
         }
 
         private bool CheckInput()
         {
             if (AproxANumeric.Value == null || AproxBNumeric.Value == null 
                 || AproxCNumeric.Value == null || AproxDNumeric.Value == null
-                || FreezingTimeNumeric.Value == null || MeltingTimeNumeric.Value == null)
+                || FreezingTimeNumeric.Value == null || MeltingTimeNumeric.Value == null
+                || TimeConstantNumeric.Value == null)
             {
                 this.ShowMessageAsync("", "Wpisz współczynniki");
                 return false;

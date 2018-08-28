@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:HVACSimulator"
                       xmlns:oxy="http://oxyplot.org/wpf"
                       mc:Ignorable="d"
-        Title="Charakterystyka wymiennika" Height="300" Width="600" Background="#121212">
+        Title="Charakterystyka wymiennika" Height="360" Width="600" Background="#121212">
     <Window.DataContext>
         <local:ExchangerParamsViewModel/>
     </Window.DataContext>
@@ -33,7 +33,10 @@
 
         <Label Content="Czas odmrażania:" Margin="95,145,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Controls:NumericUpDown Name="MeltingTimeNumeric" HorizontalAlignment="Left" Margin="105,170,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
-        
+
+        <Label Content="Stała czasowa:" Margin="0,195,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Controls:NumericUpDown Name="TimeConstantNumeric" HorizontalAlignment="Left" Margin="10,220,0,0" VerticalAlignment="Top" Height="23" Width="80" HideUpDownButtons="True" TextAlignment="Left"/>
+
         <oxy:PlotView x:Name="Plot" Model="{Binding PlotModel}" Margin="10" Grid.Column="1" Foreground="Black">
 
         </oxy:PlotView>

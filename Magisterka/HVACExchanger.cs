@@ -110,17 +110,6 @@ namespace HVACSimulator
             return efficiency;
         }
 
-        public void UpdateParams()
-        {
-            if (TimeConstant <= 0)
-            {
-                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
-                return;
-            }
-            double derivative = (SetEfficiency - ActualEfficiency) / TimeConstant;
-            ActualEfficiency += derivative * Constants.step;
-        }
-
         void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
         {
             switch (digitalInput)
@@ -162,6 +151,32 @@ namespace HVACSimulator
 
             SecondsToFreeze = 30;
             SecondsToMelt = 30;
+        }
+
+        public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
+        {
+            switch (variableName)
+            {
+                case EVariableName.exchangerEfficiency:
+                    return (SetEfficiency - variableToDerivate) / TimeConstant;
+                default:
+                    OnSimulationErrorOccured(string.Format("Próba całkowania niewłaściwego obiektu w wymienniku ciepła: {0}", variableName));
+                    return 0;
+            }
+        }
+
+        public void UpdateParams()
+        {
+            if (TimeConstant <= 0)
+            {
+                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
+                return;
+            }
+
+            double startDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, ActualEfficiency);
+            double midValue = ActualEfficiency + (startDerivative * Constants.step / 2.0);
+            double midDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, midValue);
+            ActualEfficiency += midDerivative * Constants.step;
         }
     }
 }

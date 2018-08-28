@@ -42,8 +42,6 @@ namespace HVACSimulator
             }
         }
         
-
-        //public double SetSpeedPercent { get; set; } 
         public double ActualSpeedPercent { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
         private bool ActivateFan;
@@ -82,18 +80,6 @@ namespace HVACSimulator
             
         }
 
-        public void UpdateParams()
-        {
-            if(TimeConstant <= 0 )
-            {
-                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
-                return;
-            }
-            double derivative = (SetSpeedPercent - ActualSpeedPercent) / TimeConstant;
-            ActualSpeedPercent += derivative * Constants.step;
-
-        }
-
         void IBindableDigitalInput.SetDigitalParameter(bool state, EDigitalInput digitalInput)
         {
             switch (digitalInput)
@@ -117,6 +103,33 @@ namespace HVACSimulator
             ActualSpeedPercent = 0.01;
             SetSpeedPercent = 0.01;
             TimeConstant = 5;
+        }
+
+        public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
+        {
+            switch (variableName)
+            {
+                case EVariableName.fanSpeed:
+                    return (SetSpeedPercent - variableToDerivate) / TimeConstant;
+                default:
+                    OnSimulationErrorOccured(string.Format("Próba całkowania niewłaściwego obiektu w wentylatorze: {0}", variableName));
+                    return 0;
+            }
+        }
+
+        public void UpdateParams()
+        {
+            if (TimeConstant <= 0)
+            {
+                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
+                return;
+            }
+
+            double startDerivative = CalculateDerivative(EVariableName.fanSpeed, ActualSpeedPercent);
+            double midValue = ActualSpeedPercent + (startDerivative * Constants.step / 2.0);
+            double midDerivative = CalculateDerivative(EVariableName.fanSpeed, midValue);
+            ActualSpeedPercent += midDerivative * Constants.step;
+
         }
     }
 }

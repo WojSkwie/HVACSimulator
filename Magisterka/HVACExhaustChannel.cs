@@ -52,5 +52,10 @@ namespace HVACSimulator
         {
             base.SetInitialValuesParameters();
         }
+
+        public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

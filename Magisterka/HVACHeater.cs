@@ -25,18 +25,6 @@ namespace HVACSimulator
             SetPlotDataNames();
             InitializeParametersList();
         }
- 
-
-        public void UpdateParams()
-        {
-            if (TimeConstant <= 0)
-            {
-                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
-                return;
-            }
-            double derivative = (SetWaterTemperature - ActualWaterTemperature) / TimeConstant;
-            ActualWaterTemperature += derivative * Constants.step;
-        }
 
         public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
         {
@@ -107,6 +95,31 @@ namespace HVACSimulator
             HeatExchangeSurface = 1;
             HeatTransferCoeff = 200;
             MaximalWaterFlow = 1;
+        }
+
+        public void UpdateParams()
+        {
+            if (TimeConstant <= 0)
+            {
+                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
+                return;
+            }
+            double startDerivative = CalculateDerivative(EVariableName.waterTemp, ActualWaterTemperature);
+            double midValue = ActualWaterTemperature + (startDerivative * Constants.step / 2.0);
+            double midDerivative = CalculateDerivative(EVariableName.waterTemp, midValue);
+            ActualWaterTemperature += midDerivative * Constants.step;
+        }
+
+        public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
+        {
+            switch(variableName)
+            {
+                case EVariableName.waterTemp:
+                    return (SetWaterTemperature - variableToDerivate) / TimeConstant;
+                default:
+                    OnSimulationErrorOccured(string.Format("Próba całkowania niewłaściwego obiektu w nagrzewnicy: {0}", variableName));
+                    return 0;
+            }
         }
     }
 }

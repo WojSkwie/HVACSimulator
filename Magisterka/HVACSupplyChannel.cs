@@ -143,5 +143,10 @@ namespace HVACSimulator
             DataPoint PresNewPoint = new DataPoint(GlobalParameters.SimulationTime, FanPressureDrop);
             pressPlotData.AddPointWithEvent(PresNewPoint);
         }
+
+        public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

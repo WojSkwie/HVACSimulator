@@ -193,5 +193,10 @@ namespace HVACSimulator
         {
             SimulationErrorOccured?.Invoke(this, error);
         }
+
+        public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

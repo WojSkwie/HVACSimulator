@@ -68,20 +68,6 @@ namespace HVACSimulator
             return OutputAir;
         }
 
-        public void UpdateParams()
-        {
-            if (TimeConstant <= 0)
-            {
-                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
-                return;
-            }
-            double derivative = (SetWaterTemperature - ActualWaterTemperature) / TimeConstant;
-            ActualWaterTemperature += derivative * Constants.step;
-
-            derivative = (SetMaximalCoolingPower - ActualMaximalCoolingPower) / CoolingTimeConstant;
-            ActualMaximalCoolingPower += derivative * Constants.step;
-        }
-
         public void InitializeParametersList()
         {
             BindedInputs = new List<BindableAnalogInputPort>
@@ -139,6 +125,39 @@ namespace HVACSimulator
             SetMaximalCoolingPower = 100;
             CoolingTimeConstant = 10;
             MaximalWaterFlow = 1;
+        }
+
+        public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
+        {
+            switch (variableName)
+            {
+                case EVariableName.waterTemp:
+                    return (SetWaterTemperature - variableToDerivate) / TimeConstant;
+                case EVariableName.coolingPower:
+                    return (SetMaximalCoolingPower - variableToDerivate) / TimeConstant;
+            default:
+                    OnSimulationErrorOccured(string.Format("Próba całkowania niewłaściwego obiektu w wymienniku ciepła: {0}", variableName));
+                    return 0;
+            }
+        }
+
+        public void UpdateParams()
+        {
+            if (TimeConstant <= 0)
+            {
+                OnSimulationErrorOccured("Nieprawidłowa stała czasowa");
+                return;
+            }
+
+            double startDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, ActualWaterTemperature);
+            double midValue = ActualWaterTemperature + (startDerivative * Constants.step / 2.0);
+            double midDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, midValue);
+            ActualWaterTemperature += midDerivative * Constants.step;
+
+            startDerivative = CalculateDerivative(EVariableName.coolingPower, ActualMaximalCoolingPower);
+            midValue = ActualMaximalCoolingPower + (startDerivative * Constants.step / 2.0);
+            midDerivative = CalculateDerivative(EVariableName.coolingPower, midValue);
+            ActualMaximalCoolingPower += midDerivative * Constants.step;
         }
     }
 }
