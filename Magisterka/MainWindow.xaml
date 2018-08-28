@@ -90,7 +90,7 @@
                             <Button Content="Char.&#x0a;wymiennika" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="82" Height="58" Click="ExchangerCharacteristicsButton_Click"/>
                             <Button Content="Char.&#x0a;pokoju" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Center" Width="82" Height="58" Click="RoomCharacteristicsButton_Click"/>
                         </StackPanel>
-                            <DataGrid Name="extractDataGrid" HorizontalAlignment="Right" 
+                        <DataGrid Name="extractDataGrid" HorizontalAlignment="Right" 
                               Height="230" Margin="0,0,0,0" VerticalAlignment="Top" 
                               Width="336" Background="White" AutoGenerateColumns="False" 
                               CanUserAddRows="False" CanUserReorderColumns="False" 
@@ -215,6 +215,8 @@
             <TabItem Name="AdapterTabItem" Header="Adapter">
 
                 <Grid>
+                    <Image Name="imgPanel" HorizontalAlignment="Left" Margin="32,60,0,0" VerticalAlignment="Top" Height="auto" Width="818" Source="images\thresholdbetter.png" />
+
                     <TextBox Name="PortNameTextBox" Height="23" TextWrapping="Wrap" Text="{Binding PortName}" Width="280" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,157,25,0"/>
                     <Controls:Tile Title="Stan połączenia" HorizontalAlignment="Right" VerticalAlignment="Top" Height="79" Margin="0,25,25,0" Width="280" IsHitTestVisible="False">
                         <Controls:Tile.Style>

@@ -149,9 +149,9 @@ namespace HVACSimulator
                 return;
             }
 
-            double startDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, ActualWaterTemperature);
+            double startDerivative = CalculateDerivative(EVariableName.waterTemp, ActualWaterTemperature);
             double midValue = ActualWaterTemperature + (startDerivative * Constants.step / 2.0);
-            double midDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, midValue);
+            double midDerivative = CalculateDerivative(EVariableName.waterTemp, midValue);
             ActualWaterTemperature += midDerivative * Constants.step;
 
             startDerivative = CalculateDerivative(EVariableName.coolingPower, ActualMaximalCoolingPower);

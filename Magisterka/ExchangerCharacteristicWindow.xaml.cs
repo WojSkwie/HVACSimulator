@@ -83,6 +83,7 @@ namespace HVACSimulator
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             CommitCoeffs();
+            DialogResult = true;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)

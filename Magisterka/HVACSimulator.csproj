@@ -265,5 +265,15 @@
   <ItemGroup>
     <Resource Include="images\mixingbox.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\panel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\thresholdbetter.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
