@@ -17,8 +17,8 @@ namespace HVACSimulator
         public double AproxC { get; set; }
         public double AproxD { get; set; }
 
-        public double SetEfficiency { get; private set; }
-        private double ActualEfficiency { get; set; }
+        public double SetEfficiencyPercent { get; private set; }
+        private double ActualEfficiencyPercent { get; set; }
         private const double ReferenceTemperatureDifference = 32 - 6; 
 
         public double TimeConstant;
@@ -63,35 +63,51 @@ namespace HVACSimulator
             }
             else
             {
-                Air cooledAir;
-                Air heatedAir;
-                Air maximallyCooledAir;
-                double dewPoint = MolierCalculations.CalculateDewPoint(exhaustAir);
-                double tempDiff = exhaustAir.Temperature - supplyAir.Temperature;
-                double heatedTemp = supplyAir.Temperature + tempDiff * ActualEfficiency / 100;
-                heatedAir = new Air(heatedTemp, supplyAir.SpecificHumidity, EAirHum.specific);
-                double energyAdded = heatedAir.Enthalpy - supplyAir.Enthalpy;
-                
-                if(dewPoint > supplyAir.Temperature)///wykroplenie
+                //Założenie -> równy przepływ powietrza z obu kanałach.
+                Air heatingAir; Air coolingAir;
+                if(supplyAir.Temperature > exhaustAir.Temperature)
                 {
-                    maximallyCooledAir = new Air(supplyAir.Temperature, 100, EAirHum.relative);
+                    heatingAir = supplyAir; coolingAir = exhaustAir;
                 }
                 else
                 {
-                    maximallyCooledAir = new Air(supplyAir.Temperature, exhaustAir.SpecificHumidity, EAirHum.specific);
+                    heatingAir = exhaustAir; coolingAir = supplyAir;
                 }
-                double enthalpyDiff = exhaustAir.Enthalpy - maximallyCooledAir.Enthalpy;
-                double proportion = energyAdded / enthalpyDiff;
+                double dewPoint = MolierCalculations.CalculateDewPoint(heatingAir);
+                double tempDiff = heatingAir.Temperature - coolingAir.Temperature;
+                double heatedtemp = coolingAir.Temperature + tempDiff * (ActualEfficiencyPercent / 100);
+                Air heatedAir;
+                Air cooledAir;
+                heatedAir = new Air(heatedtemp, coolingAir.SpecificHumidity, EAirHum.specific);
+                double enthalpyAdded = heatedAir.Enthalpy - coolingAir.Enthalpy;
+                Air maximallyCooledAir;
+                if(dewPoint > heatingAir.Temperature) //wykroplenie
+                {
+                    maximallyCooledAir = new Air(coolingAir.Temperature, 100, EAirHum.relative);
+                }
+                else //bez wykroplenia
+                {
+                    maximallyCooledAir = new Air(coolingAir.Temperature, heatingAir.SpecificHumidity, EAirHum.specific);
+                }
+                double maximumEnthalpyRemoved = heatingAir.Enthalpy - maximallyCooledAir.Enthalpy;
+                double proportion = enthalpyAdded / maximumEnthalpyRemoved;
                 if (proportion > 1 || proportion < 0) OnSimulationErrorOccured("Niewłaściwy stosunek energi w wymienniku");
-                double tempCoolDiff = exhaustAir.Temperature - maximallyCooledAir.Temperature;
-                double humidCoolDiff = exhaustAir.SpecificHumidity - maximallyCooledAir.SpecificHumidity;
-                double cooledTemp = exhaustAir.Temperature - tempCoolDiff * proportion;
-                double cooledHumid = exhaustAir.SpecificHumidity - humidCoolDiff * proportion;
+
+                double tempCoolDiff = heatingAir.Temperature - maximallyCooledAir.Temperature;
+                double humidCoolDiff = heatingAir.SpecificHumidity - maximallyCooledAir.SpecificHumidity;
+                double cooledTemp = heatingAir.Temperature - tempCoolDiff * proportion;
+                double cooledHumid = heatingAir.SpecificHumidity - humidCoolDiff * proportion;
                 cooledAir = new Air(cooledTemp, cooledHumid, EAirHum.specific);
-                OutletExchange.OutputAir = cooledAir;
-                InletExchange.OutputAir = heatedAir;
-                supplyAirAfter = heatedAir;
-                exhaustAirAfter = cooledAir;
+                if (supplyAir.Temperature > exhaustAir.Temperature)
+                {
+                    supplyAirAfter = cooledAir; exhaustAirAfter = heatedAir;
+                }
+                else
+                {
+                    supplyAirAfter = heatedAir; exhaustAirAfter = cooledAir;
+                }
+                OutletExchange.OutputAir = exhaustAirAfter;
+                InletExchange.OutputAir = supplyAirAfter;
             }
         }
 
@@ -106,7 +122,7 @@ namespace HVACSimulator
             double efficiency = MathUtil.QubicEquaVal(AproxA, AproxB, AproxC, AproxD, airFlow);
             if (efficiency > 95) efficiency = 95;
             if (efficiency < 0) efficiency = 0;
-            SetEfficiency = efficiency;
+            SetEfficiencyPercent = efficiency;
             return efficiency;
         }
 
@@ -158,7 +174,7 @@ namespace HVACSimulator
             switch (variableName)
             {
                 case EVariableName.exchangerEfficiency:
-                    return (SetEfficiency - variableToDerivate) / TimeConstant;
+                    return (SetEfficiencyPercent - variableToDerivate) / TimeConstant;
                 default:
                     OnSimulationErrorOccured(string.Format("Próba całkowania niewłaściwego obiektu w wymienniku ciepła: {0}", variableName));
                     return 0;
@@ -173,10 +189,10 @@ namespace HVACSimulator
                 return;
             }
 
-            double startDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, ActualEfficiency);
-            double midValue = ActualEfficiency + (startDerivative * Constants.step / 2.0);
+            double startDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, ActualEfficiencyPercent);
+            double midValue = ActualEfficiencyPercent + (startDerivative * Constants.step / 2.0);
             double midDerivative = CalculateDerivative(EVariableName.exchangerEfficiency, midValue);
-            ActualEfficiency += midDerivative * Constants.step;
+            ActualEfficiencyPercent += midDerivative * Constants.step;
         }
     }
 }

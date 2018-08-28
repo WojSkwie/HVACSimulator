@@ -146,10 +146,11 @@ namespace HVACSimulator
             {
                 if (GlobalParameters.SimulationState == EState.stopped)
                 {
-                    SeriesViewModel.InitializeModelFromList(ExchangerViewModel.SupplyChannel.HVACObjectsList);
+                    SeriesViewModel.AddPlottableObjectsFromHVACObjects(ExchangerViewModel.SupplyChannel.HVACObjectsList);
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.SupplyChannel);
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.Environment);
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.Room);
+                    SeriesViewModel.AddPlottableObjectsFromHVACObjects(ExchangerViewModel.ExhaustChannel.HVACObjectsList);
                     Plot.DataContext = SeriesViewModel;
                 }
                 ExchangerViewModel.AllowChanges = false;

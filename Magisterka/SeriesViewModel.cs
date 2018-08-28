@@ -29,11 +29,10 @@ namespace HVACSimulator
             this.PresentObjects = new ObservableCollection<PlottableObject>(); 
         }
 
-        public void InitializeModelFromList(ObservableCollection<HVACObject> inList)
+        public void AddPlottableObjectsFromHVACObjects(ObservableCollection<HVACObject> inList)
         {
             if (!inList.Any(item => item.IsPresent)) return;
             foreach (var obj in inList) PresentObjects.Add(obj);
-            //PresentObjects.AddRange(inList.Where(item => item.IsPresent));
         }
 
         public void AddPlottableObject(PlottableObject plottableObject)
@@ -44,7 +43,6 @@ namespace HVACSimulator
         public void ResetModel()
         {
             ActualPoints = new ObservableCollection<DataPoint>();
-            //PresentObjects.Clear();
             if(ActualDataPointer != null ) ActualDataPointer.NewPointCreated -= OnNewPointCreated;
             
         }
