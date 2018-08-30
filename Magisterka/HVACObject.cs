@@ -40,7 +40,7 @@ namespace HVACSimulator
         {
             GlobalParameters = GlobalParameters.Instance;
             InitializePlotDataList();
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
             IsMutable = true;
         }
 
@@ -109,7 +109,7 @@ namespace HVACSimulator
             }
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

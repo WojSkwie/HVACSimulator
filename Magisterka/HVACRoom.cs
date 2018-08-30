@@ -27,7 +27,7 @@ namespace HVACSimulator
         {
             HVACEnvironment = environment;
             InitializeParametersList();
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
             SetInitialValuesParameters();
             InitializePlotDataList();
         }
@@ -57,8 +57,8 @@ namespace HVACSimulator
         {
             BindedOutputs = new List<BindableAnalogOutputPort>
             {
-                new BindableAnalogOutputPort(50,-10, EAnalogOutput.temperature),
-                new BindableAnalogOutputPort(100, 0, EAnalogOutput.relativeHumidity)
+                new BindableAnalogOutputPort(40,-20, EAnalogOutput.roomTemperature),
+                new BindableAnalogOutputPort(100, 0, EAnalogOutput.roomRelativeHumidity)
             };
 
         }
@@ -79,7 +79,7 @@ namespace HVACSimulator
             return BindedOutputs.Select(item => item.AnalogOutput).ToList();
         }
 
-        public int GetParamter(EAnalogOutput analogOutput)
+        public int GetParameter(EAnalogOutput analogOutput)
         {
             var bindedParameter = BindedOutputs.FirstOrDefault(item => item.AnalogOutput == analogOutput);
             if (bindedParameter == null)
@@ -90,10 +90,10 @@ namespace HVACSimulator
             int output = 0;
             switch(analogOutput)
             {
-                case EAnalogOutput.temperature:
+                case EAnalogOutput.roomTemperature:
                     output = bindedParameter.ConvertTo12BitRange(AirInRoom.Temperature);
                     break;
-                case EAnalogOutput.relativeHumidity:
+                case EAnalogOutput.roomRelativeHumidity:
                     output = bindedParameter.ConvertTo12BitRange(AirInRoom.RelativeHumidity);
                     break;
             }
@@ -105,7 +105,7 @@ namespace HVACSimulator
             SimulationErrorOccured?.Invoke(this, error);
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

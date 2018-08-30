@@ -17,7 +17,7 @@ namespace HVACSimulator
         protected AirChannel() : base()
         {
             GlobalParameters = GlobalParameters.Instance;
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
         }
 
         protected List<IResetableObject> ResetableObjects = new List<IResetableObject>();
@@ -125,44 +125,6 @@ namespace HVACSimulator
             }
         }
 
-        /*protected void CalculateDropAndFlow()
-        {
-            GatherParametersFromObjects(
-                out double A, out double B, out double C,
-                out double Ap, out double Bp, out double Cp);
-
-            double delta = MathUtil.CalculateDelta(A, B, C);
-            if(delta < 0 ) { OnSimulationErrorOccured("Charakterystyki nie mają punktu wspólnego"); }
-            double[] roots = MathUtil.FindRoots(A, B, C, delta);
-            double flow;
-            if(roots[0] > 0 )
-            {
-                flow = roots[0];
-            }
-            else if(roots[1] > 0)
-            {
-                flow = roots[1];
-            }
-            else
-            {
-                OnSimulationErrorOccured("Charakterystyki nie mają dodatniego punktu wspólnego");
-                return;
-            }
-            double pressure = MathUtil.QuadEquaVal(Ap, Bp, Cp, flow);
-            if(pressure < 0)
-            {
-                OnSimulationErrorOccured("Ujemna wartość spadku ciśnienia");
-                return;
-            }
-
-            FlowRate = flow;
-            FanPressureDrop = pressure;
-
-            AddFlowDataFromAirParams();
-            AddPressureDataFromAirParams();
-
-        }*/
-
         public void OnSimulationErrorOccured(string error)
         {
             SimulationErrorOccured?.Invoke(this, error);
@@ -205,7 +167,7 @@ namespace HVACSimulator
             return air;
         }
 
-        public Air CalculateAirParametersWithAndAfterExchanger(Air InputAir, double airFlow, double massFlow)
+        public virtual Air CalculateAirParametersWithAndAfterExchanger(Air InputAir, double airFlow, double massFlow)
         {
             if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = new Air(0, 0, EAirHum.relative); //powietrze słup. korzystam przez źle napisaną metode obliczającą
@@ -236,7 +198,7 @@ namespace HVACSimulator
             }
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

@@ -18,7 +18,7 @@ namespace HVACSimulator
         {
             MaxValue = max;
             MinValue = min;
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
         }
 
         public void OnSimulationErrorOccured(string error)
@@ -37,7 +37,7 @@ namespace HVACSimulator
             return true;
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

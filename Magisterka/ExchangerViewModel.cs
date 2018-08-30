@@ -54,7 +54,7 @@ namespace HVACSimulator
             ResetableObjects.Add(Room);
             ResetableObjects.Add(Exchanger);
 
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -193,7 +193,7 @@ namespace HVACSimulator
             SupplyChannel.AddPointToSeries(airFlow, pressure);
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

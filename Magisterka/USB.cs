@@ -28,7 +28,7 @@ namespace HVACSimulator
             DataReceived += USBDataReceived;
             ReadTimeout = 100;
             WriteTimeout = 100;
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
         }
 
         public bool OpenWithEvent()
@@ -146,7 +146,7 @@ namespace HVACSimulator
             return crc;
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

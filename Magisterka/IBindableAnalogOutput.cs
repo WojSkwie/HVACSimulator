@@ -8,10 +8,11 @@ namespace HVACSimulator
 {
     public enum EAnalogOutput: byte
     {
-        temperature = 0,
-        relativeHumidity = 1,
-
-
+        roomTemperature = 0,
+        roomRelativeHumidity = 1,
+        environmentalAirTemperature = 2,
+        supplyAirTemperature = 3,
+        exchangerExhaustAirTemperature = 1
     }
 
     public interface IBindableAnalogOutput 
@@ -19,6 +20,6 @@ namespace HVACSimulator
         void InitializeParametersList();
         List<BindableAnalogOutputPort> BindedOutputs { get; set; }
         List<EAnalogOutput> GetListOfParams();
-        int GetParamter(EAnalogOutput analogOutput);
+        int GetParameter(EAnalogOutput analogOutput);
     }
 }

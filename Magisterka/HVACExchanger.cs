@@ -48,7 +48,7 @@ namespace HVACSimulator
         {
             InletExchange = inletExchange;
             OutletExchange = outletExchange;
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
             SetInitialValuesParameters();
         }
         /// <summary>
@@ -108,7 +108,7 @@ namespace HVACSimulator
             }
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

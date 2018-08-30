@@ -12,7 +12,7 @@ namespace HVACSimulator
 
         void OnSimulationErrorOccured(string error);
 
-        void GetSubscription();
+        void GetGlobalErrorHandlerSubscription();
         
     }
 }

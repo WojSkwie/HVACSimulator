@@ -7,16 +7,22 @@ using System.Threading.Tasks;
 
 namespace HVACSimulator
 {
-    public class HVACEnvironment : PlottableObject, IResetableObject
+    public class HVACEnvironment : PlottableObject, IResetableObject, IBindableAnalogOutput, INotifyErrorSimulation
     {
         public Air Air;
         public string Name { get; set; } = "Środowisko zewnętrzne";
+        public List<BindableAnalogOutputPort> BindedOutputs { get; set; }
+
         private GlobalParameters GlobalParameters = GlobalParameters.Instance;
+
+        public event EventHandler<string> SimulationErrorOccured;
 
         public HVACEnvironment()
         {
             SetInitialValuesParameters();
             InitializePlotDataList();
+            GetGlobalErrorHandlerSubscription();
+            InitializeParametersList();
         }
 
         protected override void InitializePlotDataList()
@@ -43,6 +49,47 @@ namespace HVACSimulator
             plotData = PlotDataList.Single(item => item.DataType == EDataType.humidity);
             newPoint = new DataPoint(GlobalParameters.SimulationTime, Air.RelativeHumidity);
             plotData.AddPointWithEvent(newPoint);
+        }
+
+        public void InitializeParametersList()
+        {
+            BindedOutputs = new List<BindableAnalogOutputPort>
+            {
+                new BindableAnalogOutputPort(40, -20, EAnalogOutput.environmentalAirTemperature)
+            };
+        }
+
+        public List<EAnalogOutput> GetListOfParams()
+        {
+            return BindedOutputs.Select(item => item.AnalogOutput).ToList();
+        }
+
+        public int GetParameter(EAnalogOutput analogOutput)
+        {
+            var bindedParameter = BindedOutputs.FirstOrDefault(item => item.AnalogOutput == analogOutput);
+            if (bindedParameter == null)
+            {
+                OnSimulationErrorOccured(string.Format("Próba odczytu nieprawidłowego parametru ze środowiska zewnętrznego: {0}", analogOutput.ToString()));
+                return 0;
+            }
+            int output = 0;
+            switch (analogOutput)
+            {
+                case EAnalogOutput.supplyAirTemperature:
+                    output = bindedParameter.ConvertTo12BitRange(Air.Temperature);
+                    break;
+            }
+            return output;
+        }
+
+        public void OnSimulationErrorOccured(string error)
+        {
+            SimulationErrorOccured?.Invoke(this, error);
+        }
+
+        public void GetGlobalErrorHandlerSubscription()
+        {
+            SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
     }
 }

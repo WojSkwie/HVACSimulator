@@ -48,7 +48,7 @@ namespace HVACSimulator
         {
             USB.CorrectFrameRead += correctFrameHandler;
             USB.StateChanged += stateChangedHandler;
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
             //USB.CorrectFrameRead += Parser.ParseCorrectCroppedFrame;
         }
 
@@ -91,7 +91,7 @@ namespace HVACSimulator
         public int GetAnalogParameterSimulation(EAnalogOutput analogOutput)
         {
             IBindableAnalogOutput bindableAnalogOutput = ABindedOutputs.Where(item => item.GetListOfParams().Contains(analogOutput)).First();
-            return bindableAnalogOutput.GetParamter(analogOutput);
+            return bindableAnalogOutput.GetParameter(analogOutput);
         }
 
         public void SetDigitalParameterSimulation(EDigitalInput digitalInput, bool inputValue)
@@ -160,13 +160,13 @@ namespace HVACSimulator
         public void CreateAndSendDataToAdapter()
         {
             byte[] WholeData = new byte[9];
-            foreach(EAnalogOutput analogOutputType in Enum.GetValues(typeof(EAnalogOutput)))
+            foreach(EAnalogOutput analogOutputType in ((EAnalogOutput[])Enum.GetValues(typeof(EAnalogOutput))).Distinct())
             {
                 int value = GetAnalogParameterSimulation(analogOutputType);
                 Array.Copy(Parser.GetBytesFromInt(value), 0, WholeData, 1 + (int)analogOutputType * 2, 0);
             }
             
-            foreach(EDigitalOutput digitalOutput in Enum.GetValues(typeof(EDigitalOutput)))
+            foreach(EDigitalOutput digitalOutput in ((EDigitalOutput[])Enum.GetValues(typeof(EDigitalOutput))).Distinct())
             {
                 bool value = GetDigitalParameterSimulation(digitalOutput);
                 WholeData[8] = Parser.SetBitValueInByte(value, (int)digitalOutput, WholeData[8]);
@@ -175,7 +175,7 @@ namespace HVACSimulator
             USB.DecoreAndTryWriteFrame(innerFrame);
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

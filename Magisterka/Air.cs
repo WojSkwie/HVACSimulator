@@ -66,12 +66,12 @@ namespace HVACSimulator
                     RelativeHumidity = humidity;
                     break;
             }
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
         }
 
         private Air()
         {
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
         }
 
         public void OnSimulationErrorOccured(string error)
@@ -91,7 +91,7 @@ namespace HVACSimulator
             
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

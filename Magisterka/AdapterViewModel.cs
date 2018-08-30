@@ -77,7 +77,9 @@ namespace HVACSimulator
                 (IBindableAnalogInput)exchangerViewModel.SupplyChannel.HVACObjectsList.First(item => item is HVACHeater)
                 );
             AdapterManager.InitializeAnalogOutputs(
-                (IBindableAnalogOutput)exchangerViewModel.Room
+                exchangerViewModel.Room,
+                exchangerViewModel.Environment,
+                exchangerViewModel.SupplyChannel
                 );
             AdapterManager.InitializeDigitalInputs(
                 (IBindableDigitalInput)exchangerViewModel.SupplyChannel.HVACObjectsList.First(item => item is HVACFan),

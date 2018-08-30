@@ -11,7 +11,7 @@ namespace HVACSimulator
     {
         public Parser()
         {
-            GetSubscription();
+            GetGlobalErrorHandlerSubscription();
         }
         private const int croppedFrameBytes = 10;
         private const int booleanValuesIndex = 9;
@@ -188,7 +188,7 @@ namespace HVACSimulator
             return inputValue;
         }
 
-        public void GetSubscription()
+        public void GetGlobalErrorHandlerSubscription()
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }

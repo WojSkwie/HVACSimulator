@@ -11,8 +11,11 @@ using System.Windows.Data;
 
 namespace HVACSimulator
 {
-    public sealed class HVACSupplyChannel : AirChannel, IDynamicObject, INotifyPropertyChanged
+    public sealed class HVACSupplyChannel : AirChannel, IDynamicObject, INotifyPropertyChanged, IBindableAnalogOutput
     {
+        public List<BindableAnalogOutputPort> BindedOutputs { get; set; }
+        public Air OutputAir { get; set; }
+
         public HVACSupplyChannel() : base()
         {
             HVACObjectsList.Add(new HVACFilter(inverted: false));
@@ -29,6 +32,7 @@ namespace HVACSimulator
 
             SetInitialValuesParameters();
             ResetableObjects.AddRange(HVACObjectsList);
+            InitializeParametersList();
         } 
 
         public HVACInletExchange GetInletExchange()
@@ -129,6 +133,7 @@ namespace HVACSimulator
         public override void SetInitialValuesParameters()
         {
             base.SetInitialValuesParameters();
+            OutputAir = new Air(20, 40, EAirHum.relative);
         }
 
         public void AddPointToSeries(double airFlow, double pressure)
@@ -147,7 +152,45 @@ namespace HVACSimulator
 
         public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); //It stays like this ;)
+        }
+
+        public void InitializeParametersList()
+        {
+            BindedOutputs = new List<BindableAnalogOutputPort>
+            {
+                new BindableAnalogOutputPort(40,-20, EAnalogOutput.supplyAirTemperature)
+            };
+
+        }
+
+        public List<EAnalogOutput> GetListOfParams()
+        {
+            return BindedOutputs.Select(item => item.AnalogOutput).ToList();
+        }
+
+        public int GetParameter(EAnalogOutput analogOutput)
+        {
+            var bindedParameter = BindedOutputs.FirstOrDefault(item => item.AnalogOutput == analogOutput);
+            if (bindedParameter == null)
+            {
+                OnSimulationErrorOccured(string.Format("Próba odczytu nieprawidłowego parametru z kanału nawiewnego: {0}", analogOutput.ToString()));
+                return 0;
+            }
+            int output = 0;
+            switch (analogOutput)
+            {
+                case EAnalogOutput.supplyAirTemperature:
+                    output = bindedParameter.ConvertTo12BitRange(OutputAir.Temperature);
+                    break;
+            }
+            return output;
+        }
+
+        public override Air CalculateAirParametersWithAndAfterExchanger(Air InputAir, double airFlow, double massFlow)
+        {
+            OutputAir = base.CalculateAirParametersWithAndAfterExchanger(InputAir, airFlow, massFlow);
+            return OutputAir;
         }
     }
 }
