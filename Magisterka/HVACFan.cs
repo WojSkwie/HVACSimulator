@@ -54,8 +54,9 @@ namespace HVACSimulator
             EDigitalInput.fanStart
         };
 
-        public List<EAnalogInput> GetListOfParams()
+        public List<EAnalogInput> GetListOfParams(bool onlyVisible)
         {
+            if (onlyVisible) return BindedInputs.Where(item => item.Visibility == true).Select(item => item.AnalogInput).ToList();
             return BindedInputs.Select(item => item.AnalogInput).ToList();
         }
 
@@ -63,7 +64,7 @@ namespace HVACSimulator
         {
             BindedInputs = new List<BindableAnalogInputPort>
             {
-                new BindableAnalogInputPort(0.01, 100, EAnalogInput.fanSpeed)
+                new BindableAnalogInputPort(0.01, 100, true, EAnalogInput.fanSpeed)
             };
 
         }

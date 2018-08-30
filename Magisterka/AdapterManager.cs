@@ -84,13 +84,13 @@ namespace HVACSimulator
 
         public void SetAnalogParameterSimulation(EAnalogInput analogInput, int inputValue)
         {
-            IBindableAnalogInput bindableAnalogInput = ABindedInputs.Where(item => item.GetListOfParams().Contains(analogInput)).First();
+            IBindableAnalogInput bindableAnalogInput = ABindedInputs.Where(item => item.GetListOfParams(onlyVisible: true).Contains(analogInput)).First();
             bindableAnalogInput.SetParameter(inputValue, analogInput);
         }
 
         public int GetAnalogParameterSimulation(EAnalogOutput analogOutput)
         {
-            IBindableAnalogOutput bindableAnalogOutput = ABindedOutputs.Where(item => item.GetListOfParams().Contains(analogOutput)).First();
+            IBindableAnalogOutput bindableAnalogOutput = ABindedOutputs.Where(item => item.GetListOfParams(onlyVisible: true).Contains(analogOutput)).First();
             return bindableAnalogOutput.GetParameter(analogOutput);
         }
 

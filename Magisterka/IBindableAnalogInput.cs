@@ -19,6 +19,6 @@ namespace HVACSimulator
         void InitializeParametersList();
         List<BindableAnalogInputPort> BindedInputs { get; set; }
         void SetParameter(int parameter, EAnalogInput analogInput);
-        List<EAnalogInput> GetListOfParams();
+        List<EAnalogInput> GetListOfParams(bool onlyVisible);
     }
 }

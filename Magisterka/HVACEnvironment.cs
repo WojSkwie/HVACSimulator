@@ -55,12 +55,13 @@ namespace HVACSimulator
         {
             BindedOutputs = new List<BindableAnalogOutputPort>
             {
-                new BindableAnalogOutputPort(40, -20, EAnalogOutput.environmentalAirTemperature)
+                new BindableAnalogOutputPort(40, -20, true, EAnalogOutput.environmentalAirTemperature)
             };
         }
 
-        public List<EAnalogOutput> GetListOfParams()
+        public List<EAnalogOutput> GetListOfParams(bool onlyVisible)
         {
+            if (onlyVisible) return BindedOutputs.Where(item => item.Visibility == true).Select(item => item.AnalogOutput).ToList();
             return BindedOutputs.Select(item => item.AnalogOutput).ToList();
         }
 
@@ -75,7 +76,7 @@ namespace HVACSimulator
             int output = 0;
             switch (analogOutput)
             {
-                case EAnalogOutput.supplyAirTemperature:
+                case EAnalogOutput.environmentalAirTemperature:
                     output = bindedParameter.ConvertTo12BitRange(Air.Temperature);
                     break;
             }

@@ -57,8 +57,8 @@ namespace HVACSimulator
         {
             BindedOutputs = new List<BindableAnalogOutputPort>
             {
-                new BindableAnalogOutputPort(40,-20, EAnalogOutput.roomTemperature),
-                new BindableAnalogOutputPort(100, 0, EAnalogOutput.roomRelativeHumidity)
+                new BindableAnalogOutputPort(40,-20, true, EAnalogOutput.roomTemperature),
+                new BindableAnalogOutputPort(100, 0, true, EAnalogOutput.roomRelativeHumidity)
             };
 
         }
@@ -74,8 +74,9 @@ namespace HVACSimulator
             plotData.AddPointWithEvent(newPoint);
         }
 
-        public List<EAnalogOutput> GetListOfParams()
+        public List<EAnalogOutput> GetListOfParams(bool onlyVisible)
         {
+            if (onlyVisible) return BindedOutputs.Where(item => item.Visibility == true).Select(item => item.AnalogOutput).ToList();
             return BindedOutputs.Select(item => item.AnalogOutput).ToList();
         }
 

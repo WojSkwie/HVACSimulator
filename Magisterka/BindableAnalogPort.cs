@@ -11,13 +11,15 @@ namespace HVACSimulator
         public double MaxValue { get; set; }
         public double MinValue { get; set; }
         protected int max12BitsNumber = 4095;
+        public bool Visibility { get; set; }
 
         public event EventHandler<string> SimulationErrorOccured;
 
-        public BindableAnalogPort(double max, double min)
+        public BindableAnalogPort(double max, double min, bool visibility)
         {
             MaxValue = max;
             MinValue = min;
+            Visibility = visibility;
             GetGlobalErrorHandlerSubscription();
         }
 

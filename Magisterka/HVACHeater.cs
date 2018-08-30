@@ -44,7 +44,7 @@ namespace HVACSimulator
         {
             BindedInputs = new List<BindableAnalogInputPort>
             {
-                new BindableAnalogInputPort(0, 100, EAnalogInput.heaterFlow)
+                new BindableAnalogInputPort(0, 100, true, EAnalogInput.heaterFlow)
             };
         }
 
@@ -63,8 +63,9 @@ namespace HVACSimulator
             WaterFlowPercent = bindedParameter.ConvertToParameterRange(parameter);
         }
 
-        public List<EAnalogInput> GetListOfParams()
+        public List<EAnalogInput> GetListOfParams(bool onlyVisible)
         {
+            if (onlyVisible) return BindedInputs.Where(item => item.Visibility == true).Select(item => item.AnalogInput).ToList();
             return BindedInputs.Select(item => item.AnalogInput).ToList();
         }
 

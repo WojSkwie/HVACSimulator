@@ -79,7 +79,8 @@ namespace HVACSimulator
             AdapterManager.InitializeAnalogOutputs(
                 exchangerViewModel.Room,
                 exchangerViewModel.Environment,
-                exchangerViewModel.SupplyChannel
+                exchangerViewModel.SupplyChannel,
+                (IBindableAnalogOutput)exchangerViewModel.ExhaustChannel.HVACObjectsList.First(item => item is HVACOutletExchange)
                 );
             AdapterManager.InitializeDigitalInputs(
                 (IBindableDigitalInput)exchangerViewModel.SupplyChannel.HVACObjectsList.First(item => item is HVACFan),

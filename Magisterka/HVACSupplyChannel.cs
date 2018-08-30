@@ -159,13 +159,14 @@ namespace HVACSimulator
         {
             BindedOutputs = new List<BindableAnalogOutputPort>
             {
-                new BindableAnalogOutputPort(40,-20, EAnalogOutput.supplyAirTemperature)
+                new BindableAnalogOutputPort(40,-20, true, EAnalogOutput.supplyAirTemperature)
             };
 
         }
 
-        public List<EAnalogOutput> GetListOfParams()
+        public List<EAnalogOutput> GetListOfParams(bool onlyVisible)// TODO
         {
+            if(onlyVisible) return BindedOutputs.Where(item => item.Visibility == true).Select(item => item.AnalogOutput).ToList();
             return BindedOutputs.Select(item => item.AnalogOutput).ToList();
         }
 

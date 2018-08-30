@@ -108,12 +108,13 @@ namespace HVACSimulator
         {
             BindedInputs = new List<BindableAnalogInputPort>
             {
-                new BindableAnalogInputPort(0, 100, EAnalogInput.mixingBox)
+                new BindableAnalogInputPort(0, 100, true, EAnalogInput.mixingBox)
             };
         }
 
-        public List<EAnalogInput> GetListOfParams()
+        public List<EAnalogInput> GetListOfParams(bool onlyVisible)
         {
+            if (onlyVisible) return BindedInputs.Where(item => item.Visibility == true).Select(item => item.AnalogInput).ToList();
             return BindedInputs.Select(item => item.AnalogInput).ToList();
         }
 

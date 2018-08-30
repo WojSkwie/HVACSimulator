@@ -10,7 +10,7 @@ namespace HVACSimulator
     {
         public EAnalogOutput AnalogOutput { get; private set; }
 
-        public BindableAnalogOutputPort(double max, double min, EAnalogOutput analogOutput) : base(max, min)
+        public BindableAnalogOutputPort(double max, double min, bool visibility, EAnalogOutput analogOutput) : base(max, min, visibility)
         {
             AnalogOutput = analogOutput;
         }
