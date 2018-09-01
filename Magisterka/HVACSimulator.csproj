@@ -108,6 +108,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AdapterConfigViewModel.cs" />
+    <Compile Include="AdapterIOConfigWindow.xaml.cs">
+      <DependentUpon>AdapterIOConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AdapterManager.cs" />
     <Compile Include="AdapterViewModel.cs" />
     <Compile Include="Air.cs" />
@@ -168,6 +172,10 @@
     <Compile Include="USB.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Page Include="AdapterIOConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ChannelCharactWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -59,7 +59,7 @@ namespace HVACSimulator
             set { _AllowClick = value; OnPropertyChanged("AllowClick"); }
         }
 
-        private AdapterManager AdapterManager;
+        public AdapterManager AdapterManager;
         private Parser Parser;
 
         public event PropertyChangedEventHandler PropertyChanged;

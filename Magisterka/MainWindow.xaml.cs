@@ -404,5 +404,10 @@ namespace HVACSimulator
             RoomCharactWindow roomCharactWindow = new RoomCharactWindow(ExchangerViewModel.Room);
             roomCharactWindow.ShowDialog();
         }
+
+        private void ConfigureIOAdapter_Click(object sender, RoutedEventArgs e)
+        {
+            AdapterConfigViewModel adapterConfigViewModel = new AdapterConfigViewModel(AdapterViewModel.AdapterManager);
+        }
     }
 }
