@@ -193,5 +193,10 @@ namespace HVACSimulator
             OutputAir = base.CalculateAirParametersWithAndAfterExchanger(InputAir, airFlow, massFlow);
             return OutputAir;
         }
+
+        public void DeactivateOutput(EAnalogOutput analogOutput)
+        {
+            BindedOutputs.Where(item => item.AnalogOutput.ToString() == analogOutput.ToString()).Single().Visibility = false;
+        }
     }
 }

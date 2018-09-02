@@ -127,5 +127,10 @@ namespace HVACSimulator
             PlotData humidPlotData = new PlotData(EDataType.humidity, "Czas [s]", "Wilgotność [%RH]", "Pomieszczenie");
             PlotDataList.Add(humidPlotData);
         }
+
+        public void DeactivateOutput(EAnalogOutput analogOutput)
+        {
+            BindedOutputs.Where(item => item.AnalogOutput.ToString() == analogOutput.ToString()).Single().Visibility = false;
+        }
     }
 }

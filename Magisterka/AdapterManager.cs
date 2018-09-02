@@ -106,6 +106,39 @@ namespace HVACSimulator
             return bindableDigitalOutput.GetDigitalParameter(digitalOutput);
         }
 
+        public void ActivateOutput(string output)
+        {
+            if(output == "Wilgotność w pomieszczeniu")
+            {
+                ABindedOutputs.Where(item => item is HVACRoom).Single().BindedOutputs.
+                    Where(item => item.AnalogOutput == EAnalogOutput.roomRelativeHumidity).Single().Visibility = true;
+            }
+            else
+            {
+                ABindedOutputs.Where(item => item is HVACOutletExchange).Single().BindedOutputs.
+                    Where(item => item.AnalogOutput == EAnalogOutput.exchangerExhaustAirTemperature).Single().Visibility = true;
+            }
+        }
+
+        public void DeactivateOutput(EAnalogOutput analogOutput)
+        {
+            var outputsToDeactivate = ABindedOutputs.SelectMany(item => item.BindedOutputs.Where(x => x.AnalogOutput == analogOutput));
+            foreach(var output in outputsToDeactivate)
+            {
+                output.Visibility = false;
+            }
+        }
+
+        public List<EAnalogOutput> GetActiveOutputs()
+        {
+            List<EAnalogOutput> activeOutputs = new List<EAnalogOutput>();
+            foreach(var output in ABindedOutputs)
+            {
+                activeOutputs.AddRange(output.GetListOfParams(onlyVisible: true));
+            }
+            return activeOutputs;
+        }
+
         public async Task SendEchoToFindAdapter()
         {
             foreach(var name in USB.GetPortNames())

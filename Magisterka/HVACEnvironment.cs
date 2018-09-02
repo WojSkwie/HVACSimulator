@@ -92,5 +92,10 @@ namespace HVACSimulator
         {
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
+
+        public void DeactivateOutput(EAnalogOutput analogOutput)
+        {
+            BindedOutputs.Where(item => item.AnalogOutput.ToString() == analogOutput.ToString()).Single().Visibility = false;
+        }
     }
 }

@@ -8,13 +8,18 @@ namespace HVACSimulator
 {
     public class AdapterConfigViewModel
     {
-        public List<EAnalogInput> SelectedAnalogInputs = new List<EAnalogInput>(4);
-        public List<EAnalogInput> SelectedAnalogOutputs = new List<EAnalogInput>(4);
-        public List<EAnalogInput> SelectedDigitalInputs = new List<EAnalogInput>(6);
-        public List<EAnalogInput> SelectedDigitalOutputs = new List<EAnalogInput>(6);
-        AdapterConfigViewModel(AdapterManager adapterManager)
+        public List<string> SelectableOutputs { get; set; }
+        public string SelectedOutput { get; set; }
+        private AdapterManager AdapterManager;
+
+        public AdapterConfigViewModel(AdapterManager adapterManager)
         {
-            adapterManager.
+            AdapterManager = adapterManager;
+            SelectableOutputs = new List<string>
+            {
+                "Wilgotność w pomieszczeniu",
+                "Temperatura na wylocie wymiennika"
+            };
         }
     }
 }

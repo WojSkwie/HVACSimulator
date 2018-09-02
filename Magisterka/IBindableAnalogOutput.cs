@@ -21,5 +21,6 @@ namespace HVACSimulator
         List<BindableAnalogOutputPort> BindedOutputs { get; set; }
         List<EAnalogOutput> GetListOfParams(bool onlyVisible);
         int GetParameter(EAnalogOutput analogOutput);
+        void DeactivateOutput(EAnalogOutput analogOutput);
     }
 }

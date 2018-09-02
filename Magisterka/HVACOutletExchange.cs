@@ -18,6 +18,7 @@ namespace HVACSimulator
 
             SetInitialValuesParameters();
             ImageSource = @"refactor";
+            InitializeParametersList();
         }
 
         public List<BindableAnalogOutputPort> BindedOutputs { get; set; }
@@ -68,6 +69,11 @@ namespace HVACSimulator
             ACoeff = 0;
             BCoeff = 0;
             CCoeff = 0;
+        }
+
+        public void DeactivateOutput(EAnalogOutput analogOutput)
+        {
+            BindedOutputs.Where(item => item.AnalogOutput.ToString() == analogOutput.ToString()).Single().Visibility = false;
         }
     }
 }

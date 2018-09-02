@@ -408,6 +408,16 @@ namespace HVACSimulator
         private void ConfigureIOAdapter_Click(object sender, RoutedEventArgs e)
         {
             AdapterConfigViewModel adapterConfigViewModel = new AdapterConfigViewModel(AdapterViewModel.AdapterManager);
+            AdapterIOConfigWindow configWindow = new AdapterIOConfigWindow
+            {
+                DataContext = adapterConfigViewModel
+            };
+            configWindow.ShowDialog();
+            if (configWindow.DialogResult == true) 
+            {
+                AdapterViewModel.AdapterManager.DeactivateOutput(EAnalogOutput.roomRelativeHumidity);
+                AdapterViewModel.AdapterManager.ActivateOutput(adapterConfigViewModel.SelectedOutput);
+            }
         }
     }
 }

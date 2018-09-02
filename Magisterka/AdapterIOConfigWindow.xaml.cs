@@ -29,6 +29,7 @@ namespace HVACSimulator
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            if (OutputSplitButton.SelectedItem == null) return;
             DialogResult = true;
         }
 
