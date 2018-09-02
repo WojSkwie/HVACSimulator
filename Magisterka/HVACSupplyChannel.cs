@@ -188,9 +188,9 @@ namespace HVACSimulator
             return output;
         }
 
-        public override Air CalculateAirParametersWithAndAfterExchanger(Air InputAir, double airFlow, double massFlow)
+        public override Air CalculateAirParametersWithAndAfterExchanger(Air InputAir, ref double airFlow, ref double massFlow)
         {
-            OutputAir = base.CalculateAirParametersWithAndAfterExchanger(InputAir, airFlow, massFlow);
+            OutputAir = base.CalculateAirParametersWithAndAfterExchanger(InputAir, ref airFlow, ref massFlow);
             return OutputAir;
         }
 

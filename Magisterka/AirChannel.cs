@@ -155,27 +155,28 @@ namespace HVACSimulator
             }
         }
 
-        public Air CalculateAirParametersBeforeExchanger(Air InputAir, double airFlow, double massFlow)
+        public Air CalculateAirParametersBeforeExchanger(Air InputAir, ref double airFlow, ref double massFlow)
         {
             if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = InputAir;
             foreach(HVACObject obj in HVACObjectsList)
             {
                 if (obj is HVACInletExchange || obj is HVACOutletExchange) return air;
-                air = obj.CalculateOutputAirParameters(air, FlowRate, massFlow);
+                air = obj.CalculateOutputAirParameters(air, ref airFlow, ref massFlow);
             }
             return air;
         }
 
-        public virtual Air CalculateAirParametersWithAndAfterExchanger(Air InputAir, double airFlow, double massFlow)
+        public virtual Air CalculateAirParametersWithAndAfterExchanger(Air InputAir, ref double airFlow, ref double massFlow)
         {
             if (FlowRate == 0) return InputAir; //TODO tutaj nie wiem jeszcze jak powinien zareagować układ
             Air air = new Air(0, 0, EAirHum.relative); //powietrze słup. korzystam przez źle napisaną metode obliczającą
             bool foundExchanger = false;
+            //double airFlowInParticularObjects = FlowRate;
             foreach(HVACObject obj in HVACObjectsList)
             {
                 if (obj is HVACInletExchange || obj is HVACOutletExchange) { foundExchanger = true; }
-                if (foundExchanger) air = obj.CalculateOutputAirParameters(air, FlowRate, massFlow);
+                if (foundExchanger) air = obj.CalculateOutputAirParameters(air, ref airFlow, ref massFlow);
             }
             return air;
         }

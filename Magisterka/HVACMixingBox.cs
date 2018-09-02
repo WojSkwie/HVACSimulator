@@ -31,7 +31,6 @@ namespace HVACSimulator
             }
         }
 
-        //public double MixingPercent { get; set; }
         public HVACMixingBox(bool inSupply)
         {
             IsGenerativeFlow = false;
@@ -70,7 +69,7 @@ namespace HVACSimulator
             CoupledMixingBox = mixingBox;
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, ref double airFlow, ref double massFlow)
         {
             if(InSupply)
             {
@@ -81,11 +80,17 @@ namespace HVACSimulator
                 OutputAir = new Air(temp, specHum, EAirHum.specific);
                 AddDataPointFromAir(OutputAir, EDataType.temperature);
                 AddDataPointFromAir(OutputAir, EDataType.humidity);
+
+                airFlow *=  100 / (100 - MixingPercent);
+                massFlow *= 100 / (100 - MixingPercent);
+
                 return OutputAir;
             }
             else
             {
-                return base.CalculateOutputAirParameters(inputAir, airFlow, massFlow);
+                airFlow *= (100 - MixingPercent) / 100;
+                massFlow *= (100 - MixingPercent) / 100;
+                return base.CalculateOutputAirParameters(inputAir, ref airFlow, ref massFlow);
             }
         }
 

@@ -32,7 +32,7 @@ namespace HVACSimulator
             SetInitialValuesParameters();
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, ref double airFlow, ref double massFlow)
         {
             double inputAirDewPoint = MolierCalculations.CalculateDewPoint(inputAir);
             double enthalpyDiff = 0;

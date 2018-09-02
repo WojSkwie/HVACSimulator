@@ -20,6 +20,7 @@ namespace HVACSimulator
         public HVACExchanger Exchanger { get; private set; }
         public HVACEnvironment Environment { get; private set; }
         public HVACRoom Room { get; private set; }
+        private bool ModeWithMixingBoxActivated = true;
         private List<IResetableObject> ResetableObjects = new List<IResetableObject>();
 
         private bool _AllowChanges = true;
@@ -55,6 +56,7 @@ namespace HVACSimulator
             ResetableObjects.Add(Exchanger);
 
             GetGlobalErrorHandlerSubscription();
+            SubscribeToMixingBoxPresenceChanged();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -63,6 +65,11 @@ namespace HVACSimulator
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        private void SubscribeToMixingBoxPresenceChanged()
+        {
+            ((HVACMixingBox)SupplyChannel.HVACObjectsList.Single(item => item is HVACMixingBox)).PropertyChanged += OnMixingBoxPropertyChanged;
         }
 
         private void CoupleMixingBoxes()
@@ -138,7 +145,14 @@ namespace HVACSimulator
 
         public double GetFlowRateFromSupplyChannel()
         {
-            return SupplyChannel.FlowRate;
+            if (SupplyChannel.HVACObjectsList.Single(item => item is HVACMixingBox).IsPresent)
+            {
+                return SupplyChannel.FlowRate * (100 - ((HVACMixingBox)SupplyChannel.HVACObjectsList.Single(item => item is HVACMixingBox)).MixingPercent) / 100;
+            }
+            else
+            {
+                return SupplyChannel.FlowRate;
+            }
         }
 
         public double GetPressureDropFromSupplyChannel()
@@ -152,7 +166,7 @@ namespace HVACSimulator
             {
                 resetableObject.SetInitialValuesParameters();
             }
-
+            //ModeWithMixingBoxActivated = true;
             AllowChanges = true;
         }
 
@@ -206,6 +220,19 @@ namespace HVACSimulator
         public double CalculateDerivative(EVariableName variableName, double variableToDerivate)
         {
             throw new NotImplementedException();
+        }
+
+        private void OnMixingBoxPropertyChanged(object sender, PropertyChangedEventArgs property)
+        {
+            if(property.PropertyName.Equals("IsPresent"))
+            {
+                var midProperty = sender.GetType().GetProperty(property.PropertyName);
+                ModeWithMixingBoxActivated = (bool)midProperty.GetValue(sender, null);
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }

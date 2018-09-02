@@ -48,7 +48,22 @@ namespace HVACSimulator
         private HVACFan CoupledFan;
         public double ActualSpeedPercent { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
-        private bool ActivateFan;
+        private bool _ActivateFan;
+        private bool ActivateFan
+        {
+            get
+            {
+                return _ActivateFan;
+            }
+            set
+            {
+                if(value != _ActivateFan)
+                {
+                    _ActivateFan = value;
+                    if (CoupledFan != null) CoupledFan._ActivateFan = value;
+                }
+            }
+        }
         List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
         {
             EDigitalInput.fanStart

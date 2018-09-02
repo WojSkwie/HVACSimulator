@@ -85,11 +85,11 @@ namespace HVACSimulator
             PressureDropSupplyNumeric.Value = ExchangerViewModel.GetPressureDropFromSupplyChannel();
             FlowRateSupplyNumeric.Value = ExchangerViewModel.GetFlowRateFromSupplyChannel();
 
-            Air exhaustExchangerAir = ExchangerViewModel.ExhaustChannel.CalculateAirParametersBeforeExchanger(roomAir, airFlow, massFlow);
-            Air supplyExchangerAir = ExchangerViewModel.SupplyChannel.CalculateAirParametersBeforeExchanger(outsideAir, airFlow, massFlow);
+            Air exhaustExchangerAir = ExchangerViewModel.ExhaustChannel.CalculateAirParametersBeforeExchanger(roomAir, ref airFlow, ref massFlow);
+            Air supplyExchangerAir = ExchangerViewModel.SupplyChannel.CalculateAirParametersBeforeExchanger(outsideAir, ref airFlow, ref massFlow);
             ExchangerViewModel.Exchanger.CalculateExchangeAndSetOutputAir(supplyExchangerAir, exhaustExchangerAir, out Air supplyAirAfter, out Air exhaustAirAfter);
-            ExchangerViewModel.ExhaustChannel.CalculateAirParametersWithAndAfterExchanger(exhaustAirAfter, airFlow, massFlow);
-            Air airEnteringRoom = ExchangerViewModel.SupplyChannel.CalculateAirParametersWithAndAfterExchanger(supplyAirAfter, airFlow, massFlow);
+            ExchangerViewModel.ExhaustChannel.CalculateAirParametersWithAndAfterExchanger(exhaustAirAfter, ref airFlow, ref massFlow);
+            Air airEnteringRoom = ExchangerViewModel.SupplyChannel.CalculateAirParametersWithAndAfterExchanger(supplyAirAfter, ref airFlow, ref massFlow);
             ExchangerViewModel.Room.CalculateAirParametersInRoom(airEnteringRoom, airFlow, massFlow);
             ExchangerViewModel.Environment.AddDataPointsFromAir();
 

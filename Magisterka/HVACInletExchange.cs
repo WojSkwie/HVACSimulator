@@ -24,7 +24,7 @@ namespace HVACSimulator
             SetInitialValuesParameters();
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, ref double airFlow, ref double massFlow)
         {
             AddDataPointFromAir(OutputAir, EDataType.humidity);
             AddDataPointFromAir(OutputAir, EDataType.temperature);

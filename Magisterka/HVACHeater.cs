@@ -26,7 +26,7 @@ namespace HVACSimulator
             InitializeParametersList();
         }
 
-        public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
+        public override Air CalculateOutputAirParameters(Air inputAir, ref double airFlow, ref double massFlow)
         {
             double RealWaterFlowValve = ActivatePump ? WaterFlowPercent : 0.01;
             double W1 = RealWaterFlowValve * MaximalWaterFlow / 100 * Constants.heaterFluidHeatCapacity;
