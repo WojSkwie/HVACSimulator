@@ -49,7 +49,8 @@ namespace HVACSimulator
             enthalpyDiff = inputAir.Enthalpy - MaximallyCooledAir.Enthalpy;
             energyDiff = enthalpyDiff * massFlow;
             double coolingPower = ActualMaximalCoolingPower * (inputAir.Temperature - ActualWaterTemperature) / ReferenceTemperatureDifference;
-            coolingPower *= WaterFlowPercent / 100;
+            double RealWaterFlowValve = ActivatePump ? WaterFlowPercent : 0.01;
+            coolingPower *= RealWaterFlowValve / 100;
             if (coolingPower > energyDiff)
             {
                 OutputAir = MaximallyCooledAir;

@@ -115,7 +115,15 @@ namespace HVACSimulator
             switch (variableName)
             {
                 case EVariableName.fanSpeed:
-                    return (SetSpeedPercent - variableToDerivate) / TimeConstant;
+                    if(ActivateFan)
+                    {
+                        return (SetSpeedPercent - variableToDerivate) / TimeConstant;
+                    }
+                    else
+                    {
+                        return (0.01 - variableToDerivate) / TimeConstant;
+                    }
+                    
                 default:
                     OnSimulationErrorOccured(string.Format("Próba całkowania niewłaściwego obiektu w wentylatorze: {0}", variableName));
                     return 0;

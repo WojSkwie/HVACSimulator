@@ -28,7 +28,8 @@ namespace HVACSimulator
 
         public override Air CalculateOutputAirParameters(Air inputAir, double airFlow, double massFlow)
         {
-            double W1 = WaterFlowPercent * MaximalWaterFlow / 100 * Constants.heaterFluidHeatCapacity;
+            double RealWaterFlowValve = ActivatePump ? WaterFlowPercent : 0.01;
+            double W1 = RealWaterFlowValve * MaximalWaterFlow / 100 * Constants.heaterFluidHeatCapacity;
             double W2 = massFlow * Constants.airHeatCapacity;
             double Nominator = 1 - Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
             double Denominator = 1 - W1 / W2 * Math.Exp(-(1 - W1 / W2) * HeatTransferCoeff * HeatExchangeSurface / W1);
