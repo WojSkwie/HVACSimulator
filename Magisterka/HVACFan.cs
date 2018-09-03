@@ -48,6 +48,7 @@ namespace HVACSimulator
         private HVACFan CoupledFan;
         public double ActualSpeedPercent { get; set; }
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
+        public double GoalAirFlowWithMixingBox { get; set; }
         private bool _ActivateFan;
         private bool ActivateFan
         {
@@ -117,12 +118,13 @@ namespace HVACSimulator
         {
             base.SetInitialValuesParameters();
 
-            ACoeff = -1;
-            BCoeff = 1;
-            CCoeff = 120;
+            ACoeff = -200;
+            BCoeff = 40;
+            CCoeff = 700;
             ActualSpeedPercent = 0.01;
             SetSpeedPercent = 0.01;
             TimeConstant = 5;
+            GoalAirFlowWithMixingBox = 0.8;
         }
 
         public double CalculateDerivative(EVariableName variableName, double variableToDerivate)

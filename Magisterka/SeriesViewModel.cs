@@ -31,8 +31,8 @@ namespace HVACSimulator
 
         public void AddPlottableObjectsFromHVACObjects(ObservableCollection<HVACObject> inList)
         {
-            if (!inList.Any(item => item.IsPresent)) return;
-            foreach (var obj in inList) PresentObjects.Add(obj);
+            //if (!inList.Any(item => item.IsPresent)) return;
+            foreach (var obj in inList.Where(item => item.IsPresent)) PresentObjects.Add(obj);
         }
 
         public void AddPlottableObject(PlottableObject plottableObject)

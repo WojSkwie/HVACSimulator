@@ -173,38 +173,57 @@ namespace HVACSimulator
 
         public void CalculateAirFlowInChannels(out double airFlow, out double massFlow, out double pressure, Air EnviromentAir)
         {
-            double A = 0, B = 0, C = 0, Ap = 0, Bp = 0, Cp = 0;
-            SupplyChannel.GatherParametersFromObjects(ref A, ref B, ref C, ref Ap, ref Bp, ref Cp);
-            ExhaustChannel.GatherParametersFromObjects(ref A, ref B, ref C, ref Ap, ref Bp, ref Cp);
-
-            double delta = MathUtil.CalculateDelta(A, B, C);
-            if (delta < 0) { OnSimulationErrorOccured("Charakterystyki nie mają punktu wspólnego"); }
-            double[] roots = MathUtil.FindRoots(A, B, C, delta);
-            if (roots[0] > 0)
+            if(ModeWithMixingBoxActivated)
             {
-                airFlow = roots[0];
-            }
-            else if (roots[1] > 0)
-            {
-                airFlow = roots[1];
+                double percent = GetSpeedFromSupplyChannel();
+                if(percent > 60)
+                {
+                    airFlow = SupplyChannel.FanInChannel.GoalAirFlowWithMixingBox;
+                }
+                else
+                {
+                    airFlow = SupplyChannel.FanInChannel.GoalAirFlowWithMixingBox * percent / 60;
+                }
+                double density = MolierCalculations.FindAirDensity(EnviromentAir);
+                pressure = 0;
+                massFlow = density * airFlow;
+                SupplyChannel.AddPointToSeries(airFlow, pressure);
             }
             else
             {
-                OnSimulationErrorOccured("Charakterystyki nie mają dodatniego punktu wspólnego");
-                airFlow = 0; massFlow = 0; pressure = 0;
-                return;
-            }
-            pressure = MathUtil.QuadEquaVal(Ap, Bp, Cp, airFlow);
-            if (pressure < 0)
-            {
-                OnSimulationErrorOccured("Ujemna wartość spadku ciśnienia");
-                airFlow = 0; massFlow = 0; pressure = 0;
-                return;
-            }
-            double density = MolierCalculations.FindAirDensity(EnviromentAir);
-            massFlow = density * airFlow;
+                double A = 0, B = 0, C = 0, Ap = 0, Bp = 0, Cp = 0;
+                SupplyChannel.GatherParametersFromObjects(ref A, ref B, ref C, ref Ap, ref Bp, ref Cp);
+                ExhaustChannel.GatherParametersFromObjects(ref A, ref B, ref C, ref Ap, ref Bp, ref Cp);
 
-            SupplyChannel.AddPointToSeries(airFlow, pressure);
+                double delta = MathUtil.CalculateDelta(A, B, C);
+                if (delta < 0) { OnSimulationErrorOccured("Charakterystyki nie mają punktu wspólnego"); }
+                double[] roots = MathUtil.FindRoots(A, B, C, delta);
+                if (roots[0] > 0)
+                {
+                    airFlow = roots[0];
+                }
+                else if (roots[1] > 0)
+                {
+                    airFlow = roots[1];
+                }
+                else
+                {
+                    OnSimulationErrorOccured("Charakterystyki nie mają dodatniego punktu wspólnego");
+                    airFlow = 0; massFlow = 0; pressure = 0;
+                    return;
+                }
+                pressure = MathUtil.QuadEquaVal(Ap, Bp, Cp, airFlow);
+                if (pressure < 0)
+                {
+                    OnSimulationErrorOccured("Ujemna wartość spadku ciśnienia");
+                    airFlow = 0; massFlow = 0; pressure = 0;
+                    return;
+                }
+                double density = MolierCalculations.FindAirDensity(EnviromentAir);
+                massFlow = density * airFlow;
+
+                SupplyChannel.AddPointToSeries(airFlow, pressure);
+            }
         }
 
         public void GetGlobalErrorHandlerSubscription()

@@ -30,8 +30,8 @@ namespace HVACSimulator
         public override void SetInitialValuesParameters()
         {
             base.SetInitialValuesParameters();
-            ACoeff = 1;
-            BCoeff = 1;
+            ACoeff = 400;
+            BCoeff = 70;
             CCoeff = 0;
         }
 

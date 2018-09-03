@@ -161,6 +161,7 @@ namespace HVACSimulator
             Air air = InputAir;
             foreach(HVACObject obj in HVACObjectsList)
             {
+                if (!obj.IsPresent) continue;
                 if (obj is HVACInletExchange || obj is HVACOutletExchange) return air;
                 air = obj.CalculateOutputAirParameters(air, ref airFlow, ref massFlow);
             }
@@ -175,6 +176,7 @@ namespace HVACSimulator
             //double airFlowInParticularObjects = FlowRate;
             foreach(HVACObject obj in HVACObjectsList)
             {
+                if (!obj.IsPresent) continue;
                 if (obj is HVACInletExchange || obj is HVACOutletExchange) { foundExchanger = true; }
                 if (foundExchanger) air = obj.CalculateOutputAirParameters(air, ref airFlow, ref massFlow);
             }
@@ -197,7 +199,9 @@ namespace HVACSimulator
             {
                 resetableElement.SetInitialValuesParameters();
             }
+            EmptyChannelPressureDrop = 10;
         }
+        
 
         public void GetGlobalErrorHandlerSubscription()
         {

@@ -96,6 +96,7 @@ namespace HVACSimulator
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
             Plot.InvalidatePlot(true);
+            FixPlotIFNeeded();
             AdapterViewModel.SendDataRequestToAdapter();
         }
 
@@ -316,6 +317,8 @@ namespace HVACSimulator
             Plot.Axes[0].Minimum = Plot.Axes[0].Maximum = double.NaN;
             Plot.ResetAllAxes();
             Plot.Axes[0].IsZoomEnabled = true;
+            Plot.InvalidatePlot(true);
+            FixPlotIFNeeded();
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
@@ -417,6 +420,17 @@ namespace HVACSimulator
             {
                 AdapterViewModel.AdapterManager.DeactivateOutput(EAnalogOutput.roomRelativeHumidity);
                 AdapterViewModel.AdapterManager.ActivateOutput(adapterConfigViewModel.SelectedOutput);
+            }
+        }
+
+        private void FixPlotIFNeeded()
+        {
+            const int YAxis = 1;
+            if(Plot.Axes[YAxis].InternalAxis.DataMaximum - Plot.Axes[YAxis].InternalAxis.DataMinimum < 0.1)
+            {
+                double mid = (Plot.Axes[YAxis].InternalAxis.DataMinimum + Plot.Axes[YAxis].InternalAxis.DataMaximum) / 2;
+                Plot.Axes[YAxis].Minimum = mid - 0.05;
+                Plot.Axes[YAxis].Maximum = mid + 0.05;
             }
         }
     }

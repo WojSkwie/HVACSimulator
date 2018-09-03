@@ -61,8 +61,9 @@ namespace HVACSimulator
                         * ((energyDiff - coolingPower) / energyDiff);
                 double specHum = MaximallyCooledAir.SpecificHumidity + (inputAir.SpecificHumidity - MaximallyCooledAir.SpecificHumidity)
                     * ((energyDiff - coolingPower) / energyDiff);
-                if (OutputAir.RelativeHumidity > 100) OutputAir.RelativeHumidity = 100; //TODO sprawdzić jak częśto występuje i jaka wartość
                 OutputAir = new Air(temp, specHum, EAirHum.specific);
+                if (OutputAir.RelativeHumidity > 100) OutputAir.RelativeHumidity = 100; //TODO sprawdzić jak częśto występuje i jaka wartość
+                //OutputAir = new Air(temp, specHum, EAirHum.specific);
             }
             AddDataPointFromAir(OutputAir, EDataType.humidity);
             AddDataPointFromAir(OutputAir, EDataType.temperature);
@@ -114,8 +115,8 @@ namespace HVACSimulator
         public override void SetInitialValuesParameters()
         {
             base.SetInitialValuesParameters();
-            ACoeff = 1;
-            BCoeff = 1;
+            ACoeff = 100;
+            BCoeff = 50;
             CCoeff = 0;
 
             TimeConstant = 1;
