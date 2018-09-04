@@ -208,8 +208,10 @@ namespace HVACSimulator
                 }
                 else
                 {
-                    OnSimulationErrorOccured("Charakterystyki nie mają dodatniego punktu wspólnego");
-                    airFlow = 0; massFlow = 0; pressure = 0;
+                    airFlow = 0.01;
+                    double densityWhenNoFlow = MolierCalculations.FindAirDensity(EnviromentAir);
+                    massFlow = densityWhenNoFlow * airFlow;
+                    pressure = 0;
                     return;
                 }
                 pressure = MathUtil.QuadEquaVal(Ap, Bp, Cp, airFlow);

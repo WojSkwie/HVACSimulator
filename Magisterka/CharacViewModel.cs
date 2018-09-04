@@ -57,7 +57,7 @@ namespace HVACSimulator
             PlotModel.Axes.Add(xAxis);
             var yAxis = new LinearAxis()
             {
-                Maximum = 300
+                //Maximum = 300
             };
             PlotModel.Axes.Add(yAxis);
         }

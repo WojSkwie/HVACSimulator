@@ -80,7 +80,7 @@ namespace HVACSimulator
         {
             BindedInputs = new List<BindableAnalogInputPort>
             {
-                new BindableAnalogInputPort(0.01, 100, true, EAnalogInput.fanSpeed)
+                new BindableAnalogInputPort(0.1, 100, true, EAnalogInput.fanSpeed)
             };
 
         }
@@ -121,8 +121,8 @@ namespace HVACSimulator
             ACoeff = -200;
             BCoeff = 40;
             CCoeff = 700;
-            ActualSpeedPercent = 0.01;
-            SetSpeedPercent = 0.01;
+            ActualSpeedPercent = 0.1;
+            SetSpeedPercent = 0.1;
             TimeConstant = 5;
             GoalAirFlowWithMixingBox = 0.8;
         }
@@ -138,7 +138,7 @@ namespace HVACSimulator
                     }
                     else
                     {
-                        return (0.01 - variableToDerivate) / TimeConstant;
+                        return (0.1 - variableToDerivate) / TimeConstant;
                     }
                     
                 default:

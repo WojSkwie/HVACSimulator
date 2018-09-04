@@ -96,8 +96,8 @@ namespace HVACSimulator
         public void GatherParametersFromObjects(ref double A, ref double B, ref double C, 
             ref double Ap, ref double Bp, ref double Cp)
         {
-            C += EmptyChannelPressureDrop;
-            //Cp += EmptyChannelPressureDrop;
+            B += EmptyChannelPressureDrop;
+            Bp += EmptyChannelPressureDrop;
 
             foreach (HVACObject obj in HVACObjectsList)
             {

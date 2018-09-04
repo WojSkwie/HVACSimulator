@@ -10,7 +10,8 @@ namespace HVACSimulator
     {
         public static double[] stepValues = { 0.1, 0.2, 0.5, 1, 2, 5 };
 
-        public static int pointsOnCharac = 20;
+        public static int pointsOnCharac = 50;
+        public static double CharacDx = 0.04;
 
         public static double step = stepValues[0];
 

@@ -62,7 +62,11 @@ namespace HVACSimulator
                 HeatExchangeSurfaceStackpanel.Visibility = Visibility.Visible;
                 HeatTransferCoefStackpanel.Visibility = Visibility.Visible;
             }
-
+            if (currentObject is HVACFan)
+            {
+                AirFlowGoalWithMixingBoxInChannelStackpanel.Visibility = Visibility.Visible;
+            }
+            
         }
 
         private void CopyCoeffs()
@@ -87,6 +91,10 @@ namespace HVACSimulator
             {
                 HeatExchangeSurfaceTextBox.Text = ((HVACHeater)currentObject).HeatExchangeSurface.ToString();
                 HeatTransferCoefTextBox.Text = ((HVACHeater)currentObject).HeatTransferCoeff.ToString();
+            }
+            if(currentObject is HVACFan)
+            {
+                AirFlowGoalWithMixingBoxInChannelTextBox.Text = ((HVACFan)currentObject).GoalAirFlowWithMixingBox.ToString();
             }
         }
 
@@ -114,6 +122,10 @@ namespace HVACSimulator
                 {
                     ((HVACHeater)currentObject).HeatExchangeSurface = Convert.ToDouble(HeatExchangeSurfaceTextBox.Text);
                     ((HVACHeater)currentObject).HeatTransferCoeff = Convert.ToDouble(HeatTransferCoefTextBox.Text);
+                }
+                if (currentObject is HVACFan)
+                {
+                    ((HVACFan)currentObject).GoalAirFlowWithMixingBox = Convert.ToDouble(AirFlowGoalWithMixingBoxInChannelTextBox.Text);
                 }
                 return true;
             }
@@ -168,15 +180,15 @@ namespace HVACSimulator
                 MessageBox.Show("Wpisz poprawne liczby");
                 return;
             }
-            GetParabola(CofA, CofB, CofC, Constants.pointsOnCharac);            
+            GetParabola(CofA, CofB, CofC, Constants.pointsOnCharac, Constants.CharacDx);            
         }
 
-        private void GetParabola(double A, double B, double C, double Xmax)
+        private void GetParabola(double A, double B, double C, int pointsNum, double dx)
         {
             CharacModel.ClearPlot();
-            for(int i = 0; i < Xmax; i++)
+            for(int i = 0; i < pointsNum; i++)
             {
-                double X = i;
+                double X = i * dx;
                 double Y = MathUtil.QuadEquaVal(A, B, C, X);
                 if(Y > 0)
                 {

@@ -67,6 +67,10 @@
                 <TextBox x:Name="HeatExchangeSurfaceTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
                 <Label x:Name="HeatExchangeSurfaceLabel" Content="Powierzchnia wymiany ciepła" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
+            <StackPanel x:Name="AirFlowGoalWithMixingBoxInChannelStackpanel" Visibility="Collapsed" HorizontalAlignment="Left" Height="Auto" Margin="10,0,0,20" VerticalAlignment="Top" Width="Auto" Orientation="Horizontal">
+                <TextBox x:Name="AirFlowGoalWithMixingBoxInChannelTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" PreviewTextInput="NumericTextBox_Input"/>
+                <Label x:Name="AirFlowGoalWithMixingBoxInChannelLabel" Content="Nastawa natężenia przepływu&#x0a;z komorą mieszania" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Controls:MetroWindow>

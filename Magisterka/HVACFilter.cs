@@ -31,7 +31,7 @@ namespace HVACSimulator
         {
             base.SetInitialValuesParameters();
             ACoeff = 400;
-            BCoeff = 70;
+            BCoeff = 0;
             CCoeff = 0;
         }
 

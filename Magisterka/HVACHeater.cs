@@ -88,7 +88,7 @@ namespace HVACSimulator
             base.SetInitialValuesParameters();
 
             ACoeff = 100;
-            BCoeff = 50;
+            BCoeff = 0;
             CCoeff = 0;
             TimeConstant = 5;
             SetWaterTemperature = 80;

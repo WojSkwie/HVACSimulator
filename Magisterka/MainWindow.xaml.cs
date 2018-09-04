@@ -96,7 +96,6 @@ namespace HVACSimulator
             GlobalParameters.IncrementTime();
             PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
             Plot.InvalidatePlot(true);
-            FixPlotIFNeeded();
             AdapterViewModel.SendDataRequestToAdapter();
         }
 
@@ -131,7 +130,6 @@ namespace HVACSimulator
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //supplyDataGrid.ItemsSource = supplyChannel.HVACObjectsList;
         }
 
         private void stopButton_Click(object sender, RoutedEventArgs e)
@@ -312,13 +310,12 @@ namespace HVACSimulator
             SeriesViewModel.ResetModel();
             if (PlotDataSplitButton.SelectedItem == null) return;
             SeriesViewModel.SetObjectToDrawPlot((PlottableObject)PresentObjectsSplitButton.SelectedItem, ((PlotData)PlotDataSplitButton.SelectedItem).DataType);
-            //Plot.BringIntoView();
             Plot.Axes[0].IsZoomEnabled = false;
             Plot.Axes[0].Minimum = Plot.Axes[0].Maximum = double.NaN;
             Plot.ResetAllAxes();
             Plot.Axes[0].IsZoomEnabled = true;
+            PlotSeries.ItemsSource = SeriesViewModel.ActualPoints;
             Plot.InvalidatePlot(true);
-            FixPlotIFNeeded();
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
@@ -376,7 +373,6 @@ namespace HVACSimulator
         private async void SearchAdapterButtonClick(object sender, RoutedEventArgs e)
         {
             AdapterViewModel.AllowClick = false;
-            //await Task.Delay(800);
             await AdapterViewModel.SearchAdapter();
             AdapterViewModel.AllowClick = true;
         }
@@ -400,6 +396,7 @@ namespace HVACSimulator
             mainTimer.Stop();
             ExchangerViewModel.AllowChanges = true;
             GlobalParameters.SimulationState = EState.paused;
+            this.ShowMessageAsync("Błąd", error);
         }
 
         private void RoomCharacteristicsButton_Click(object sender, RoutedEventArgs e)
