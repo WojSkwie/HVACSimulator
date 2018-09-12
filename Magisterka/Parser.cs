@@ -50,7 +50,8 @@ namespace HVACSimulator
                     }
                     foreach(EDigitalInput digitalInput in Enum.GetValues(typeof(EDigitalInput)))
                     {
-                        bool value = GetBoolValueFromByte(frame[booleanValuesIndex], (byte)digitalInput); 
+                        bool value = GetBoolValueFromByte(frame[booleanValuesIndex], (byte)digitalInput);
+                        OnDigitalInputValueChange(new KeyValuePair<EDigitalInput, bool>(digitalInput, value));
                     }
                     break;
                 case (byte)ECommand.AnswerOneAn:

@@ -9,7 +9,10 @@ namespace HVACSimulator
     public sealed class HVACHeater : HVACTemperatureActiveObject, IDynamicObject, IBindableAnalogInput, IBindableDigitalInput
     {
         public List<BindableAnalogInputPort> BindedInputs { get; set; }
-        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; }
+        List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
+        {
+            EDigitalInput.heaterStart
+        };
         public double HeatTransferCoeff { get; set; }
         public double HeatExchangeSurface { get; set; }
 
@@ -74,7 +77,7 @@ namespace HVACSimulator
         {
             switch (digitalInput)
             {
-                case EDigitalInput.coolerStart:
+                case EDigitalInput.heaterStart:
                     ActivatePump = state;
                     break;
                 default:

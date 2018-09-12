@@ -396,7 +396,11 @@ namespace HVACSimulator
             mainTimer.Stop();
             ExchangerViewModel.AllowChanges = true;
             GlobalParameters.SimulationState = EState.paused;
-            this.ShowMessageAsync("Błąd", error);
+            this.Dispatcher.Invoke(() =>
+            {
+                this.ShowMessageAsync("Błąd", error);
+            });
+               
         }
 
         private void RoomCharacteristicsButton_Click(object sender, RoutedEventArgs e)

@@ -103,7 +103,7 @@ namespace HVACSimulator
         {
             switch(digitalInput)
             {
-                case EDigitalInput.heaterStart:
+                case EDigitalInput.coolerStart:
                     ActivatePump = state;
                     break;
                 default:
