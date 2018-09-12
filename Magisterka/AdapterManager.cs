@@ -196,7 +196,10 @@ namespace HVACSimulator
             foreach(EAnalogOutput analogOutputType in ((EAnalogOutput[])Enum.GetValues(typeof(EAnalogOutput))).Distinct())
             {
                 int value = GetAnalogParameterSimulation(analogOutputType);
-                Array.Copy(Parser.GetBytesFromInt(value), 0, WholeData, 1 + (int)analogOutputType * 2, 0);
+                byte[] bytesInParam = Parser.GetBytesFromInt(value);
+                WholeData[(int)analogOutputType * 2] = bytesInParam[0];
+                WholeData[1 + (int)analogOutputType * 2] = bytesInParam[1];
+                //Array.Copy(Parser.GetBytesFromInt(value), 0, WholeData, 1 + (int)analogOutputType * 2, 0);
             }
             
             foreach(EDigitalOutput digitalOutput in ((EDigitalOutput[])Enum.GetValues(typeof(EDigitalOutput))).Distinct())

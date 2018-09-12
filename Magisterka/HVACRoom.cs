@@ -58,7 +58,7 @@ namespace HVACSimulator
             BindedOutputs = new List<BindableAnalogOutputPort>
             {
                 new BindableAnalogOutputPort(40,-20, true, EAnalogOutput.roomTemperature),
-                new BindableAnalogOutputPort(100, 0, true, EAnalogOutput.roomRelativeHumidity)
+                new BindableAnalogOutputPort(100, 0, false, EAnalogOutput.roomRelativeHumidity)
             };
 
         }

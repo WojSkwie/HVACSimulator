@@ -58,14 +58,14 @@ namespace HVACSimulator
         {
             BindedOutputs = new List<BindableAnalogOutputPort>
             {
-                new BindableAnalogOutputPort(40,-20, false, EAnalogOutput.exchangerExhaustAirTemperature)
+                new BindableAnalogOutputPort(40,-20, true, EAnalogOutput.exchangerExhaustAirTemperature)
             };
         }
 
         public override void SetInitialValuesParameters()
         {
             base.SetInitialValuesParameters();
-
+            OutputAir = new Air(10, 40, EAirHum.relative);
             ACoeff = 0;
             BCoeff = 0;
             CCoeff = 0;

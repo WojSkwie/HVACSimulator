@@ -101,7 +101,7 @@ namespace HVACSimulator
             switch(digitalOutput)
             {
                 case EDigitalOutput.frozenExchanger:
-                    return IsFrozen;
+                    return !IsFrozen;
                 default:
                     OnSimulationErrorOccured(string.Format("Próba odczytu nieprawidłowego parametru z wymiennika ciepła: {0}", digitalOutput));
                     return false;
