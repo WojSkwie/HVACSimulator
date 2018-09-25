@@ -108,21 +108,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AdapterConfigViewModel.cs" />
+    <Compile Include="ViewModels\AdapterConfigViewModel.cs" />
     <Compile Include="AdapterIOConfigWindow.xaml.cs">
       <DependentUpon>AdapterIOConfigWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AdapterManager.cs" />
-    <Compile Include="AdapterViewModel.cs" />
+    <Compile Include="Adapter\AdapterManager.cs" />
+    <Compile Include="ViewModels\AdapterViewModel.cs" />
     <Compile Include="Air.cs" />
-    <Compile Include="AirChannel.cs" />
-    <Compile Include="BindableAnalogOutputPort.cs" />
-    <Compile Include="BindableAnalogPort.cs" />
-    <Compile Include="BindableAnalogInputPort.cs" />
+    <Compile Include="HVACObjects\AirChannel.cs" />
+    <Compile Include="Adapter\BindableAnalogOutputPort.cs" />
+    <Compile Include="Adapter\BindableAnalogPort.cs" />
+    <Compile Include="Adapter\BindableAnalogInputPort.cs" />
     <Compile Include="ChannelCharactWindow.xaml.cs">
       <DependentUpon>ChannelCharactWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CharacViewModel.cs" />
+    <Compile Include="ViewModels\CharacViewModel.cs" />
     <Compile Include="CharactWindow.xaml.cs">
       <DependentUpon>CharactWindow.xaml</DependentUpon>
     </Compile>
@@ -130,46 +130,46 @@
     <Compile Include="ExchangerCharacteristicWindow.xaml.cs">
       <DependentUpon>ExchangerCharacteristicWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExchangerParamsViewModel.cs" />
-    <Compile Include="ExchangerViewModel.cs" />
-    <Compile Include="ExportFactory.cs" />
-    <Compile Include="ExportManagerCSV.cs" />
-    <Compile Include="ExportManagerXLS.cs" />
+    <Compile Include="ViewModels\ExchangerParamsViewModel.cs" />
+    <Compile Include="ViewModels\ExchangerViewModel.cs" />
+    <Compile Include="Export\ExportFactory.cs" />
+    <Compile Include="Export\ExportManagerCSV.cs" />
+    <Compile Include="Export\ExportManagerXLS.cs" />
     <Compile Include="GlobalParameters.cs" />
-    <Compile Include="HVACCooler.cs" />
-    <Compile Include="HVACEnvironment.cs" />
-    <Compile Include="HVACExchanger.cs" />
-    <Compile Include="HVACExhaustChannel.cs" />
-    <Compile Include="HVACFan.cs" />
-    <Compile Include="HVACFilter.cs" />
-    <Compile Include="HVACHeater.cs" />
-    <Compile Include="HVACInletExchange.cs" />
-    <Compile Include="HVACMixingBox.cs" />
-    <Compile Include="HVACObject.cs" />
-    <Compile Include="HVACOutletExchange.cs" />
-    <Compile Include="HVACRoom.cs" />
-    <Compile Include="HVACSupplyChannel.cs" />
-    <Compile Include="HVACTemperatureActiveObject.cs" />
-    <Compile Include="IBindableDigitalInput.cs" />
-    <Compile Include="IBindableAnalogInput.cs" />
-    <Compile Include="IBindableAnalogOutput.cs" />
-    <Compile Include="IBindableDigitalOutput.cs" />
-    <Compile Include="IDynamicObject.cs" />
-    <Compile Include="IExportsPlotData.cs" />
-    <Compile Include="IModifiableCharact.cs" />
-    <Compile Include="INotifyErrorSimulation.cs" />
-    <Compile Include="IResetableObject.cs" />
+    <Compile Include="HVACObjects\HVACCooler.cs" />
+    <Compile Include="HVACObjects\HVACEnvironment.cs" />
+    <Compile Include="HVACObjects\HVACExchanger.cs" />
+    <Compile Include="HVACObjects\HVACExhaustChannel.cs" />
+    <Compile Include="HVACObjects\HVACFan.cs" />
+    <Compile Include="HVACObjects\HVACFilter.cs" />
+    <Compile Include="HVACObjects\HVACHeater.cs" />
+    <Compile Include="HVACObjects\HVACInletExchange.cs" />
+    <Compile Include="HVACObjects\HVACMixingBox.cs" />
+    <Compile Include="HVACObjects\HVACObject.cs" />
+    <Compile Include="HVACObjects\HVACOutletExchange.cs" />
+    <Compile Include="HVACObjects\HVACRoom.cs" />
+    <Compile Include="HVACObjects\HVACSupplyChannel.cs" />
+    <Compile Include="HVACObjects\HVACTemperatureActiveObject.cs" />
+    <Compile Include="Interfaces\IBindableDigitalInput.cs" />
+    <Compile Include="Interfaces\IBindableAnalogInput.cs" />
+    <Compile Include="Interfaces\IBindableAnalogOutput.cs" />
+    <Compile Include="Interfaces\IBindableDigitalOutput.cs" />
+    <Compile Include="Interfaces\IDynamicObject.cs" />
+    <Compile Include="Interfaces\IExportsPlotData.cs" />
+    <Compile Include="Interfaces\IModifiableCharact.cs" />
+    <Compile Include="Interfaces\INotifyErrorSimulation.cs" />
+    <Compile Include="Interfaces\IResetableObject.cs" />
     <Compile Include="LINQExtension.cs" />
     <Compile Include="MolierCalculations.cs" />
     <Compile Include="MathUtil.cs" />
-    <Compile Include="Parser.cs" />
+    <Compile Include="Adapter\Parser.cs" />
     <Compile Include="PlottableObject.cs" />
     <Compile Include="PlotData.cs" />
     <Compile Include="RoomCharactWindow.xaml.cs">
       <DependentUpon>RoomCharactWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SeriesViewModel.cs" />
-    <Compile Include="USB.cs">
+    <Compile Include="ViewModels\SeriesViewModel.cs" />
+    <Compile Include="Adapter\USB.cs">
       <SubType>Component</SubType>
     </Compile>
     <Page Include="AdapterIOConfigWindow.xaml">
@@ -283,5 +283,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
