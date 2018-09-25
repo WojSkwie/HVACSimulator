@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows;
 
 namespace HVACSimulator
 {
-    public class HVACExchanger : INotifyErrorSimulation, IDynamicObject, IBindableDigitalInput, IBindableDigitalOutput, IResetableObject
+    public class HVACExchanger : PlottableObject, INotifyErrorSimulation, IDynamicObject, IBindableDigitalInput, IBindableDigitalOutput
     {
         private HVACOutletExchange OutletExchange;
         private HVACInletExchange InletExchange;
@@ -34,6 +35,8 @@ namespace HVACSimulator
         private double NegativeTempTime;
         private double PositiveTempTime;
 
+        private GlobalParameters GlobalParameters = GlobalParameters.Instance;
+
         
         List<EDigitalInput> IBindableDigitalInput.ParamsList { get; set; } = new List<EDigitalInput>
         {
@@ -50,6 +53,7 @@ namespace HVACSimulator
             OutletExchange = outletExchange;
             GetGlobalErrorHandlerSubscription();
             SetInitialValuesParameters();
+            InitializePlotDataList();
         }
         /// <summary>
         /// Oblicza parametry powietrza na wylotach kanałów. Zakłada równy przepływ przez nawiew i wywiew
@@ -64,7 +68,8 @@ namespace HVACSimulator
             {
                 CalculateAirParamsWhenBypassOff(supplyAir, exhaustAir, out supplyAirAfter, out exhaustAirAfter);
             }
-            CheckAndSetFreezingStatus(exhaustAir);
+            CheckAndSetFreezingStatus(exhaustAirAfter);
+            AddFreezingStatusData();
         }
 
         public void OnSimulationErrorOccured(string error)
@@ -113,15 +118,16 @@ namespace HVACSimulator
             SimulationErrorOccured += GlobalParameters.Instance.OnErrorSimulationOccured;
         }
 
-        public void SetInitialValuesParameters()
+        public override void SetInitialValuesParameters()
         {
+            base.SetInitialValuesParameters();
             TimeConstant = 2;
             AproxA = -11.37;
             AproxB = 53.21;
             AproxC = -68.65;
-            AproxD = 97.93;
+            AproxD = 87.93;
 
-            SecondsToFreeze = 30;
+            SecondsToFreeze = 10;
             SecondsToMelt = 30;
             NegativeTempTime = 0;
             PositiveTempTime = 0;
@@ -248,6 +254,18 @@ namespace HVACSimulator
                     NegativeTempTime = 0;
                 }
             }
+        }
+
+        protected override void InitializePlotDataList()
+        {
+            PlotDataList.Add(new PlotData(EDataType.freezingStatus, "Czas [s]", "Status", "Status zamarznięcia wymiennika"));
+        }
+
+        private void AddFreezingStatusData()
+        {
+            PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.freezingStatus);
+            DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, IsFrozen ? 100 : 0);
+            plotData.AddPointWithEvent(newPoint);
         }
     }
 }

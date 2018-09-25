@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace HVACSimulator
     {
         public HVACTemperatureActiveObject() : base()
         {
-
+            PlotData tempPlotData = new PlotData(EDataType.controlValue, "Czas [s]", "Procent wysterowania", Name); 
+            PlotDataList.Add(tempPlotData);
         }
         private double _WaterFlowPercent;
 
@@ -28,7 +30,15 @@ namespace HVACSimulator
 
         public double ActualWaterTemperature { get; set; }
         public double SetWaterTemperature { get; set; }
+        private GlobalParameters GlobalParameters = GlobalParameters.Instance;
 
         protected bool ActivatePump;
+
+        public void AddPointFromControlValue()
+        {
+            PlotData plotData = PlotDataList.Single(item => item.DataType == EDataType.controlValue);
+            DataPoint newPoint = new DataPoint(GlobalParameters.SimulationTime, WaterFlowPercent);
+            plotData.AddPointWithEvent(newPoint);
+        }
     }
 }

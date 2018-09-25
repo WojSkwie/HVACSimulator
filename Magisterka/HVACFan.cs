@@ -134,7 +134,7 @@ namespace HVACSimulator
                 case EVariableName.fanSpeed:
                     if(ActivateFan)
                     {
-                        return (SetSpeedPercent - variableToDerivate) / TimeConstant;
+                        return (70 - variableToDerivate) / TimeConstant;
                     }
                     else
                     {

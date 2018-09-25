@@ -11,7 +11,7 @@ namespace HVACSimulator
 {
 
     public enum EDataType
-    {///koniecznie należy podać opis nowych elementów. w przeciwnym wypadku wysypie się aplikacja
+    {///koniecznie należy podać opis nowych elementów. w przeciwnym wypadku wysypie się aplikacja //już nieaktualne ale warto wpisać tak po prostu
         [Description("Temperatura")]
         temperature,
 
@@ -23,6 +23,12 @@ namespace HVACSimulator
 
         [Description("Spadek ciśnienia")]
         pressureDrop,
+
+        [Description("Wysterowanie")]
+        controlValue,
+
+        [Description("Status zamarznięcia")]
+        freezingStatus,
     }
 
     public class PlotData : IResetableObject

@@ -36,7 +36,15 @@ namespace HVACSimulator
         public override void SetInitialValuesParameters()
         {
             base.SetInitialValuesParameters();
-            Air = new Air(-5, 40, EAirHum.relative);
+            if(Air == null)
+            {
+                Air = new Air(-10, 40, EAirHum.relative);
+            }
+            else
+            {
+                Air.Temperature = -10;
+                Air.RelativeHumidity = 40;//= new Air(-5, 40, EAirHum.relative);
+            }
 
         }
 

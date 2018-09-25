@@ -52,12 +52,13 @@ namespace HVACSimulator
             PlotModel.Title = "Charakterystyka wymiennika";
             var xAxis = new LinearAxis()
             {
-                Position = AxisPosition.Bottom
+                Position = AxisPosition.Bottom,
+                Title = "Natężęnie przepływu [m\xB3/s]"
             };
             PlotModel.Axes.Add(xAxis);
             var yAxis = new LinearAxis()
             {
-               
+               Title = "Sprawność [%]"
             };
             PlotModel.Axes.Add(yAxis);
         }

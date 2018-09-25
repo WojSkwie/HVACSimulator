@@ -147,6 +147,7 @@ namespace HVACSimulator
                 {
                     SeriesViewModel.AddPlottableObjectsFromHVACObjects(ExchangerViewModel.SupplyChannel.HVACObjectsList);
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.SupplyChannel);
+                    SeriesViewModel.AddPlottableObject(ExchangerViewModel.Exchanger);
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.Environment);
                     SeriesViewModel.AddPlottableObject(ExchangerViewModel.Room);
                     SeriesViewModel.AddPlottableObjectsFromHVACObjects(ExchangerViewModel.ExhaustChannel.HVACObjectsList);

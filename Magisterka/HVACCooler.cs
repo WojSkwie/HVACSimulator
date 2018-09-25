@@ -67,6 +67,7 @@ namespace HVACSimulator
             }
             AddDataPointFromAir(OutputAir, EDataType.humidity);
             AddDataPointFromAir(OutputAir, EDataType.temperature);
+            AddPointFromControlValue();
             return OutputAir;
         }
 
@@ -127,7 +128,7 @@ namespace HVACSimulator
             ActualMaximalCoolingPower = 100;
             SetMaximalCoolingPower = 100;
             CoolingTimeConstant = 10;
-            MaximalWaterFlow = 1;
+            MaximalWaterFlow = 5;
         }
 
         public double CalculateDerivative(EVariableName variableName, double variableToDerivate)

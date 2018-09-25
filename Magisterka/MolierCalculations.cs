@@ -8,13 +8,17 @@ namespace HVACSimulator
 {
     public static class MolierCalculations
     {
-        public static double FindAirDensity(Air air)//TODO Add humidity to this method
+        public static double FindAirDensity(Air air)
         {
             //y = 1.289429 - 0.004834286*x + 0.00001571429*x^2
-            double C = 1.289429;
+            /*double C = 1.289429;
             double B = 0.004834286;
             double A = 0.00001571429;
-            return (A * air.Temperature * air.Temperature + B * air.Temperature + C);
+            return (A * air.Temperature * air.Temperature + B * air.Temperature + C);*/
+            const double Ra = 286.9;
+            const double Rw = 461.5;
+            double density = 101325 / (Ra * (air.Temperature + 273)) * (1 + air.SpecificHumidity) / (1 + air.SpecificHumidity * Ra / Rw);
+            return density;
         }
 
         public static double CalculateSaturationVaporPressure(double temperature)
